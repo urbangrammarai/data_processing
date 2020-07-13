@@ -31,8 +31,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add ./docs
-          git commit -m "Generate Jupyter book"
+          git commit -m "Build Jupyter book" -a
 
       - name: Push changes
         uses: ad-m/github-push-action@master
