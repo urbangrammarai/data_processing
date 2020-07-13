@@ -1,2 +1,7 @@
 - file: intro
+
+- header: Data
+- file: footprints
+
+- header: Code
 - file: code/test
