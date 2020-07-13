@@ -1,7 +1,17 @@
 # Book settings
-title: My sample book
-author: The Jupyter Book Community
-logo: logo.png
+title: Urban Grammar Data Processing
+author: Dani Arribas-Bel, Martin Fleischmann
+# logo: logo.png
 
 execute:
   execute_notebooks: "off"
+
+repository:
+  url: https://github.com/urbangrammarai/data_processing
+
+launch_buttons:
+  binderhub_url: https://mybinder.org
+
+html:
+  use_repository_button: true
+  baseurl: "https://urbangrammarai.github.io/data_processing/"
