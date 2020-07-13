@@ -23,8 +23,8 @@ jobs:
           activate-environment: book
 
       - name: Build Jupyter book
+        shell: bash -l {0}
         run: |
-          conda activate book
           make build-book
 
       - name: Commit files
