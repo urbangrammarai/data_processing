@@ -5,3 +5,4 @@ build-book:
 	jupyter-book build book
 	cp -r book/_build/html docs
 	rm -rf book/code
+	touch docs/.nojekyll
