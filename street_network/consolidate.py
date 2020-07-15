@@ -40,6 +40,7 @@ def _average_geometry(lines, poly, distance=2):
         distance for interpolation
 
 
+
     Returns list of averaged geometries
     """
     # get an additional line around the lines to avoid infinity issues with Voronoi
@@ -92,6 +93,19 @@ def _average_geometry(lines, poly, distance=2):
 def filter_comp(gdf, max_size=10000, circom_max=0.2):
     """
     Filter based on max size and compactness
+
+    Parameters
+    ----------
+    gdf : GeoDataFrame
+        polygonized network
+    max_size : float
+        maximum size of a polygon to be considered potentially invalid
+    circom_max : float
+        maximum circular compactness of a polygon to be considered
+        potentially invalid.
+    
+    Returns boolean series
+
     """
     # calculate parameters
     gdf["area"] = gdf.geometry.area
@@ -114,7 +128,7 @@ def consolidate(network, distance=2, epsilon=2, filter_func=filter_comp, **kwarg
     4. Remove invalid and merge together with new geometry.
 
     Step 2 needs work, this is just a first attempt based on shape and area
-    of the polygon. We will have to come with clever options here and 
+    of the polygon. We will have to come with clever options here and
     allow their specification, because each network will need different
     parameters.
 
@@ -141,12 +155,11 @@ def consolidate(network, distance=2, epsilon=2, filter_func=filter_comp, **kwarg
     """
 
     # polygonize network
-    crs = network.crs
     polygonized = polygonize(network.geometry)
     geoms = [g for g in polygonized]
     gdf = gpd.GeoDataFrame(geometry=geoms, crs=network.crs)
 
-    # filter potentially incorrect polygons - TODO
+    # filter potentially incorrect polygons
     mask = filter_func(gdf, **kwargs)
     invalid = gdf.loc[mask]
 
@@ -174,7 +187,7 @@ def consolidate(network, distance=2, epsilon=2, filter_func=filter_comp, **kwarg
 
     # merge new geometries with the existing network
     result = gpd.GeoSeries(averaged).simplify(epsilon).append(clean.geometry)
-    result.crs = crs
+    result.crs = network.crs
 
     # here we have to merge lines which are supposed to be merged (eliminate nodes of degree 2)
     # could be done using momepy.network_false_nodes if we care only about the geometry
