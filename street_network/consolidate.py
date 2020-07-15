@@ -89,7 +89,19 @@ def _average_geometry(lines, poly, distance=2):
     return edgelines
 
 
-def consolidate(network, distance=2, epsilon=2):
+def filter_comp(gdf, max_size=10000, circom_max=0.2):
+    """
+    Filter based on max size and compactness
+    """
+    # calculate parameters
+    gdf["area"] = gdf.geometry.area
+    gdf["circom"] = mm.CircularCompactness(gdf, "area").series
+    # select valid and invalid network-net_blocks
+    mask = (gdf["area"] < max_size) & (gdf["circom"] < circom_max)
+    return mask
+
+
+def consolidate(network, distance=2, epsilon=2, filter_func=filter_comp, **kwargs):
     """
     Consolidate edges of a network, takes care of geometry only. No
     attributes are preserved at the moment.
@@ -120,6 +132,12 @@ def consolidate(network, distance=2, epsilon=2):
     epsilon : float
         tolerance for simplification
 
+    filter_func : function
+        function which takes gdf of polygonized network and returns mask of invalid
+        polygons (those which should be consolidated)
+
+    **kwargs
+        Additional kwargs passed to filter_func
     """
 
     # polygonize network
@@ -129,14 +147,8 @@ def consolidate(network, distance=2, epsilon=2):
     gdf = gpd.GeoDataFrame(geometry=geoms, crs=network.crs)
 
     # filter potentially incorrect polygons - TODO
-    max_size = 10000
-    circom_max = 0.2
-    # calculate parameters
-    gdf["area"] = gdf.geometry.area
-    gdf["circom"] = mm.CircularCompactness(gdf, "area").series
-    # select valid and invalid network-net_blocks
-    possible = gdf.loc[gdf["area"] < max_size]
-    invalid = possible.loc[(possible["circom"] < circom_max)]
+    mask = filter_func(gdf, **kwargs)
+    invalid = gdf.loc[mask]
 
     sindex = network.sindex
 
@@ -169,10 +181,3 @@ def consolidate(network, distance=2, epsilon=2):
 
     return result
 
-
-# TODO:
-# - figure out clever way of adaptable filters (to identify which polygons should not be there, i.e. which edges should be consolidated)
-# - triple/quadruple lines
-# - consolidate nodes in geometrical manner before (or after) edge consolidation. Current implementation of node consolidation creates overlapping lines causing issues with Voronoi. The optimal result should be spider-like.
-# - implementation into OSMnx, which has to deal with a mess of OSM (overlapping geometries)
-# - make it work for both GeoDataFrames and Graph
