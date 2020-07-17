@@ -25,7 +25,7 @@ def get_verts(x, voronoi_diagram):
     return voronoi_diagram.vertices[x]
 
 
-def _average_geometry(lines, poly, distance=2):
+def _average_geometry(lines, poly=None, distance=2):
     """
     Returns average geometry.
 
@@ -35,14 +35,18 @@ def _average_geometry(lines, poly, distance=2):
     lines : list
         LineStrings connected at endpoints forming a closed polygon
     poly : shapely.geometry.Polygon
-        polygons encloseg by `lines`
+        polygon enclosed by `lines`
     distance : float
         distance for interpolation
 
-
-
     Returns list of averaged geometries
     """
+    if not poly:
+        polygons = list(polygonize(lines))
+        if len(polygons) == 1:
+            poly = polygons[0]
+        else:
+            raise ValueError("given lines do not form a single polygon")
     # get an additional line around the lines to avoid infinity issues with Voronoi
     extended_lines = [poly.buffer(distance).exterior] + lines
 
