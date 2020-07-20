@@ -2,6 +2,7 @@ from itertools import combinations
 
 import pygeos
 import numpy as np
+import pandas as pd
 import geopandas as gpd
 import momepy as mm  # this is only temporary to simplify the identification of incorrect polygons
 
@@ -94,32 +95,7 @@ def _average_geometry(lines, poly=None, distance=2):
     return edgelines
 
 
-def filter_comp(gdf, max_size=10000, circom_max=0.2):
-    """
-    Filter based on max size and compactness
-
-    Parameters
-    ----------
-    gdf : GeoDataFrame
-        polygonized network
-    max_size : float
-        maximum size of a polygon to be considered potentially invalid
-    circom_max : float
-        maximum circular compactness of a polygon to be considered
-        potentially invalid.
-    
-    Returns boolean series
-
-    """
-    # calculate parameters
-    gdf["area"] = gdf.geometry.area
-    gdf["circom"] = mm.CircularCompactness(gdf, "area").series
-    # select valid and invalid network-net_blocks
-    mask = (gdf["area"] < max_size) & (gdf["circom"] < circom_max)
-    return mask
-
-
-def consolidate(network, distance=2, epsilon=2, filter_func=filter_comp, **kwargs):
+def consolidate(network, distance=2, epsilon=2, filter_func=None, **kwargs):
     """
     Consolidate edges of a network, takes care of geometry only. No
     attributes are preserved at the moment.
@@ -190,8 +166,8 @@ def consolidate(network, distance=2, epsilon=2, filter_func=filter_comp, **kwarg
     clean = network.drop(set(to_remove))
 
     # merge new geometries with the existing network
-    result = gpd.GeoSeries(averaged).simplify(epsilon).append(clean.geometry)
-    result.crs = network.crs
+    averaged = gpd.array.from_shapely(averaged, crs=network.crs).simplify(epsilon)
+    result = pd.concat([clean, gpd.GeoDataFrame(geometry=averaged[~averaged.is_empty])])
 
     # here we have to merge lines which are supposed to be merged (eliminate nodes of degree 2)
     # could be done using momepy.network_false_nodes if we care only about the geometry
@@ -209,4 +185,29 @@ def roundabouts(gdf, area=5000, circom=0.6):
     gdf["circom"] = mm.CircularCompactness(gdf, "area").series
     # select valid and invalid network-net_blocks
     mask = (gdf["area"] < area) & (gdf["circom"] > circom)
+    return mask
+
+
+def filter_comp(gdf, max_size=10000, circom_max=0.2):
+    """
+    Filter based on max size and compactness
+
+    Parameters
+    ----------
+    gdf : GeoDataFrame
+        polygonized network
+    max_size : float
+        maximum size of a polygon to be considered potentially invalid
+    circom_max : float
+        maximum circular compactness of a polygon to be considered
+        potentially invalid.
+    
+    Returns boolean series
+
+    """
+    # calculate parameters
+    gdf["area"] = gdf.geometry.area
+    gdf["circom"] = mm.CircularCompactness(gdf, "area").series
+    # select valid and invalid network-net_blocks
+    mask = (gdf["area"] < max_size) & (gdf["circom"] < circom_max)
     return mask
