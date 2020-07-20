@@ -198,3 +198,15 @@ def consolidate(network, distance=2, epsilon=2, filter_func=filter_comp, **kwarg
 
     return result
 
+
+def roundabouts(gdf, area=5000, circom=0.6):
+    """
+    Filter out roundabouts
+    """
+
+    # calculate parameters
+    gdf["area"] = gdf.geometry.area
+    gdf["circom"] = mm.CircularCompactness(gdf, "area").series
+    # select valid and invalid network-net_blocks
+    mask = (gdf["area"] < area) & (gdf["circom"] > circom)
+    return mask
