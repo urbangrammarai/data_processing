@@ -1,5 +1,9 @@
 - file: intro
 
+- header: Infrastructure
+- file: infrastructure/platform
+- file: infrastructure/dask_cluster
+
 - header: Data
 - file: footprints
 
