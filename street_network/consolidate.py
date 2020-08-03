@@ -168,11 +168,9 @@ def consolidate(network, distance=2, epsilon=2, filter_func=None, **kwargs):
     # merge new geometries with the existing network
     averaged = gpd.array.from_shapely(averaged, crs=network.crs).simplify(epsilon)
     result = pd.concat([clean, gpd.GeoDataFrame(geometry=averaged[~averaged.is_empty])])
+    merge = mm.network_false_nodes(result)
 
-    # here we have to merge lines which are supposed to be merged (eliminate nodes of degree 2)
-    # could be done using momepy.network_false_nodes if we care only about the geometry
-
-    return result
+    return merge
 
 
 def roundabouts(gdf, area=5000, circom=0.6):
