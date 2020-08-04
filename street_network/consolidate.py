@@ -199,7 +199,7 @@ def filter_comp(gdf, max_size=10000, circom_max=0.2):
     circom_max : float
         maximum circular compactness of a polygon to be considered
         potentially invalid.
-    
+
     Returns boolean series
 
     """
