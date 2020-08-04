@@ -141,7 +141,7 @@ def consolidate(network, distance=2, epsilon=2, filter_func=None, **kwargs):
 
     # filter potentially incorrect polygons
     mask = filter_func(gdf, **kwargs)
-    invalid = gdf.loc[mask]
+    invalid = gdf.loc[mask].unary_union
 
     sindex = network.sindex
 
@@ -149,14 +149,17 @@ def consolidate(network, distance=2, epsilon=2, filter_func=None, **kwargs):
     # list segments to be removed and the averaged geoms replacing them
     averaged = []
     to_remove = []
-    for poly in invalid.geometry:
+    for poly in invalid.geoms:
         real = network.iloc[sindex.query(poly.exterior, predicate="intersects")]
-        mask = real.intersection(poly.exterior).type.isin(
+        outline_mask = real.intersection(poly.exterior).type.isin(
             ["LineString", "MultiLineString"]
         )
-        real = real[mask]
-        lines = list(real.geometry)
-        to_remove += list(real.index)
+        outline = real[outline_mask]
+        lines = list(outline.geometry)
+        remove_mask = real.intersection(poly).type.isin(
+            ["LineString", "MultiLineString"]
+        )
+        to_remove += list(real[remove_mask].index)
 
         if lines:
             av = _average_geometry(lines, poly, distance)
