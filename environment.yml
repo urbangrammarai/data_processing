@@ -7,4 +7,4 @@ dependencies:
   - sphinx=2.4.4
   - pip
   - pip:
-      - jupyter-book>=0.7.0b
+      - jupyter-book==0.7.3
