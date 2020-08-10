@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fetch OpenRoads and store them in a PostGIS database &#8212; Urban Grammar Data Processing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Load data from PostGIS" href="Load_data_from_PostGIS.html" />
+    <link rel="prev" title="Intro" href="../intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.jpeg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Urban Grammar Data Processing</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Intro
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Fetch OpenRoads and store them in a PostGIS database
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Load_data_from_PostGIS.html">
+   Load data from PostGIS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Network_Consolidation_Test.html">
+   Assessment of the correctness of OpenRoads network
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/code/Fetch_OpenRoads.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/urbangrammarai/data_processing/master?urlpath=tree/code/Fetch_OpenRoads.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> On this page
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#download-openroads">
+   Download OpenRoads
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#save-geodataframe-to-postgis">
+   Save GeoDataFrame to PostGIS
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="fetch-openroads-and-store-them-in-a-postgis-database">
+<h1>Fetch OpenRoads and store them in a PostGIS database<a class="headerlink" href="#fetch-openroads-and-store-them-in-a-postgis-database" title="Permalink to this headline">¶</a></h1>
+<p>Dowload OpenRoads from OS API, save zip, open it in GeoPandas and dump to a PostGIS database.</p>
+<p>To establish a connection to the database, this notebook is using docker environment variables. Start docker as <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">-e</span> <span class="pre">DB_PORT=&lt;port&gt;</span> <span class="pre">-e</span> <span class="pre">DB_USER=&lt;username&gt;</span> <span class="pre">-e</span> <span class="pre">DB_PWD=&lt;password&gt;</span> <span class="pre">-e</span> <span class="pre">DB_HOST=&lt;host&gt;</span> <span class="pre">darribas/gds_dev:5.0</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="download-openroads">
+<h2>Download OpenRoads<a class="headerlink" href="#download-openroads" title="Permalink to this headline">¶</a></h2>
+<p>Request the list of products available using Ordnance Survey API and filter <code class="docutils literal notranslate"><span class="pre">'OpenRoads'</span></code> record.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://api.os.uk/downloads/v1/products&#39;</span><span class="p">)</span>
+<span class="n">json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OpenRoads&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">roads</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">roads_json</span> <span class="o">=</span> <span class="n">roads</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">roads_json</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;id&#39;: &#39;OpenRoads&#39;,
+ &#39;name&#39;: &#39;OS Open Roads&#39;,
+ &#39;description&#39;: &#39;Get a high-level view of the road network, from motorways to country lanes.&#39;,
+ &#39;version&#39;: &#39;2020-04&#39;,
+ &#39;documentationUrl&#39;: &#39;https://www.ordnancesurvey.co.uk/business-government/products/open-map-roads&#39;,
+ &#39;dataStructures&#39;: [&#39;Vector&#39;],
+ &#39;category&#39;: &#39;Networks&#39;,
+ &#39;formats&#39;: [{&#39;format&#39;: &#39;ESRI® Shapefile&#39;},
+  {&#39;format&#39;: &#39;GML&#39;, &#39;subformat&#39;: &#39;3&#39;},
+  {&#39;format&#39;: &#39;GeoPackage&#39;}],
+ &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRoads&#39;,
+ &#39;imageCount&#39;: 3,
+ &#39;imageTemplate&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRoads/images/{index}&#39;,
+ &#39;downloadsUrl&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRoads/downloads&#39;,
+ &#39;areas&#39;: [&#39;GB&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Get download URLs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">download</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">roads_json</span><span class="p">[</span><span class="s1">&#39;downloadsUrl&#39;</span><span class="p">])</span>
+<span class="n">download_json</span> <span class="o">=</span> <span class="n">download</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">download_json</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[{&#39;md5&#39;: &#39;60286049CB76C9D6364F0FE87090202C&#39;,
+  &#39;size&#39;: 541236838,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRoads/downloads?area=GB&amp;format=ESRI%C2%AE+Shapefile&amp;redirect&#39;,
+  &#39;format&#39;: &#39;ESRI® Shapefile&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;oproad_essh_gb.zip&#39;},
+ {&#39;md5&#39;: &#39;84E66CAFCEA9DD695A68540DE9379D4C&#39;,
+  &#39;size&#39;: 542188036,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRoads/downloads?area=GB&amp;format=GML&amp;subformat=3&amp;redirect&#39;,
+  &#39;format&#39;: &#39;GML&#39;,
+  &#39;subformat&#39;: &#39;3&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;oproad_gml3_gb.zip&#39;},
+ {&#39;md5&#39;: &#39;E1FC93742CAAE7EF70C675749077AB42&#39;,
+  &#39;size&#39;: 931331115,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRoads/downloads?area=GB&amp;format=GeoPackage&amp;redirect&#39;,
+  &#39;format&#39;: &#39;GeoPackage&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;oproad_gpkg_gb.zip&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Save zipped GeoPackage to disk. Since we do not know its contents, we can’t read it directly to GeoPandas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">fileformat</span> <span class="ow">in</span> <span class="n">download_json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GeoPackage&#39;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">],</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">down</span><span class="p">:</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Explore the contents of the downloaded file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gpkg</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">])</span>
+<span class="n">gpkg</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;readme.txt&#39;, &#39;data/oproad_gb.gpkg&#39;, &#39;doc/licence.txt&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Read GeoPackage to GeoPandas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">gpkg</span><span class="o">.</span><span class="n">namelist</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">gdf</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>endNode</th>
+      <th>startNode</th>
+      <th>roadNumberTOID</th>
+      <th>roadNameTOID</th>
+      <th>fictitious</th>
+      <th>roadClassification</th>
+      <th>roadFunction</th>
+      <th>formOfWay</th>
+      <th>length</th>
+      <th>...</th>
+      <th>loop</th>
+      <th>primaryRoute</th>
+      <th>trunkRoad</th>
+      <th>roadClassificationNumber</th>
+      <th>name1</th>
+      <th>name1_lang</th>
+      <th>name2</th>
+      <th>name2_lang</th>
+      <th>roadStructure</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>id04AE862E-2A92-41BC-BBE0-6AF05DDDE57E</td>
+      <td>idD6A4C11F-3E69-4E22-9711-2DE393FCF0A2</td>
+      <td>idF4241DAB-6DC5-4C0E-90FA-161BF2270663</td>
+      <td>None</td>
+      <td>None</td>
+      <td>False</td>
+      <td>Unknown</td>
+      <td>Minor Road</td>
+      <td>Single Carriageway</td>
+      <td>500</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>LINESTRING (463181.000 1212313.000, 463361.630...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>idDF59D6BB-3E5C-4BFA-91E9-81FAFB70D79C</td>
+      <td>idE7211001-42DF-416C-9304-D39F9F66D4A6</td>
+      <td>id8F2F6CFE-2E3D-4CA3-AD41-124E098F7197</td>
+      <td>None</td>
+      <td>None</td>
+      <td>False</td>
+      <td>Unknown</td>
+      <td>Minor Road</td>
+      <td>Single Carriageway</td>
+      <td>525</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>LINESTRING (464759.470 1212349.740, 464729.000...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>id92D440D3-B707-45F8-8173-E7EE22663573</td>
+      <td>idCB2E6127-8894-4372-8B1A-D8EECC2B6F8C</td>
+      <td>id9404ED22-2647-483C-81B6-C294CF3B8712</td>
+      <td>None</td>
+      <td>None</td>
+      <td>False</td>
+      <td>Unknown</td>
+      <td>Minor Road</td>
+      <td>Single Carriageway</td>
+      <td>338</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>LINESTRING (463644.000 1212504.000, 463805.030...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>id7AA3E18E-21A4-4FD4-B308-EA0B3EA67046</td>
+      <td>id1CC69224-6F4C-4706-A658-2175240DE21A</td>
+      <td>id63BA7519-6915-4553-BEA5-AF9C57EF73A5</td>
+      <td>None</td>
+      <td>None</td>
+      <td>False</td>
+      <td>Unknown</td>
+      <td>Restricted Local Access Road</td>
+      <td>Single Carriageway</td>
+      <td>99</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>LINESTRING (464193.000 1212455.000, 464217.080...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>idB9590DD5-48C1-47F6-9B1A-044C454CCB00</td>
+      <td>id63BA7519-6915-4553-BEA5-AF9C57EF73A5</td>
+      <td>idE7211001-42DF-416C-9304-D39F9F66D4A6</td>
+      <td>None</td>
+      <td>osgb4000000003210673</td>
+      <td>False</td>
+      <td>Unknown</td>
+      <td>Minor Road</td>
+      <td>Single Carriageway</td>
+      <td>104</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>None</td>
+      <td>Beach Road</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>LINESTRING (464287.780 1212496.830, 464240.390...</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="save-geodataframe-to-postgis">
+<h2>Save GeoDataFrame to PostGIS<a class="headerlink" href="#save-geodataframe-to-postgis" title="Permalink to this headline">¶</a></h2>
+<p>Note: table has to exist. Could be an empty dummy one, GeoPandas can replace it, but was not able to create a new one (possibly a bug).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">)</span>
+<span class="n">pwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PWD&#39;</span><span class="p">)</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_HOST&#39;</span><span class="p">)</span>
+<span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PORT&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">db_connection_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;postgres+psycopg2://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">pwd</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/built_env&quot;</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">db_connection_url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openroads_200803&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./code"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">Intro</a>
+    <a class='right-next' id="next-link" href="Load_data_from_PostGIS.html" title="next page">Load data from PostGIS</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dani Arribas-Bel, Martin Fleischmann<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
