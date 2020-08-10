@@ -1,10 +1,11 @@
 from itertools import combinations
+import collections
 
 import pygeos
 import numpy as np
 import pandas as pd
 import geopandas as gpd
-import momepy as mm  # this is only temporary to simplify the identification of incorrect polygons
+import momepy as mm
 
 from shapely.ops import polygonize
 from scipy.spatial import Voronoi
@@ -141,7 +142,7 @@ def consolidate(network, distance=2, epsilon=2, filter_func=None, **kwargs):
 
     # filter potentially incorrect polygons
     mask = filter_func(gdf, **kwargs)
-    invalid = gdf.loc[mask].unary_union
+    invalid = gdf.loc[mask]
 
     sindex = network.sindex
 
@@ -149,17 +150,14 @@ def consolidate(network, distance=2, epsilon=2, filter_func=None, **kwargs):
     # list segments to be removed and the averaged geoms replacing them
     averaged = []
     to_remove = []
-    for poly in invalid.geoms:
+    for poly in invalid.geometry:
         real = network.iloc[sindex.query(poly.exterior, predicate="intersects")]
-        outline_mask = real.intersection(poly.exterior).type.isin(
+        mask = real.intersection(poly.exterior).type.isin(
             ["LineString", "MultiLineString"]
         )
-        outline = real[outline_mask]
-        lines = list(outline.geometry)
-        remove_mask = real.intersection(poly).type.isin(
-            ["LineString", "MultiLineString"]
-        )
-        to_remove += list(real[remove_mask].index)
+        real = real[mask]
+        lines = list(real.geometry)
+        to_remove += list(real.index)
 
         if lines:
             av = _average_geometry(lines, poly, distance)
@@ -212,3 +210,72 @@ def filter_comp(gdf, max_size=10000, circom_max=0.2):
     # select valid and invalid network-net_blocks
     mask = (gdf["area"] < max_size) & (gdf["circom"] < circom_max)
     return mask
+
+
+def topology(gdf):
+    """
+    Clean topology of existing LineString geometry by removal of nodes of degree 2.
+
+    Parameters
+    ----------
+    gdf : GeoDataFrame
+        (Multi)LineString data of street network
+    """
+
+    # explode to avoid MultiLineStrings
+    # double reset index due to the bug in GeoPandas explode
+    df = gdf.reset_index(drop=True).explode().reset_index(drop=True)
+
+    # get underlying pygeos geometry
+    geom = df.geometry.values.data
+
+    # extract array of coordinates and number per geometry
+    coords = pygeos.get_coordinates(geom)
+    indices = pygeos.get_num_coordinates(geom)
+
+    # generate a list of start and end coordinates and create point geometries
+    edges = [0]
+    i = 0
+    for ind in indices:
+        ix = i + ind
+        edges.append(ix - 1)
+        edges.append(ix)
+        i = ix
+    edges = edges[:-1]
+    points = pygeos.points(np.unique(coords[edges], axis=0))
+
+    # query LineString geometry to identify points intersecting 2 geometries
+    tree = pygeos.STRtree(geom)
+    inp, res = tree.query_bulk(points, predicate="intersects")
+    unique, counts = np.unique(inp, return_counts=True)
+    merge = res[np.isin(inp, unique[counts == 2])]
+
+    # filter duplications and create a dictionary with indication of components to be merged together
+    dups = [item for item, count in collections.Counter(merge).items() if count > 1]
+    split = np.split(merge, len(merge) / 2)
+    components = {}
+    for i, a in enumerate(split):
+        if a[0] in dups or a[1] in dups:
+            if a[0] in components.keys():
+                i = components[a[0]]
+            elif a[1] in components.keys():
+                i = components[a[1]]
+        components[a[0]] = i
+        components[a[1]] = i
+
+    # iterate through components and create new geometries
+    new = []
+    for c in set(components.values()):
+        keys = []
+        for item in components.items():
+            if item[1] == c:
+                keys.append(item[0])
+        new.append(pygeos.line_merge(pygeos.union_all(geom[keys])))
+
+    # remove incorrect geometries and append fixed versions
+    df = df.drop(merge)
+    final = gpd.GeoSeries(new).explode().reset_index(drop=True)
+    return df.append(
+        gpd.GeoDataFrame({df.geometry.name: final}, geometry=df.geometry.name),
+        ignore_index=True,
+    )
