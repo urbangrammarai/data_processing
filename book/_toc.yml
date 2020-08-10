@@ -4,8 +4,8 @@
 - file: infrastructure/platform
 - file: infrastructure/dask_cluster
 
-- header: Data
-- file: footprints
-
-- header: Code
-- file: code/test
+- chapter: Data
+  sections:
+    - file: code/Fetch_OpenRoads
+    - file: code/Load_data_from_PostGIS
+    - file: code/Network_Consolidation_Test
