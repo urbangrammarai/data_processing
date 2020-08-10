@@ -1,5 +1,7 @@
 - file: intro
 
-- header: Data
-- file: code/Fetch_OpenRoads
-- file: code/Load_data_from_PostGIS
+- chapter: Data
+  sections:
+    - file: code/Fetch_OpenRoads
+    - file: code/Load_data_from_PostGIS
+    - file: code/Network_Consolidation_Test
