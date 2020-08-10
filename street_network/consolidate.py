@@ -169,7 +169,7 @@ def consolidate(network, distance=2, epsilon=2, filter_func=None, **kwargs):
     # merge new geometries with the existing network
     averaged = gpd.array.from_shapely(averaged, crs=network.crs).simplify(epsilon)
     result = pd.concat([clean, gpd.GeoDataFrame(geometry=averaged[~averaged.is_empty])])
-    merge = mm.network_false_nodes(result)
+    merge = topology(result)
 
     return merge
 
