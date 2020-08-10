@@ -1,11 +1,11 @@
 - file: intro
 
-- header: Infrastructure
-- file: infrastructure/platform
-- file: infrastructure/dask_cluster
+- chapter: Infrastructure
+  sections:
+    - file: infrastructure/platform
+    - file: infrastructure/dask_cluster
 
 - chapter: Data
-  sections:
     - file: code/Fetch_OpenRoads
     - file: code/Load_data_from_PostGIS
     - file: code/Network_Consolidation_Test
