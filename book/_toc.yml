@@ -1,7 +1,5 @@
 - file: intro
 
 - header: Data
-- file: footprints
-
-- header: Code
-- file: code/test
+- file: code/Fetch_OpenRoads
+- file: code/Load_data_from_PostGIS
