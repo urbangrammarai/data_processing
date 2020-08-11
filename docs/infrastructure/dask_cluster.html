@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
@@ -28,9 +29,16 @@
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Building footprints" href="../footprints.html" />
+    <link rel="next" title="Fetch OpenRoads and store them in a PostGIS database" href="../code/Fetch_OpenRoads.html" />
     <link rel="prev" title="Computational platform" href="platform.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,20 +103,18 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../footprints.html">
-   Building footprints
+  <a class="reference internal" href="../code/Fetch_OpenRoads.html">
+   Fetch OpenRoads and store them in a PostGIS database
   </a>
  </li>
-</ul>
-<p class="caption">
- <span class="caption-text">
-  Code
- </span>
-</p>
-<ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../code/test.html">
-   Retrieval of building footprints
+  <a class="reference internal" href="../code/Load_data_from_PostGIS.html">
+   Load data from PostGIS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/Network_Consolidation_Test.html">
+   Assessment of the correctness of OpenRoads network
   </a>
  </li>
 </ul>
@@ -177,7 +183,7 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> On this page
+            <i class="fas fa-list"></i> Contents
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
@@ -289,6 +295,25 @@
 </div>
 </div>
 
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./infrastructure"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
@@ -299,7 +324,7 @@
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="platform.html" title="previous page">Computational platform</a>
-    <a class='right-next' id="next-link" href="../footprints.html" title="next page">Building footprints</a>
+    <a class='right-next' id="next-link" href="../code/Fetch_OpenRoads.html" title="next page">Fetch OpenRoads and store them in a PostGIS database</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
