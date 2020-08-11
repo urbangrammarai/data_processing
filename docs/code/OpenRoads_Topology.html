@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Load data from PostGIS &#8212; Urban Grammar Data Processing</title>
+    <title>Cleaning OpenRoads topology &#8212; Urban Grammar Data Processing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -38,8 +38,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Assessment of the correctness of OpenRoads network" href="Network_Consolidation_Test.html" />
-    <link rel="prev" title="Fetch OpenRoads and store them in a PostGIS database" href="Fetch_OpenRoads.html" />
+    <link rel="prev" title="Assessment of the correctness of OpenRoads network" href="Network_Consolidation_Test.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -107,8 +106,8 @@
    Fetch OpenRoads and store them in a PostGIS database
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Load_data_from_PostGIS.html">
    Load data from PostGIS
   </a>
  </li>
@@ -117,8 +116,8 @@
    Assessment of the correctness of OpenRoads network
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="OpenRoads_Topology.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Cleaning OpenRoads topology
   </a>
  </li>
@@ -164,7 +163,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/code/Load_data_from_PostGIS.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/code/OpenRoads_Topology.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -188,7 +187,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/urbangrammarai/data_processing/master?urlpath=tree/code/Load_data_from_PostGIS.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/urbangrammarai/data_processing/master?urlpath=tree/code/OpenRoads_Topology.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -208,19 +207,7 @@
             <i class="fas fa-list"></i> Contents
         </div>
         <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#establish-connection">
-   Establish connection
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#select-subset-of-data-as-a-buffer-around-a-set-point">
-   Select subset of data as a buffer around a set point
-  </a>
- </li>
-</ul>
-
+            
         </nav>
     </div>
 </div>
@@ -229,19 +216,19 @@
         
               <div>
                 
-  <div class="section" id="load-data-from-postgis">
-<h1>Load data from PostGIS<a class="headerlink" href="#load-data-from-postgis" title="Permalink to this headline">¶</a></h1>
-<p>Loading data from GDSL PostGIS database.</p>
-<div class="section" id="establish-connection">
-<h2>Establish connection<a class="headerlink" href="#establish-connection" title="Permalink to this headline">¶</a></h2>
-<p>Using docker environment variables. Start docker as <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">-e</span> <span class="pre">DB_PORT=&lt;port&gt;</span> <span class="pre">-e</span> <span class="pre">DB_USER=&lt;username&gt;</span> <span class="pre">-e</span> <span class="pre">DB_PWD=&lt;password&gt;</span> <span class="pre">-e</span> <span class="pre">DB_HOST=&lt;host&gt;</span> <span class="pre">darribas/gds_dev:5.0</span></code>.</p>
+  <div class="section" id="cleaning-openroads-topology">
+<h1>Cleaning OpenRoads topology<a class="headerlink" href="#cleaning-openroads-topology" title="Permalink to this headline">¶</a></h1>
+<p>OpenRoads data are not always topologically correct, meaning that they introduce nodes of a degree 2. Topologically precise network has a single LineString between two junctions. This notebook fixes topology of OpenRoads data and saves resulting GeoDataFrame to PostGIS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="kn">from</span> <span class="nn">consolidate</span> <span class="kn">import</span> <span class="n">topology</span>
 
 <span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">)</span>
 <span class="n">pwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PWD&#39;</span><span class="p">)</span>
@@ -260,42 +247,56 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;sqlalchemy.engine.base.Engine._trans_ctx at 0x7f711094aed0&gt;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;sqlalchemy.engine.base.Engine._trans_ctx at 0x7f05f15793d0&gt;
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="select-subset-of-data-as-a-buffer-around-a-set-point">
-<h2>Select subset of data as a buffer around a set point<a class="headerlink" href="#select-subset-of-data-as-a-buffer-around-a-set-point" title="Permalink to this headline">¶</a></h2>
+<p>We load the whole <code class="docutils literal notranslate"><span class="pre">openroads_200803</span></code> table from existing PostGIS database.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">334289.32</span><span class="p">,</span> <span class="mf">390468.43</span>  <span class="c1"># coordinates in epsg 27700</span>
-<span class="n">buffer</span> <span class="o">=</span> <span class="mi">1500</span>  <span class="c1"># radius in [m]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;SELECT * FROM openroads_200803 WHERE ST_DWithin(geometry, ST_SetSRID(ST_Point(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">), 27700), </span><span class="si">{</span><span class="n">buffer</span><span class="si">}</span><span class="s1">)&#39;</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_postgis</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">geom_col</span><span class="o">=</span><span class="s1">&#39;geometry&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;roadFunction&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_postgis</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM openroads_200803&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">geom_col</span><span class="o">=</span><span class="s1">&#39;geometry&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(3719381, 21)
 </pre></div>
 </div>
-<img alt="../_images/Load_data_from_PostGIS_6_1.png" src="../_images/Load_data_from_PostGIS_6_1.png" />
+</div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">topology</span></code> function stored in <code class="docutils literal notranslate"><span class="pre">consolidation.py</span></code> file, we clean the network by merging segments which introduces false junctions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">fixed</span> <span class="o">=</span> <span class="n">topology</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>4619.6336443424225
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fixed</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>(3569045, 21)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fixed</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openroads_200803_topological&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -329,8 +330,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Fetch_OpenRoads.html" title="previous page">Fetch OpenRoads and store them in a PostGIS database</a>
-    <a class='right-next' id="next-link" href="Network_Consolidation_Test.html" title="next page">Assessment of the correctness of OpenRoads network</a>
+    <a class='left-prev' id="prev-link" href="Network_Consolidation_Test.html" title="previous page">Assessment of the correctness of OpenRoads network</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
