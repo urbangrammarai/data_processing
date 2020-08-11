@@ -3,6 +3,7 @@
 - chapter: Infrastructure
   sections:
     - file: infrastructure/platform
+    - file: infrastructure/storage_drives.md
     - file: infrastructure/dask_cluster
 
 - chapter: Street network data
