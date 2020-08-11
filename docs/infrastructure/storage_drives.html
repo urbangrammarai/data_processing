@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Set up ad-hoc Dask cluster &#8212; Urban Grammar Data Processing</title>
+    <title>Mount samba drives on linux from the command line &#8212; Urban Grammar Data Processing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -38,8 +38,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Fetch OpenRoads and store them in a PostGIS database" href="../code/Fetch_OpenRoads.html" />
-    <link rel="prev" title="Mount samba drives on linux from the command line" href="storage_drives.html" />
+    <link rel="next" title="Set up ad-hoc Dask cluster" href="dask_cluster.html" />
+    <link rel="prev" title="Computational platform" href="platform.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="docsearch:language" content="en">
@@ -90,13 +90,13 @@
    Computational platform
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="storage_drives.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Mount samba drives on linux from the command line
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dask_cluster.html">
    Set up ad-hoc Dask cluster
   </a>
  </li>
@@ -169,7 +169,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/infrastructure/dask_cluster.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/infrastructure/storage_drives.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -198,29 +198,69 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#requirements">
-   Requirements
+  <a class="reference internal nav-link" href="#using-cifs">
+   Using
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     cifs
+    </span>
+   </code>
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requirements">
+     Requirements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mount-the-drive">
+     Mount the drive
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unmount-the-drive">
+     Unmount the drive
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#to-do">
+     To do
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#intuition">
-   Intuition
+  <a class="reference internal nav-link" href="#using-gvfs-deprecated">
+   Using
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     gvfs
+    </span>
+   </code>
+   (deprecated)
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#scheduler">
-   Scheduler
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#workers">
-   Workers
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#use-the-cluster">
-   Use the cluster
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Requirements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Mount the drive
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#access-the-drive">
+     Access the drive
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     Unmount the drive
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -232,76 +272,88 @@
         
               <div>
                 
-  <div class="section" id="set-up-ad-hoc-dask-cluster">
-<h1>Set up ad-hoc Dask cluster<a class="headerlink" href="#set-up-ad-hoc-dask-cluster" title="Permalink to this headline">¶</a></h1>
-<p>This guide documents how to set up an ad-hoc cluster of machines that can run <a class="reference external" href="https://dask.org/">Dask</a> processes.</p>
+  <div class="section" id="mount-samba-drives-on-linux-from-the-command-line">
+<h1>Mount samba drives on linux from the command line<a class="headerlink" href="#mount-samba-drives-on-linux-from-the-command-line" title="Permalink to this headline">¶</a></h1>
+<p>This document covers how to (un)mount and access data on a samba drive from Ubuntu, using the command line.</p>
+<div class="section" id="using-cifs">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">cifs</span></code><a class="headerlink" href="#using-cifs" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>For this guide, we will assume you have access to the following:</p>
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>For this route, you will need:</p>
 <ul class="simple">
-<li><p>At least two machines connected to a network that allows them to talk to each other over ssh</p></li>
-<li><p>Ability to run on each machine <a class="reference external" href="https://github.com/darribas/gds_env"><code class="docutils literal notranslate"><span class="pre">gds_env</span></code></a> containers (for this example, we will use <code class="docutils literal notranslate"><span class="pre">gds_dev</span></code> but the same should work with <code class="docutils literal notranslate"><span class="pre">gds_py</span></code> and <code class="docutils literal notranslate"><span class="pre">gds</span></code>)</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">cifs</span></code> tools</p></li>
+<li><p>The address of the samba server you’d like to mount. For this example we will use <code class="docutils literal notranslate"><span class="pre">&lt;server-url&gt;</span></code> for the address, <code class="docutils literal notranslate"><span class="pre">&lt;drive&gt;</span></code> for the folder you want to mount and <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;</span></code></p></li>
 </ul>
 </div>
-<div class="section" id="intuition">
-<h2>Intuition<a class="headerlink" href="#intuition" title="Permalink to this headline">¶</a></h2>
-<p>Dask has several ways of setting up a cluster, including over ssh or with orchestration tools such as Kubernetes. For a more thorough coverage, please visit the <a class="reference external" href="https://docs.dask.org/en/latest/setup.html">official docs</a>. In this guide, we will connect a few machines that can talk to each other over ssh. This is handy, for example, if you have a few computers running on the same local network.</p>
-<p>The structure a Dask cluster relies on a single “entry point”, the <em>“scheduler”</em>, that recruits resources from a series of additional machines, the <em>“workers”</em> (including itself potentially).</p>
-<p>The sequence of actions will be as follows:</p>
-<ol class="simple">
-<li><p>Start the scheduler</p></li>
-<li><p>Start workers on different machines, attaching them to the scheduler</p></li>
-<li><p>Use the cluster on a Python session with a Dask <code class="docutils literal notranslate"><span class="pre">Client</span></code></p></li>
-</ol>
-</div>
-<div class="section" id="scheduler">
-<h2>Scheduler<a class="headerlink" href="#scheduler" title="Permalink to this headline">¶</a></h2>
-<p>We will run the scheduler inside a Jupyter Lab session that will then <a class="reference external" href="#Use-the-cluster">use the cluster</a>, although this need not be the case. For illustration, we will refer to the IP on which this machine can be reached at with <code class="docutils literal notranslate"><span class="pre">&lt;scheduler-ip&gt;</span></code>.</p>
-<ol class="simple">
-<li><p>Fire up a terminal and type:</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm -ti -p <span class="m">8888</span>:8888 -p <span class="m">8787</span>:8787 -p <span class="m">8786</span>:8786 darribas/gds_dev:latest start.sh
+<div class="section" id="mount-the-drive">
+<h3>Mount the drive<a class="headerlink" href="#mount-the-drive" title="Permalink to this headline">¶</a></h3>
+<p>First create an empty folder where you will mount the drive:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir &lt;mount-point&gt;
 </pre></div>
 </div>
-<p>This will spin up a <code class="docutils literal notranslate"><span class="pre">gds_dev</span></code> container with a JupyterLab instance, opening ports 8888 (JupyterLab), 8787 (Dask dashboard) and 8786 (scheduler).</p>
-<ol class="simple">
-<li><p>Inside JupyterLab, open a terminal window and launch the scheduler with:</p></li>
-</ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dask-scheduler
+<p>To mount the drive, you can:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo mount -t cifs -o <span class="nv">user</span><span class="o">=</span>&lt;username&gt;,domain<span class="o">=</span>&lt;domain&gt; &lt;server-url&gt;/&lt;drive&gt; &lt;mount-point&gt;
+</pre></div>
+</div>
+<p>The drive is mounted now under the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point&gt;</span></code> path and you can read from there, as well as pass it as a volume to a container:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm -ti -v &lt;mount-point&gt;:/home/jovyan/data darribas/gds:5.0
 </pre></div>
 </div>
 </div>
-<div class="section" id="workers">
-<h2>Workers<a class="headerlink" href="#workers" title="Permalink to this headline">¶</a></h2>
-<p>Now go to each of the machines in the network you want to recruit as workers. Open a terminal and run:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --network<span class="o">=</span><span class="s2">&quot;host&quot;</span>  --rm -ti -p <span class="m">8786</span>:8786 darribas/gds_dev:latest start.sh dask-worker &lt;scheduler-ip&gt;:8786
+<div class="section" id="unmount-the-drive">
+<h3>Unmount the drive<a class="headerlink" href="#unmount-the-drive" title="Permalink to this headline">¶</a></h3>
+<p>Simply run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo umount &lt;mount-point&gt;
 </pre></div>
 </div>
-<p>This will launch a container that starts a worker process and attaches to the scheduler (through the <code class="docutils literal notranslate"><span class="pre">&lt;scheduler-ip&gt;</span></code> link).</p>
-<p>It’s important to include the <code class="docutils literal notranslate"><span class="pre">--network=&quot;host&quot;</span></code> parameter so that the worker container can be reached from outside the machine through ssh.</p>
 </div>
-<div class="section" id="use-the-cluster">
-<h2>Use the cluster<a class="headerlink" href="#use-the-cluster" title="Permalink to this headline">¶</a></h2>
-<p>Once the cluster is available, we can use it on a Python session.</p>
-<ol class="simple">
-<li><p>Open a notebook or Python console in the same JupyterLab instance as the scheduler</p></li>
-<li><p>Import Dask’s <code class="docutils literal notranslate"><span class="pre">Client</span></code></p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+<div class="section" id="to-do">
+<h3>To do<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h3>
+<p>Currently, because the mount relies on <code class="docutils literal notranslate"><span class="pre">sudo</span></code>, the user cannot write to the drive. It’d be nice to allow write capabilities as well.</p>
+</div>
+</div>
+<div class="section" id="using-gvfs-deprecated">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">gvfs</span></code> (deprecated)<a class="headerlink" href="#using-gvfs-deprecated" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Requirements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>You will need to have the following:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">gio</span></code>/<code class="docutils literal notranslate"><span class="pre">gvfs</span></code> tools</p></li>
+<li><p>The address of the samba server you’d like to mount. For this example we will use <code class="docutils literal notranslate"><span class="pre">&lt;server-url&gt;</span></code> for the address, <code class="docutils literal notranslate"><span class="pre">&lt;drive&gt;</span></code> for the folder you want to mount and <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Mount the drive<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>To mount a samba drive,  you can run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio mount smb://&lt;username&gt;@&lt;server-url&gt;/&lt;drive&gt;
 </pre></div>
 </div>
-<ol class="simple">
-<li><p>Set up a client for the session</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;tcp://172.17.0.2:8786&quot;</span><span class="p">)</span>
+<p>This will ask for your password and, once entered, will mount the drive.</p>
+<p>To check the drive is effectively mounted, you can run:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio mount -l
 </pre></div>
 </div>
-<p>Replace <code class="docutils literal notranslate"><span class="pre">tcp://172.17.0.2:8786</span></code> by the URL where the scheduler is running at (you can see this on the scheduler log feed).</p>
-<ol class="simple">
-<li><p>You can check the status of the cluster at <code class="docutils literal notranslate"><span class="pre">&lt;scheduler-ip&gt;:8787</span></code></p></li>
-</ol>
-<hr class="docutils" />
-<p>Now the cluster is set up and linked to the session, when you run a Dask operation, its computation will be distributed across the cluster.</p>
+<p>and that should display at least the drive you just mounted.</p>
+<p>To get more info on the mount, you can do:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio info smb://&lt;username&gt;@&lt;server-url&gt;/&lt;drive&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="access-the-drive">
+<h3>Access the drive<a class="headerlink" href="#access-the-drive" title="Permalink to this headline">¶</a></h3>
+<p>The command above will mount the drive at the mount point:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/run/user/<span class="nv">$UID</span>/gvfs/
+</pre></div>
+</div>
+<p>You can run <code class="docutils literal notranslate"><span class="pre">ls</span></code> on the folder above to see under what mount point it’s been attached.</p>
+</div>
+<div class="section" id="id3">
+<h3>Unmount the drive<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>To unmount the drive:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio mount -u smb://&lt;username&gt;@&lt;server-url&gt;/&lt;drive&gt;
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -333,8 +385,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="storage_drives.html" title="previous page">Mount samba drives on linux from the command line</a>
-    <a class='right-next' id="next-link" href="../code/Fetch_OpenRoads.html" title="next page">Fetch OpenRoads and store them in a PostGIS database</a>
+    <a class='left-prev' id="prev-link" href="platform.html" title="previous page">Computational platform</a>
+    <a class='right-next' id="next-link" href="dask_cluster.html" title="next page">Set up ad-hoc Dask cluster</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
