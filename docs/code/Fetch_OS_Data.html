@@ -224,12 +224,12 @@
      Download from API
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#save-geodataframe-to-postgis">
+     Save GeoDataFrame to PostGIS
+    </a>
+   </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#save-geodataframe-to-postgis">
-   Save GeoDataFrame to PostGIS
-  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#openmap-local-building-layer-only">
@@ -564,9 +564,8 @@
 </div></div></div>
 </div>
 </div>
-</div>
 <div class="section" id="save-geodataframe-to-postgis">
-<h2>Save GeoDataFrame to PostGIS<a class="headerlink" href="#save-geodataframe-to-postgis" title="Permalink to this headline">¶</a></h2>
+<h3>Save GeoDataFrame to PostGIS<a class="headerlink" href="#save-geodataframe-to-postgis" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">)</span>
@@ -589,6 +588,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openroads_200803&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>
