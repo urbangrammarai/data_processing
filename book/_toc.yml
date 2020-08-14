@@ -6,9 +6,9 @@
     - file: infrastructure/storage_drives.md
     - file: infrastructure/dask_cluster
 
-- chapter: Street network data
+- chapter: Vector data
   sections:
-    - file: code/Fetch_OpenRoads
+    - file: code/Fetch_OS_Data
     - file: code/Load_data_from_PostGIS
     - file: code/Network_Consolidation_Test
     - file: code/OpenRoads_Topology
