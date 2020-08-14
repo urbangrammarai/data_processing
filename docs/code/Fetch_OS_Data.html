@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Fetch OpenRoads and store them in a PostGIS database &#8212; Urban Grammar Data Processing</title>
+    <title>Fetch Ordnance Survey (Open) Data &#8212; Urban Grammar Data Processing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -103,13 +103,13 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  Street network data
+  Vector data
  </span>
 </p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Fetch OpenRoads and store them in a PostGIS database
+   Fetch Ordnance Survey (Open) Data
   </a>
  </li>
  <li class="toctree-l1">
@@ -169,7 +169,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/code/Fetch_OpenRoads.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/code/Fetch_OS_Data.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -193,7 +193,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/urbangrammarai/data_processing/master?urlpath=tree/code/Fetch_OpenRoads.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/urbangrammarai/data_processing/master?urlpath=tree/code/Fetch_OS_Data.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -215,13 +215,42 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#download-openroads">
-   Download OpenRoads
+  <a class="reference internal nav-link" href="#openroads">
+   OpenRoads
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#download-from-api">
+     Download from API
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#save-geodataframe-to-postgis">
    Save GeoDataFrame to PostGIS
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#openmap-local-building-layer-only">
+   OpenMap - Local (building layer only)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Download from API
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#save-files-to-postgis">
+     Save files to PostGIS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#save-samples-of-os-mastermap-building-height-layer-to-parquet-files">
+   Save samples of OS MasterMap Building height layer to parquet files
   </a>
  </li>
 </ul>
@@ -234,9 +263,12 @@
         
               <div>
                 
-  <div class="section" id="fetch-openroads-and-store-them-in-a-postgis-database">
-<h1>Fetch OpenRoads and store them in a PostGIS database<a class="headerlink" href="#fetch-openroads-and-store-them-in-a-postgis-database" title="Permalink to this headline">¶</a></h1>
-<p>Dowload OpenRoads from OS API, save zip, open it in GeoPandas and dump to a PostGIS database.</p>
+  <div class="section" id="fetch-ordnance-survey-open-data">
+<h1>Fetch Ordnance Survey (Open) Data<a class="headerlink" href="#fetch-ordnance-survey-open-data" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Dowload files from OS OpenData API, save zip, open it in GeoPandas and dump to a PostGIS database.</p></li>
+<li><p>Process OS MasterMap Building height data</p></li>
+</ul>
 <p>To establish a connection to the database, this notebook is using docker environment variables. Start docker as <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">-e</span> <span class="pre">DB_PORT=&lt;port&gt;</span> <span class="pre">-e</span> <span class="pre">DB_USER=&lt;username&gt;</span> <span class="pre">-e</span> <span class="pre">DB_PWD=&lt;password&gt;</span> <span class="pre">-e</span> <span class="pre">DB_HOST=&lt;host&gt;</span> <span class="pre">darribas/gds_dev:5.0</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -244,6 +276,7 @@
 <span class="kn">import</span> <span class="nn">zipfile</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
+<span class="kn">import</span> <span class="nn">fiona</span>
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
@@ -251,8 +284,10 @@
 </div>
 </div>
 </div>
-<div class="section" id="download-openroads">
-<h2>Download OpenRoads<a class="headerlink" href="#download-openroads" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="openroads">
+<h2>OpenRoads<a class="headerlink" href="#openroads" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="download-from-api">
+<h3>Download from API<a class="headerlink" href="#download-from-api" title="Permalink to this headline">¶</a></h3>
 <p>Request the list of products available using Ordnance Survey API and filter <code class="docutils literal notranslate"><span class="pre">'OpenRoads'</span></code> record.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -529,9 +564,9 @@
 </div></div></div>
 </div>
 </div>
+</div>
 <div class="section" id="save-geodataframe-to-postgis">
 <h2>Save GeoDataFrame to PostGIS<a class="headerlink" href="#save-geodataframe-to-postgis" title="Permalink to this headline">¶</a></h2>
-<p>Note: table has to exist. Could be an empty dummy one, GeoPandas can replace it, but was not able to create a new one (possibly a bug).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">)</span>
@@ -553,6 +588,214 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openroads_200803&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="openmap-local-building-layer-only">
+<h2>OpenMap - Local (building layer only)<a class="headerlink" href="#openmap-local-building-layer-only" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Download from API<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Now we get <code class="docutils literal notranslate"><span class="pre">url</span></code> of OpenMap - Local product, from which we extract only buidling footprints.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OpenMapLocal&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>https://api.os.uk/downloads/v1/products/OpenMapLocal
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unlike above, OpenMap comes in split into tiles. We want the whole GB, so we have to specify it as <code class="docutils literal notranslate"><span class="pre">area</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openmap</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">openmap_json</span> <span class="o">=</span> <span class="n">openmap</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="n">download</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">openmap_json</span><span class="p">[</span><span class="s1">&#39;downloadsUrl&#39;</span><span class="p">])</span>
+<span class="n">download_json</span> <span class="o">=</span> <span class="n">download</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">tile</span> <span class="ow">in</span> <span class="n">download_json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tile</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GB&#39;</span> <span class="ow">and</span> <span class="n">tile</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GML&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">tile</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">tile</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>{&#39;md5&#39;: &#39;8D26A678FC6C0990633427519FF6F55D&#39;, &#39;size&#39;: 2239775851, &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenMapLocal/downloads?area=GB&amp;format=GML&amp;subformat=3&amp;redirect&#39;, &#39;format&#39;: &#39;GML&#39;, &#39;subformat&#39;: &#39;3&#39;, &#39;area&#39;: &#39;GB&#39;, &#39;fileName&#39;: &#39;opmplc_gml3_gb.zip&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">down</span><span class="p">:</span>
+    <span class="n">down</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">down</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="save-files-to-postgis">
+<h3>Save files to PostGIS<a class="headerlink" href="#save-files-to-postgis" title="Permalink to this headline">¶</a></h3>
+<p>Because downloaded zip still containes data split into tiles, we will have to iterate over them and append them individually to the same table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gml</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;/data/&#39;,
+ &#39;/doc/&#39;,
+ &#39;/doc/licence.txt&#39;,
+ &#39;/readme.txt&#39;,
+ &#39;data/HP/HP.gml&#39;,
+ &#39;data/HT/HT.gml&#39;,
+ &#39;data/HU/HU.gml&#39;,
+ &#39;data/HW/HW.gml&#39;,
+ &#39;data/HX/HX.gml&#39;,
+ &#39;data/HY/HY.gml&#39;,
+ &#39;data/HZ/HZ.gml&#39;,
+ &#39;data/NA/NA.gml&#39;,
+ &#39;data/NB/NB.gml&#39;,
+ &#39;data/NC/NC.gml&#39;,
+ &#39;data/ND/ND.gml&#39;,
+ &#39;data/NF/NF.gml&#39;,
+ &#39;data/NG/NG.gml&#39;,
+ &#39;data/NH/NH.gml&#39;,
+ &#39;data/NJ/NJ.gml&#39;,
+ &#39;data/NK/NK.gml&#39;,
+ &#39;data/NL/NL.gml&#39;,
+ &#39;data/NM/NM.gml&#39;,
+ &#39;data/NN/NN.gml&#39;,
+ &#39;data/NO/NO.gml&#39;,
+ &#39;data/NR/NR.gml&#39;,
+ &#39;data/NS/NS.gml&#39;,
+ &#39;data/NT/NT.gml&#39;,
+ &#39;data/NU/NU.gml&#39;,
+ &#39;data/NW/NW.gml&#39;,
+ &#39;data/NX/NX.gml&#39;,
+ &#39;data/NY/NY.gml&#39;,
+ &#39;data/NZ/NZ.gml&#39;,
+ &#39;data/OV/OV.gml&#39;,
+ &#39;data/SD/SD.gml&#39;,
+ &#39;data/SE/SE.gml&#39;,
+ &#39;data/SH/SH.gml&#39;,
+ &#39;data/SJ/SJ.gml&#39;,
+ &#39;data/SK/SK.gml&#39;,
+ &#39;data/SM/SM.gml&#39;,
+ &#39;data/SN/SN.gml&#39;,
+ &#39;data/SO/SO.gml&#39;,
+ &#39;data/SP/SP.gml&#39;,
+ &#39;data/SR/SR.gml&#39;,
+ &#39;data/SS/SS.gml&#39;,
+ &#39;data/ST/ST.gml&#39;,
+ &#39;data/SU/SU.gml&#39;,
+ &#39;data/SV/SV.gml&#39;,
+ &#39;data/SW/SW.gml&#39;,
+ &#39;data/SX/SX.gml&#39;,
+ &#39;data/SY/SY.gml&#39;,
+ &#39;data/SZ/SZ.gml&#39;,
+ &#39;data/TA/TA.gml&#39;,
+ &#39;data/TF/TF.gml&#39;,
+ &#39;data/TG/TG.gml&#39;,
+ &#39;data/TL/TL.gml&#39;,
+ &#39;data/TM/TM.gml&#39;,
+ &#39;data/TQ/TQ.gml&#39;,
+ &#39;data/TR/TR.gml&#39;,
+ &#39;data/TV/TV.gml&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since <code class="docutils literal notranslate"><span class="pre">gml</span></code> files come with more layers that we are looking for, let’s explore them and pick only buildings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;Building&#39;,
+ &#39;CarChargingPoint&#39;,
+ &#39;Foreshore&#39;,
+ &#39;FunctionalSite&#39;,
+ &#39;ImportantBuilding&#39;,
+ &#39;NamedPlace&#39;,
+ &#39;RailwayStation&#39;,
+ &#39;RailwayTrack&#39;,
+ &#39;Road&#39;,
+ &#39;Roundabout&#39;,
+ &#39;SurfaceWater_Area&#39;,
+ &#39;SurfaceWater_Line&#39;,
+ &#39;TidalBoundary&#39;,
+ &#39;TidalWater&#39;,
+ &#39;Woodland&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can iterate over the contents of downloaded zip and store relevant data in our PostGIS table. Note the <code class="docutils literal notranslate"><span class="pre">if_exists='append</span></code> option, which ensures that we do not overwrite one tile with another. There are tiles covering only sea - those do not have <code class="docutils literal notranslate"><span class="pre">Building</span></code> layer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;Building&#39;</span> <span class="ow">in</span> <span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;Building&#39;</span><span class="p">)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openmap_buildings_200814&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;does not contain Building layer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>data/OV/OV.gml does not contain Building layer.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="save-samples-of-os-mastermap-building-height-layer-to-parquet-files">
+<h2>Save samples of OS MasterMap Building height layer to parquet files<a class="headerlink" href="#save-samples-of-os-mastermap-building-height-layer-to-parquet-files" title="Permalink to this headline">¶</a></h2>
+<p>Processing raw downloads of OS MasterMap Building height layer from <code class="docutils literal notranslate"><span class="pre">digimap.edina.ac.uk</span></code> to a single parquet file per city. Initial downloaded zip files have been extracted and renamed to indicate the location. The contents of each folder is unchanged.</p>
+<p>The structure of current directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span>
+<span class="n">glasgow</span><span class="o">/*</span>
+<span class="n">leeds</span><span class="o">/*</span>
+<span class="n">edinburgh</span><span class="o">/*</span>
+<span class="n">manchester</span><span class="o">/*</span>
+<span class="n">liverpool</span><span class="o">/*</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">*</span></code> is the original content of downloaded zip file.</p>
+<p>First we get the list of cities based on folders:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cities</span> <span class="o">=</span> <span class="p">[</span><span class="n">city</span> <span class="k">for</span> <span class="n">city</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;**&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">city</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;ipynb&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The data are stored in tiled <code class="docutils literal notranslate"><span class="pre">gdb</span></code> files which needs to be merged together first. We loop through <code class="docutils literal notranslate"><span class="pre">cities</span></code> and concatenate all <code class="docutils literal notranslate"><span class="pre">gdb</span></code> files in each into a single GeoDataFrame, which is then saved to a single parquet file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">city</span> <span class="ow">in</span> <span class="n">cities</span><span class="p">:</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="s1">/**/**/**&#39;</span><span class="p">)</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;gdb&#39;</span><span class="p">)])</span>
+    <span class="n">merged</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="s1">.pq&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
