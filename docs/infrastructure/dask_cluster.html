@@ -279,6 +279,7 @@
 </div>
 <p>This will launch a container that starts a worker process and attaches to the scheduler (through the <code class="docutils literal notranslate"><span class="pre">&lt;scheduler-ip&gt;</span></code> link).</p>
 <p>It’s important to include the <code class="docutils literal notranslate"><span class="pre">--network=&quot;host&quot;</span></code> parameter so that the worker container can be reached from outside the machine through ssh.</p>
+<p>If you want to start a worker on the same machine as a scheduler, use <code class="docutils literal notranslate"><span class="pre">dask-worker</span> <span class="pre">&lt;scheduler-ip&gt;:8786</span></code> (not localhost).</p>
 </div>
 <div class="section" id="use-the-cluster">
 <h2>Use the cluster<a class="headerlink" href="#use-the-cluster" title="Permalink to this headline">¶</a></h2>

@@ -51,6 +51,8 @@ This will launch a container that starts a worker process and attaches to the sc
 
 It's important to include the `--network="host"` parameter so that the worker container can be reached from outside the machine through ssh.
 
+If you want to start a worker on the same machine as a scheduler, use `dask-worker <scheduler-ip>:8786` (not localhost).
+
 ## Use the cluster
 
 Once the cluster is available, we can use it on a Python session. 
