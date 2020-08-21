@@ -136,3 +136,6 @@ dmypy.json
 
 # Sphinx
 book/_build
+
+# dask
+dask-worker-space
