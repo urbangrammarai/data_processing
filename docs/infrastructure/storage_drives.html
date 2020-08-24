@@ -24,7 +24,6 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/mystnb.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -222,44 +221,6 @@
      Unmount the drive
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#to-do">
-     To do
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-gvfs-deprecated">
-   Using
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     gvfs
-    </span>
-   </code>
-   (deprecated)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Requirements
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
-     Mount the drive
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#access-the-drive">
-     Access the drive
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
-     Unmount the drive
-    </a>
-   </li>
   </ul>
  </li>
 </ul>
@@ -274,15 +235,22 @@
                 
   <div class="section" id="mount-samba-drives-on-linux-from-the-command-line">
 <h1>Mount samba drives on linux from the command line<a class="headerlink" href="#mount-samba-drives-on-linux-from-the-command-line" title="Permalink to this headline">¶</a></h1>
-<p>This document covers how to (un)mount and access data on a samba drive from Ubuntu, using the command line.</p>
+<p>This document covers how to (un)mount and access data on a samba drive from Ubuntu, using the command line and have it
+accessible for read/write access within docker jupyter lab instance.</p>
 <div class="section" id="using-cifs">
 <h2>Using <code class="docutils literal notranslate"><span class="pre">cifs</span></code><a class="headerlink" href="#using-cifs" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
 <p>For this route, you will need:</p>
 <ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">cifs</span></code> tools</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">cifs</span></code> tools. If you do not have them, you can install them:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt-get install cifs-utils
+</pre></div>
+</div>
+<ul class="simple">
 <li><p>The address of the samba server you’d like to mount. For this example we will use <code class="docutils literal notranslate"><span class="pre">&lt;server-url&gt;</span></code> for the address, <code class="docutils literal notranslate"><span class="pre">&lt;drive&gt;</span></code> for the folder you want to mount and <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;</span></code></p></li>
+<li><p>sudo rights</p></li>
 </ul>
 </div>
 <div class="section" id="mount-the-drive">
@@ -292,11 +260,17 @@
 </pre></div>
 </div>
 <p>To mount the drive, you can:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo mount -t cifs -o <span class="nv">user</span><span class="o">=</span>&lt;username&gt;,domain<span class="o">=</span>&lt;domain&gt; &lt;server-url&gt;/&lt;drive&gt; &lt;mount-point&gt;
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo mount -t cifs &lt;server-url&gt;/&lt;drive&gt; &lt;mount-point&gt; -o <span class="nv">domain</span><span class="o">=</span>&lt;domain&gt;,sec<span class="o">=</span>ntlm,vers<span class="o">=</span><span class="m">1</span>.0,username<span class="o">=</span>&lt;samba_username&gt;,password<span class="o">=</span>&lt;samba_password&gt;
 </pre></div>
 </div>
-<p>The drive is mounted now under the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point&gt;</span></code> path and you can read from there, as well as pass it as a volume to a container:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm -ti -v &lt;mount-point&gt;:/home/jovyan/data darribas/gds:5.0
+<p>Note that <code class="docutils literal notranslate"><span class="pre">sec=ntlm,vers=1.0</span></code> may not be needed for your server or it may use different settings.</p>
+<p>The drive is now mounted under the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point&gt;</span></code> path and you can read from there. To have it accessible within docker,
+the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point&gt;</span></code> should be within your current working dierectory which you pass as a volume to a container:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm -ti --user root -e <span class="nv">GRANT_SUDO</span><span class="o">=</span>yes -e <span class="nv">NB_UID</span><span class="o">=</span><span class="nv">$UID</span> -e <span class="nv">NB_GID</span><span class="o">=</span><span class="m">100</span> -p <span class="m">8888</span>:8888 -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/home/jovyan/work darribas/gds_dev:5.0 start.sh
+</pre></div>
+</div>
+<p>Container will open shell, from which you have to start Jupyter lab with sudo access:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo jupyter lab --allow-root
 </pre></div>
 </div>
 </div>
@@ -304,53 +278,6 @@
 <h3>Unmount the drive<a class="headerlink" href="#unmount-the-drive" title="Permalink to this headline">¶</a></h3>
 <p>Simply run:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo umount &lt;mount-point&gt;
-</pre></div>
-</div>
-</div>
-<div class="section" id="to-do">
-<h3>To do<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h3>
-<p>Currently, because the mount relies on <code class="docutils literal notranslate"><span class="pre">sudo</span></code>, the user cannot write to the drive. It’d be nice to allow write capabilities as well.</p>
-</div>
-</div>
-<div class="section" id="using-gvfs-deprecated">
-<h2>Using <code class="docutils literal notranslate"><span class="pre">gvfs</span></code> (deprecated)<a class="headerlink" href="#using-gvfs-deprecated" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3>Requirements<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>You will need to have the following:</p>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">gio</span></code>/<code class="docutils literal notranslate"><span class="pre">gvfs</span></code> tools</p></li>
-<li><p>The address of the samba server you’d like to mount. For this example we will use <code class="docutils literal notranslate"><span class="pre">&lt;server-url&gt;</span></code> for the address, <code class="docutils literal notranslate"><span class="pre">&lt;drive&gt;</span></code> for the folder you want to mount and <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;</span></code></p></li>
-</ul>
-</div>
-<div class="section" id="id2">
-<h3>Mount the drive<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>To mount a samba drive,  you can run:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio mount smb://&lt;username&gt;@&lt;server-url&gt;/&lt;drive&gt;
-</pre></div>
-</div>
-<p>This will ask for your password and, once entered, will mount the drive.</p>
-<p>To check the drive is effectively mounted, you can run:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio mount -l
-</pre></div>
-</div>
-<p>and that should display at least the drive you just mounted.</p>
-<p>To get more info on the mount, you can do:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio info smb://&lt;username&gt;@&lt;server-url&gt;/&lt;drive&gt;
-</pre></div>
-</div>
-</div>
-<div class="section" id="access-the-drive">
-<h3>Access the drive<a class="headerlink" href="#access-the-drive" title="Permalink to this headline">¶</a></h3>
-<p>The command above will mount the drive at the mount point:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/run/user/<span class="nv">$UID</span>/gvfs/
-</pre></div>
-</div>
-<p>You can run <code class="docutils literal notranslate"><span class="pre">ls</span></code> on the folder above to see under what mount point it’s been attached.</p>
-</div>
-<div class="section" id="id3">
-<h3>Unmount the drive<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>To unmount the drive:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>gio mount -u smb://&lt;username&gt;@&lt;server-url&gt;/&lt;drive&gt;
 </pre></div>
 </div>
 </div>

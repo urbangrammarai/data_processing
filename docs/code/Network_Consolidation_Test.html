@@ -24,7 +24,6 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/mystnb.js"></script>
     <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -239,7 +238,7 @@
 <p>OpenRoads network is not 100 % optimal input for morphometric analysis. This notebooks tests, whether transportation-related geometry (e.g. roundabouts) causes significant disruptions or not.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -256,7 +255,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">)</span>
 <span class="n">pwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PWD&#39;</span><span class="p">)</span>
 <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_HOST&#39;</span><span class="p">)</span>
 <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PORT&#39;</span><span class="p">)</span>
@@ -269,7 +268,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">334289.32</span><span class="p">,</span> <span class="mf">390468.43</span>  <span class="c1"># coordinates in epsg 27700</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">334289.32</span><span class="p">,</span> <span class="mf">390468.43</span>  <span class="c1"># coordinates in epsg 27700</span>
 <span class="n">buffer</span> <span class="o">=</span> <span class="mi">10000</span>  <span class="c1"># radius in [m]</span>
 
 <span class="n">sql</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;SELECT * FROM openroads_200803 WHERE ST_DWithin(geometry, ST_SetSRID(ST_Point(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">), 27700), </span><span class="si">{</span><span class="n">buffer</span><span class="si">}</span><span class="s1">)&#39;</span>
@@ -281,12 +280,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;formOfWay&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;formOfWay&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
 <img alt="../_images/Network_Consolidation_Test_4_1.png" src="../_images/Network_Consolidation_Test_4_1.png" />
@@ -297,31 +296,31 @@
 <p>Check and fix topology of the network (removal of potential nodes of degree 2).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">topo</span> <span class="o">=</span> <span class="n">topology</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topo</span> <span class="o">=</span> <span class="n">topology</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">topo</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">topo</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>1677
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1677
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">topo</span><span class="p">[</span><span class="n">topo</span><span class="o">.</span><span class="n">formOfWay</span> <span class="o">==</span> <span class="s1">&#39;Roundabout&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topo</span><span class="p">[</span><span class="n">topo</span><span class="o">.</span><span class="n">formOfWay</span> <span class="o">==</span> <span class="s1">&#39;Roundabout&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
 <img alt="../_images/Network_Consolidation_Test_8_1.png" src="../_images/Network_Consolidation_Test_8_1.png" />
@@ -329,12 +328,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">topo</span><span class="o">.</span><span class="n">formOfWay</span> <span class="o">==</span> <span class="s1">&#39;Roundabout&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">topo</span><span class="o">.</span><span class="n">formOfWay</span> <span class="o">==</span> <span class="s1">&#39;Roundabout&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>505
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>505
 </pre></div>
 </div>
 </div>
@@ -342,12 +341,12 @@
 <p>505 segments marked as roundabout, where each actual roundabout is composed of ~4 segments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">topo</span><span class="o">.</span><span class="n">formOfWay</span> <span class="o">==</span> <span class="s1">&#39;Roundabout&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">topo</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">topo</span><span class="o">.</span><span class="n">formOfWay</span> <span class="o">==</span> <span class="s1">&#39;Roundabout&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">topo</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>0.013554863646124115
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.013554863646124115
 </pre></div>
 </div>
 </div>
@@ -359,7 +358,7 @@
 <p>We will try to remove roundabouts, using <code class="docutils literal notranslate"><span class="pre">roundabouts</span></code> filter, based on a range of options. Each will be compared to the original GeoDataFrame to assess the effect on the resulting morphometric values. We will also do the visual assessment to understand the level of consolidation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">versions</span> <span class="o">=</span> <span class="p">{}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">versions</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="n">areas</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">2501</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="n">compactness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -369,7 +368,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">area</span> <span class="ow">in</span> <span class="n">areas</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">area</span> <span class="ow">in</span> <span class="n">areas</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">compactness</span><span class="p">:</span>
         <span class="n">versions</span><span class="p">[(</span><span class="n">area</span><span class="p">,</span> <span class="n">comp</span><span class="p">)]</span> <span class="o">=</span> <span class="n">consolidate</span><span class="p">(</span><span class="n">topo</span><span class="p">,</span> <span class="n">filter_func</span><span class="o">=</span><span class="n">roundabouts</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">circom</span><span class="o">=</span><span class="n">comp</span><span class="p">)</span>
 </pre></div>
@@ -378,14 +377,14 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;node_density&#39;</span><span class="p">,</span> <span class="s1">&#39;meshedness&#39;</span><span class="p">,</span> <span class="s1">&#39;l_mesh_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;l_mesh_median&#39;</span><span class="p">,</span> <span class="s1">&#39;l_mesh_dev&#39;</span><span class="p">,</span> <span class="s1">&#39;l_close_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;l_close_median&#39;</span><span class="p">,</span> <span class="s1">&#39;l_close_dev&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;node_density&#39;</span><span class="p">,</span> <span class="s1">&#39;meshedness&#39;</span><span class="p">,</span> <span class="s1">&#39;l_mesh_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;l_mesh_median&#39;</span><span class="p">,</span> <span class="s1">&#39;l_mesh_dev&#39;</span><span class="p">,</span> <span class="s1">&#39;l_close_mean&#39;</span><span class="p">,</span> <span class="s1">&#39;l_close_median&#39;</span><span class="p">,</span> <span class="s1">&#39;l_close_dev&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">gdf_to_nx</span><span class="p">(</span><span class="n">topo</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">gdf_to_nx</span><span class="p">(</span><span class="n">topo</span><span class="p">)</span>
 <span class="n">comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">,</span> <span class="s1">&#39;meshedness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">meshedness</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">meshedness</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cds_length</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mean_node_degree</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span> <span class="n">cyclomatic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">edge_node_ratio</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">local_closeness</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">closeness_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">vals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">get_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;meshedness&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
@@ -402,14 +401,15 @@
 </div>
 <div class="cell_output docutils container">
 <div class="stderr docutils container">
-<pre class="stderr literal-block">100%|██████████| 29166/29166 [01:01&lt;00:00, 477.43it/s]
-</pre>
+<div class="stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 29166/29166 [01:01&lt;00:00, 477.43it/s]
+</pre></div>
+</div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">versions</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">versions</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     <span class="n">G</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">gdf_to_nx</span><span class="p">(</span><span class="n">versions</span><span class="p">[</span><span class="n">opt</span><span class="p">])</span>
     <span class="n">comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">opt</span><span class="p">),</span> <span class="s1">&#39;meshedness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">meshedness</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">G</span> <span class="o">=</span> <span class="n">mm</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">meshedness</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cds_length</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mean_node_degree</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span> <span class="n">cyclomatic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">edge_node_ratio</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">local_closeness</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">closeness_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -427,7 +427,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="stderr docutils container">
-<pre class="stderr literal-block">100%|██████████| 29125/29125 [01:03&lt;00:00, 456.99it/s]
+<div class="stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 29125/29125 [01:03&lt;00:00, 456.99it/s]
 100%|██████████| 29129/29129 [01:00&lt;00:00, 484.71it/s]
 100%|██████████| 29131/29131 [00:51&lt;00:00, 560.46it/s]
 100%|██████████| 29139/29139 [00:51&lt;00:00, 560.89it/s]
@@ -452,13 +452,14 @@
 100%|██████████| 29002/29002 [01:04&lt;00:00, 450.99it/s]
 100%|██████████| 29024/29024 [01:06&lt;00:00, 436.57it/s]
 100%|██████████| 29095/29095 [01:02&lt;00:00, 462.68it/s]
-</pre>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">comparison</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comparison</span>
 </pre></div>
 </div>
 </div>
@@ -784,14 +785,14 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deviations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deviations</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comparison</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comparison</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
     <span class="n">deviations</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">comparison</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="n">c</span><span class="p">]</span> <span class="o">-</span> <span class="n">comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="o">/</span> <span class="n">comparison</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;original&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -799,12 +800,12 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">deviations</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">deviations</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>node_density      False
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>node_density      False
 meshedness        False
 l_mesh_mean       False
 l_mesh_median     False
@@ -819,7 +820,7 @@ dtype: bool
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deviations</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deviations</span>
 </pre></div>
 </div>
 </div>
