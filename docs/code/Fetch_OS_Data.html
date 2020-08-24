@@ -231,8 +231,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#openmap-local-building-layer-only">
-   OpenMap - Local (building layer only)
+  <a class="reference internal nav-link" href="#openmap-local-building-layer-barriers">
+   OpenMap - Local (building layer + barriers)
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -244,6 +244,28 @@
     <a class="reference internal nav-link" href="#save-files-to-postgis">
      Save files to PostGIS
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#buildings">
+       Buildings
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#railway">
+       Railway
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#surface-water">
+       Surface Water
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#woodland">
+       Woodland
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -592,11 +614,11 @@
 </div>
 </div>
 </div>
-<div class="section" id="openmap-local-building-layer-only">
-<h2>OpenMap - Local (building layer only)<a class="headerlink" href="#openmap-local-building-layer-only" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="openmap-local-building-layer-barriers">
+<h2>OpenMap - Local (building layer + barriers)<a class="headerlink" href="#openmap-local-building-layer-barriers" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3>Download from API<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>Now we get <code class="docutils literal notranslate"><span class="pre">url</span></code> of OpenMap - Local product, from which we extract only buidling footprints.</p>
+<p>Now we get <code class="docutils literal notranslate"><span class="pre">url</span></code> of OpenMap - Local product, from which we extract buidling footprints and layers forming morphological barriers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">json</span><span class="p">:</span>
@@ -719,7 +741,7 @@
 </div>
 </div>
 </div>
-<p>Since <code class="docutils literal notranslate"><span class="pre">gml</span></code> files come with more layers that we are looking for, let’s explore them and pick only buildings.</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">gml</span></code> files come with more layers that we are looking for, let’s explore them and pick only those of interest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -746,7 +768,9 @@
 </div>
 </div>
 </div>
-<p>Finally, we can iterate over the contents of downloaded zip and store relevant data in our PostGIS table. Note the <code class="docutils literal notranslate"><span class="pre">if_exists='append</span></code> option, which ensures that we do not overwrite one tile with another. There are tiles covering only sea - those do not have <code class="docutils literal notranslate"><span class="pre">Building</span></code> layer.</p>
+<p>Finally, we can iterate over the contents of downloaded zip and store relevant data in our PostGIS table. Note the <code class="docutils literal notranslate"><span class="pre">if_exists='append</span></code> option, which ensures that we do not overwrite one tile with another. There are tiles covering only sea - those do not have wanted (e.g. <code class="docutils literal notranslate"><span class="pre">Building</span></code>) layer.</p>
+<div class="section" id="buildings">
+<h4>Buildings<a class="headerlink" href="#buildings" title="Permalink to this headline">¶</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
@@ -762,6 +786,98 @@
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>data/OV/OV.gml does not contain Building layer.
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="railway">
+<h4>Railway<a class="headerlink" href="#railway" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;RailwayTrack&#39;</span> <span class="ow">in</span> <span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;RailwayTrack&#39;</span><span class="p">)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openmap_railwaytrack_200824&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;does not contain Railway layer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>data/HP/HP.gml does not contain Railway layer.
+data/HT/HT.gml does not contain Railway layer.
+data/HW/HW.gml does not contain Railway layer.
+data/HX/HX.gml does not contain Railway layer.
+data/HY/HY.gml does not contain Railway layer.
+data/HZ/HZ.gml does not contain Railway layer.
+data/NA/NA.gml does not contain Railway layer.
+data/NB/NB.gml does not contain Railway layer.
+data/NF/NF.gml does not contain Railway layer.
+data/NL/NL.gml does not contain Railway layer.
+data/NR/NR.gml does not contain Railway layer.
+data/NW/NW.gml does not contain Railway layer.
+data/OV/OV.gml does not contain Railway layer.
+data/SR/SR.gml does not contain Railway layer.
+data/SV/SV.gml does not contain Railway layer.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="surface-water">
+<h4>Surface Water<a class="headerlink" href="#surface-water" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;SurfaceWater_Area&#39;</span> <span class="ow">in</span> <span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;SurfaceWater_Area&#39;</span><span class="p">)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openmap_surfacewater_area_200824&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;does not contain SurfaceWater_Area layer.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;SurfaceWater_Line&#39;</span> <span class="ow">in</span> <span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;SurfaceWater_Line&#39;</span><span class="p">)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openmap_surfacewater_line_200824&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;does not contain SurfaceWater_Line layer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>data/HW/HW.gml does not contain SurfaceWater_Line layer.
+data/HX/HX.gml does not contain SurfaceWater_Area layer.
+data/HX/HX.gml does not contain SurfaceWater_Line layer.
+data/OV/OV.gml does not contain SurfaceWater_Area layer.
+data/OV/OV.gml does not contain SurfaceWater_Line layer.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="woodland">
+<h4>Woodland<a class="headerlink" href="#woodland" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;Woodland&#39;</span> <span class="ow">in</span> <span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;Woodland&#39;</span><span class="p">)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openmap_woodland_200824&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;does not contain Woodland layer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>data/HT/HT.gml does not contain Woodland layer.
+data/HW/HW.gml does not contain Woodland layer.
+data/HX/HX.gml does not contain Woodland layer.
+data/HZ/HZ.gml does not contain Woodland layer.
+data/NA/NA.gml does not contain Woodland layer.
+data/OV/OV.gml does not contain Woodland layer.
+</pre></div>
+</div>
 </div>
 </div>
 </div>
