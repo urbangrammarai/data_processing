@@ -279,3 +279,56 @@ def topology(gdf):
         gpd.GeoDataFrame({df.geometry.name: final}, geometry=df.geometry.name),
         ignore_index=True,
     )
+
+
+def measure_network(xy, user, pwd, host, port, buffer, area, circom, cons=True):
+    import networkx as nx
+    from sqlalchemy import create_engine
+
+    url = f"postgres+psycopg2://{user}:{pwd}@{host}:{port}/built_env"
+    engine = create_engine(url)
+
+    sql = f"SELECT * FROM openroads_200803_topological WHERE ST_DWithin(geometry, ST_SetSRID(ST_Point({xy[0][0]}, {xy[0][1]}), 27700), {buffer})"
+
+    df = gpd.read_postgis(sql, engine, geom_col="geometry")
+
+    try:
+        if cons:
+            topo = consolidate(df, filter_func=roundabouts, area=area, circom=circom)
+        else:
+            topo = df
+        G = mm.gdf_to_nx(topo)
+        mesh = mm.meshedness(G, radius=None)
+        G = mm.subgraph(
+            G,
+            meshedness=True,
+            cds_length=False,
+            mean_node_degree=False,
+            proportion={0: False, 3: False, 4: False},
+            cyclomatic=False,
+            edge_node_ratio=False,
+            gamma=False,
+            local_closeness=True,
+            closeness_weight=None,
+            verbose=False,
+        )
+        vals = list(nx.get_node_attributes(G, "meshedness").values())
+        l_mesh_mean = np.mean(vals)
+        l_mesh_median = np.median(vals)
+        l_mesh_dev = np.std(vals)
+        vals = list(nx.get_node_attributes(G, "local_closeness").values())
+        l_close_mean = np.mean(vals)
+        l_close_median = np.median(vals)
+        l_close_dev = np.std(vals)
+
+        return [
+            mesh,
+            l_mesh_mean,
+            l_mesh_median,
+            l_mesh_dev,
+            l_close_mean,
+            l_close_median,
+            l_close_dev,
+        ]
+    except ValueError:
+        return None
