@@ -225,6 +225,11 @@
    Test across 112 UK cities
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusions">
+   Conclusions
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -238,6 +243,10 @@
   <div class="section" id="assessment-of-the-correctness-of-openroads-network">
 <h1>Assessment of the correctness of OpenRoads network<a class="headerlink" href="#assessment-of-the-correctness-of-openroads-network" title="Permalink to this headline">¶</a></h1>
 <p>OpenRoads network is not 100 % optimal input for morphometric analysis. This notebooks tests, whether transportation-related geometry (e.g. roundabouts) causes significant disruptions or not.</p>
+<p>Morphometric assessment is trying to reflect the morphological structure of selected places. However, street networks often contain geometry of transport planning origin, like roundabouts, complex junctions or dual carriageways. OpenRoads network, which is used within this Urban Grammar project, is relatively clean and does include an only minimal amount of these geometries. However, there are some. Therefore, we have to first check whether we need to preprocess further and consolidate the network. In other words, we are trying to understand if the effect of sub-optimal geometry is significant or not.</p>
+<p>We compare results of a selection of network-based characters measured on the OpenRoads network which is preprocessed only <a class="reference internal" href="OpenRoads_Topology.html"><span class="doc std std-doc">topologically</span></a> and one the series of consolidated networks. We test a range of values for each parameter.</p>
+<p>We first test the batch of different parameter options on the case of Liverpool (10km buffer around the centre) and then single (mid) settings on 112 UK towns and cities.</p>
+<p>If we find that the results are significantly different between non-consolidated and consolidated options, we will fix the network before doing further analysis. If not, we will use OpenRoads network as we have it now. The deviation is considered significant if the values are more than 5% different.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -255,19 +264,19 @@
 </div>
 </div>
 </div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">consolidate</span></code> is a <a class="reference external" href="https://github.com/urbangrammarai/data_processing/blob/master/vector_data/consolidate.py">custom python file</a> containing definitions of required functions. Even though these were originally written for this project, in future they will likely be included in the existing Python ecosystem:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">topology</span></code> will be included in <a class="reference external" href="https://github.com/martinfleis/momepy">momepy</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">consolidate</span></code> and <code class="docutils literal notranslate"><span class="pre">roundabouts</span></code> will eventually land in <a class="reference external" href="https://github.com/gboeing/osmnx">OSMnx</a></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">user</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_USER&#39;</span><span class="p">)</span>
 <span class="n">pwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PWD&#39;</span><span class="p">)</span>
 <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_HOST&#39;</span><span class="p">)</span>
 <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PORT&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;postgres+psycopg2://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">pwd</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/built_env&quot;</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;postgres+psycopg2://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">pwd</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/built_env&quot;</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -320,6 +329,7 @@
 </div>
 </div>
 </div>
+<p>As we can see, the original data contain 1677 more features than topologically corrected. That indicates the overall need of topological preprocessing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topo</span><span class="p">[</span><span class="n">topo</span><span class="o">.</span><span class="n">formOfWay</span> <span class="o">==</span> <span class="s1">&#39;Roundabout&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
@@ -330,7 +340,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="../_images/Network_Consolidation_Test_9_1.png" src="../_images/Network_Consolidation_Test_9_1.png" />
+<img alt="../_images/Network_Consolidation_Test_10_1.png" src="../_images/Network_Consolidation_Test_10_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -363,6 +373,7 @@
 <div class="section" id="consolidation">
 <h2>Consolidation<a class="headerlink" href="#consolidation" title="Permalink to this headline">¶</a></h2>
 <p>We will try to remove roundabouts, using <code class="docutils literal notranslate"><span class="pre">roundabouts</span></code> filter, based on a range of options. Each will be compared to the original GeoDataFrame to assess the effect on the resulting morphometric values. We will also do the visual assessment to understand the level of consolidation.</p>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">momepy</span></code> to measure node density, global meshedness, local meshedness (mean, median, std) and local closeness (mean, median, std) as characters known to be sensitive to incorrect geometry.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">versions</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1136,12 +1147,13 @@ dtype: bool
 </table>
 </div></div></div>
 </div>
-<p>The negative effect of transportation-related geometry seems to be insignificant, hence the network should be only topologically corrected.</p>
+<p>Based on the Liverpool case study, the negative effect of transportation-related geometry seems to be insignificant, hence the network should be only topologically corrected.</p>
 </div>
 <div class="section" id="test-across-112-uk-cities">
 <h2>Test across 112 UK cities<a class="headerlink" href="#test-across-112-uk-cities" title="Permalink to this headline">¶</a></h2>
 <p>Test the significance of consolidation across samples from <a class="reference external" href="https://data.gov.uk/dataset/7879ab82-2863-401e-8a29-a56e264d2182/major-towns-and-cities-december-2015-boundaries">112 major towns and cities</a> across UK.</p>
 <p>The computation is using <a class="reference internal" href="../infrastructure/dask_cluster.html"><span class="doc std std-doc">dask cluster</span></a>.</p>
+<p>We use only one option as Liverpool data showed only minimal differences between the options.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
@@ -1301,6 +1313,7 @@ dtype: bool
 </div></div></div>
 </div>
 <p>We then convert <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> to <code class="docutils literal notranslate"><span class="pre">dask.DataGrame</span></code> setting partitions to 25, which is less than the number of physical cores in the cluster.</p>
+<p>Note: this specification is an intuion and other options might be more performant.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">cities</span><span class="p">,</span> <span class="n">npartitions</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
@@ -1522,6 +1535,10 @@ Name: values, Length: 112, dtype: object
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="conclusions">
+<h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h2>
+<p>OpenRoads network certainly requires topological correction (removal of nodes of a degree 2). In terms of consolidation of transport-related geometries, the situation is more complicated. The initial study in Liverpool area suggested that the effect is not significant. However, in the test across the UK, there are some cases where at least one value is significantly affected. Based on that, we could conclude that the network requires consolidation. However, of all measured values, only 2.45% significantly deviates. Therefore, after careful consideration of options, we have decided to keep going with OpenRoads network with no consolidation. It is expected that the algorithm of identification of spatial signatures will be robust to eliminate outlying values. Moreover, the goal is to obtain a classification of the whole UK, where the overall captured deviation is insignificant.</p>
 </div>
 </div>
 
