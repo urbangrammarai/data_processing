@@ -223,6 +223,11 @@
    Consolidation
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-across-112-uk-cities">
+   Test across 112 UK cities
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -259,8 +264,13 @@
 <span class="n">pwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PWD&#39;</span><span class="p">)</span>
 <span class="n">host</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_HOST&#39;</span><span class="p">)</span>
 <span class="n">port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DB_PORT&#39;</span><span class="p">)</span>
-
-<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;postgres+psycopg2://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">pwd</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/built_env&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;postgres+psycopg2://</span><span class="si">{</span><span class="n">user</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">pwd</span><span class="si">}</span><span class="s2">@</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/built_env&quot;</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -288,7 +298,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="../_images/Network_Consolidation_Test_4_1.png" src="../_images/Network_Consolidation_Test_4_1.png" />
+<img alt="../_images/Network_Consolidation_Test_5_1.png" src="../_images/Network_Consolidation_Test_5_1.png" />
 </div>
 </div>
 <div class="section" id="topology-check">
@@ -323,7 +333,7 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="../_images/Network_Consolidation_Test_8_1.png" src="../_images/Network_Consolidation_Test_8_1.png" />
+<img alt="../_images/Network_Consolidation_Test_9_1.png" src="../_images/Network_Consolidation_Test_9_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1134,6 +1144,393 @@ dtype: bool
 </div></div></div>
 </div>
 <p>The negative effect of transportation-related geometry seems to be insignificant, hence the network should be only topologically corrected.</p>
+</div>
+<div class="section" id="test-across-112-uk-cities">
+<h2>Test across 112 UK cities<a class="headerlink" href="#test-across-112-uk-cities" title="Permalink to this headline">¶</a></h2>
+<p>Test the significance of consolidation across samples from <a class="reference external" href="https://data.gov.uk/dataset/7879ab82-2863-401e-8a29-a56e264d2182/major-towns-and-cities-december-2015-boundaries">112 major towns and cities</a> across UK.</p>
+<p>The computation is using <a class="reference internal" href="../infrastructure/dask_cluster.html"><span class="doc std std-doc">dask cluster</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;tcp://172.17.0.2:8786&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table style="border: 2px solid white;">
+<tr>
+<td style="vertical-align: top; border: 0px solid white">
+<h3 style="text-align: left;">Client</h3>
+<ul style="text-align: left; list-style: none; margin: 0; padding: 0;">
+  <li><b>Scheduler: </b>tcp://172.17.0.2:8786</li>
+  <li><b>Dashboard: </b><a href='http://172.17.0.2:8787/status' target='_blank'>http://172.17.0.2:8787/status</a></li>
+</ul>
+</td>
+<td style="vertical-align: top; border: 0px solid white">
+<h3 style="text-align: left;">Cluster</h3>
+<ul style="text-align: left; list-style:none; margin: 0; padding: 0;">
+  <li><b>Workers: </b>2</li>
+  <li><b>Cores: </b>56</li>
+  <li><b>Memory: </b>151.64 GB</li>
+</ul>
+</td>
+</tr>
+</table></div></div>
+</div>
+<p>To make sure that our custom external scripts saved in <code class="docutils literal notranslate"><span class="pre">consolidate.py</span></code> are accessible for all workers, we have to upload it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">(</span><span class="s1">&#39;consolidate.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now it is safe to import the function <code class="docutils literal notranslate"><span class="pre">measure_network</span></code> which given x, y coordinates measures series of network characters within a set buffer around coordinates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">consolidate</span> <span class="kn">import</span> <span class="n">measure_network</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are using <a class="reference external" href="https://data.gov.uk/dataset/7879ab82-2863-401e-8a29-a56e264d2182/major-towns-and-cities-december-2015-boundaries">Major Towns and Cities (December 2015) Boundaries</a> dataset by the Office for National Statistics as a pool of case studies. Sample of street network will be then defined as a buffer around a centroid of the boundary polygon.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cities</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;http://geoportal1-ons.opendata.arcgis.com/datasets/58b0dfa605d5459b80bf08082999b27c_0.geojson&#39;</span><span class="p">)</span>
+<span class="n">cities</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cities</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">27700</span><span class="p">)</span>
+
+<span class="n">cities</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cities</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;tcity15nm&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">y</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="stderr docutils container">
+<div class="stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.7/site-packages/ipykernel_launcher.py:3: UserWarning: Geometry is in a geographic CRS. Results from &#39;centroid&#39; are likely incorrect. Use &#39;GeoSeries.to_crs()&#39; to re-project geometries to a projected CRS before this operation.
+
+  This is separate from the ipykernel package so we can avoid doing imports until
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cities</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>geometry</th>
+    </tr>
+    <tr>
+      <th>tcity15nm</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Barnsley</th>
+      <td>(434627.5156657021, 407671.86576116557)</td>
+    </tr>
+    <tr>
+      <th>Basildon</th>
+      <td>(570875.6914811442, 189207.87655982003)</td>
+    </tr>
+    <tr>
+      <th>Basingstoke</th>
+      <td>(463066.2798795874, 152019.01218638083)</td>
+    </tr>
+    <tr>
+      <th>Bath</th>
+      <td>(374795.29546296695, 164832.27577616548)</td>
+    </tr>
+    <tr>
+      <th>Bedford</th>
+      <td>(505743.6176547284, 250328.95445870835)</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Woking</th>
+      <td>(500685.6824802199, 159059.72039197834)</td>
+    </tr>
+    <tr>
+      <th>Wolverhampton</th>
+      <td>(391271.41694731405, 299239.88030704804)</td>
+    </tr>
+    <tr>
+      <th>Worcester</th>
+      <td>(385584.86390267254, 255411.51403587038)</td>
+    </tr>
+    <tr>
+      <th>Worthing</th>
+      <td>(512797.8411381986, 103943.61490000293)</td>
+    </tr>
+    <tr>
+      <th>York</th>
+      <td>(459940.26973675133, 452204.59704519867)</td>
+    </tr>
+  </tbody>
+</table>
+<p>112 rows × 1 columns</p>
+</div></div></div>
+</div>
+<p>We then convert <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> to <code class="docutils literal notranslate"><span class="pre">dask.DataGrame</span></code> setting partitions to 25, which is less than the number of physical cores in the cluster.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ddf</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">cities</span><span class="p">,</span> <span class="n">npartitions</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">ddf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><strong>Dask DataFrame Structure:</strong></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>geometry</th>
+    </tr>
+    <tr>
+      <th>npartitions=23</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Barnsley</th>
+      <td>object</td>
+    </tr>
+    <tr>
+      <th>Birkenhead</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Worthing</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>York</th>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div>Dask Name: from_pandas, 23 tasks</div></div></div>
+</div>
+<p>Now we apply the <code class="docutils literal notranslate"><span class="pre">measure_network</span></code> function to the dataframe to measure both consolidated and original networks. Each of the results is then stored as a parquet file on the <a class="reference internal" href="../infrastructure/storage_drives.html"><span class="doc std std-doc">shared samba drive</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vals_cons</span> <span class="o">=</span> <span class="n">ddf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">measure_network</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">pwd</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">consolidated</span> <span class="o">=</span> <span class="n">vals_cons</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">consolidated</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../work/urbangrammar_samba/consolidation_comparison.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vals_orig</span> <span class="o">=</span> <span class="n">ddf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">measure_network</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">pwd</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="mi">2500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original</span> <span class="o">=</span> <span class="n">vals_orig</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;values&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../work/urbangrammar_samba/consolidation_original.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">consolidated</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tcity15nm
+Barnsley         [0.10695187165775401, 0.07840558630387251, 0.0...
+Basildon         [0.066543438077634, 0.046400410869555486, 0.03...
+Basingstoke      [0.08309889634278295, 0.06100586650090918, 0.0...
+Bath             [0.09589993050729674, 0.06789769229755593, 0.0...
+Bedford          [0.10690087829360101, 0.07504232112824535, 0.0...
+                                       ...                        
+Woking           [0.07844756399669695, 0.05474597309986163, 0.0...
+Wolverhampton    [0.10825097678694554, 0.0738876316023328, 0.06...
+Worcester        [0.08162302429818354, 0.059034771757602786, 0....
+Worthing         [0.110938410724694, 0.0704577125972299, 0.0697...
+York             [0.11048158640226628, 0.07967889566789936, 0.0...
+Name: values, Length: 112, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tcity15nm
+Barnsley         [0.10615293886377039, 0.07754021446011636, 0.0...
+Basildon         [0.06651078202130424, 0.046357524058090994, 0....
+Basingstoke      [0.08338692390139335, 0.061888991203901476, 0....
+Bath             [0.09524902455818224, 0.06742785926958444, 0.0...
+Bedford          [0.10764315556647824, 0.07852099974944458, 0.0...
+                                       ...                        
+Woking           [0.07837763770896136, 0.05459775984652849, 0.0...
+Wolverhampton    [0.10773418008618735, 0.07317892935647334, 0.0...
+Worcester        [0.08187950686206094, 0.05932698087358212, 0.0...
+Worthing         [0.11119676238196184, 0.07039460205008705, 0.0...
+York             [0.10975380567562489, 0.07897317797680836, 0.0...
+Name: values, Length: 112, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>To measure deviations, we convert the series of lists above to an array and calculate the deviation as an array operation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cons_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">consolidated</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">orig_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">original</span><span class="p">[</span><span class="o">~</span><span class="n">consolidated</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+<span class="n">deviations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cons_array</span> <span class="o">-</span> <span class="n">orig_array</span><span class="p">)</span> <span class="o">/</span> <span class="n">orig_array</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see if any of cities reports siginificant deviation in any of variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">deviations</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([False, False, False, False, False, False, False, False, False,
+       False, False,  True, False,  True, False, False,  True,  True,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False,  True, False, False, False,  True,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False,  True, False, False, False, False,
+       False, False, False, False, False, False, False, False, False,
+       False, False, False, False, False,  True, False,  True, False,
+        True, False, False, False, False, False,  True, False, False,
+        True, False, False, False, False, False, False, False, False,
+        True, False, False,  True, False, False, False, False, False,
+       False, False, False, False, False, False,  True, False, False,
+       False, False, False])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deviated</span> <span class="o">=</span> <span class="n">computed</span><span class="o">.</span><span class="n">dropna</span><span class="p">()[(</span><span class="n">deviations</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">deviated</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Bracknell&#39;, &#39;Brighton and Hove&#39;, &#39;Burton upon Trent&#39;, &#39;Bury&#39;,
+       &#39;Doncaster&#39;, &#39;Gateshead&#39;, &#39;Kingston upon Hull&#39;, &#39;Oxford&#39;, &#39;Plymouth&#39;,
+       &#39;Portsmouth&#39;, &#39;Salford&#39;, &#39;Shrewsbury&#39;, &#39;Stevenage&#39;, &#39;Stoke-on-Trent&#39;,
+       &#39;Wigan&#39;],
+      dtype=&#39;object&#39;, name=&#39;tcity15nm&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are 15 towns and cities, where the difference in at least one variable is more than 5%. Let’s have a look at the actual deviatoins to get a sense how much more it is.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deviations</span><span class="p">[(</span><span class="n">deviations</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.06058441, 0.1058489 , 0.25531915, 0.05122838, 0.06640357,
+       0.05990272, 0.08472903, 0.1155598 , 0.06998222, 0.14053365,
+       0.05942378, 0.05234953, 0.10128649, 0.32063126, 0.06577461,
+       0.05617978, 0.17232157, 0.06063091, 0.07765681])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Overall, there are not many deviations, so let’s check the ratio of significantly deviated network variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deviations</span><span class="p">[(</span><span class="n">deviations</span> <span class="o">&gt;</span> <span class="mf">0.05</span><span class="p">)]</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="n">deviations</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02445302445302445
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
