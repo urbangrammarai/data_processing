@@ -271,6 +271,11 @@
    Save samples of OS MasterMap Building height layer to parquet files
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coastline">
+   Coastline
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -908,6 +913,122 @@ data/OV/OV.gml does not contain Woodland layer.
     <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="s1">/**/**/**&#39;</span><span class="p">)</span>
     <span class="n">merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;gdb&#39;</span><span class="p">)])</span>
     <span class="n">merged</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="s1">.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="coastline">
+<h2>Coastline<a class="headerlink" href="#coastline" title="Permalink to this headline">¶</a></h2>
+<p>To get the external boundary of the GB, we will also need coastline geometry. That is downloadable from <a class="reference external" href="https://data.gov.uk/dataset/26053db7-6caf-446f-8f7e-9775a19970e0/countries-december-2017-full-extent-boundaries-in-great-britain">data.gov.uk</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coastline</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;http://geoportal1-ons.opendata.arcgis.com/datasets/f2c2211ff185418484566b2b7a5e1300_1.zip?outSR={</span><span class="si">%22la</span><span class="s1">testWkid%22:27700,%22wkid%22:27700}&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coastline</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>objectid</th>
+      <th>ctry17cd</th>
+      <th>ctry17nm</th>
+      <th>ctry17nmw</th>
+      <th>bng_e</th>
+      <th>bng_n</th>
+      <th>long</th>
+      <th>lat</th>
+      <th>st_areasha</th>
+      <th>st_lengths</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>E92000001</td>
+      <td>England</td>
+      <td>Lloegr</td>
+      <td>394881</td>
+      <td>370341</td>
+      <td>-2.07813</td>
+      <td>53.230099</td>
+      <td>1.329461e+11</td>
+      <td>4.776071e+06</td>
+      <td>MULTIPOLYGON (((398210.896 657405.599, 398214....</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>S92000003</td>
+      <td>Scotland</td>
+      <td>Yr Alban</td>
+      <td>277746</td>
+      <td>700060</td>
+      <td>-3.97091</td>
+      <td>56.177429</td>
+      <td>8.022646e+10</td>
+      <td>1.790847e+07</td>
+      <td>MULTIPOLYGON (((320228.803 976907.502, 320230....</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>W92000004</td>
+      <td>Wales</td>
+      <td>Cymru</td>
+      <td>263406</td>
+      <td>242881</td>
+      <td>-3.99416</td>
+      <td>52.067410</td>
+      <td>2.122477e+10</td>
+      <td>2.027624e+06</td>
+      <td>MULTIPOLYGON (((312661.601 385723.097, 312730....</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coastline</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="../_images/Fetch_OS_Data_42_1.png" src="../_images/Fetch_OS_Data_42_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coastline</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;gb_countries_2017&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
