@@ -262,6 +262,16 @@
        Woodland
       </a>
      </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tidal-water">
+       Tidal water
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tidal-boundary">
+       Tidal Boundary
+      </a>
+     </li>
     </ul>
    </li>
   </ul>
@@ -883,6 +893,44 @@ data/OV/OV.gml does not contain Woodland layer.
 </div>
 </div>
 </div>
+<div class="section" id="tidal-water">
+<h4>Tidal water<a class="headerlink" href="#tidal-water" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;TidalWater&#39;</span> <span class="ow">in</span> <span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;TidalWater&#39;</span><span class="p">)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openmap_tidalwater_200908&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;does not contain TidalWater layer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tidal-boundary">
+<h4>Tidal Boundary<a class="headerlink" href="#tidal-boundary" title="Permalink to this headline">¶</a></h4>
+<p>Showing high water mark (coinciding with tidal water boundary) and low water mark.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;TidalBoundary&#39;</span> <span class="ow">in</span> <span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">):</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;TidalBoundary&#39;</span><span class="p">)</span>
+            <span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openmap_tidalboundary_200908&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;does not contain TidalBoundary layer.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>data/SP/SP.gml does not contain TidalBoundary layer.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="save-samples-of-os-mastermap-building-height-layer-to-parquet-files">
@@ -1023,7 +1071,7 @@ data/OV/OV.gml does not contain Woodland layer.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="../_images/Fetch_OS_Data_42_1.png" src="../_images/Fetch_OS_Data_42_1.png" />
+<img alt="../_images/Fetch_OS_Data_46_1.png" src="../_images/Fetch_OS_Data_46_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
