@@ -47,6 +47,11 @@ Container will open shell, from which you have to start Jupyter lab with sudo ac
 sudo jupyter lab --allow-root
 ```
 
+If you want to start Jupyter with custom environment variables (those passes during `docker run` will not work since we're starting Jupyter as root):
+
+```shell
+sudo DB_PORT=0000 DB_USER=user jupyter lab --allow-root
+```
 
 ### Unmount the drive
 
