@@ -277,6 +277,11 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#openrivers">
+   OpenRivers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#save-samples-of-os-mastermap-building-height-layer-to-parquet-files">
    Save samples of OS MasterMap Building height layer to parquet files
   </a>
@@ -933,6 +938,128 @@ data/OV/OV.gml does not contain Woodland layer.
 </div>
 </div>
 </div>
+<div class="section" id="openrivers">
+<h2>OpenRivers<a class="headerlink" href="#openrivers" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OpenRivers&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rivers</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">rivers_json</span> <span class="o">=</span> <span class="n">rivers</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">rivers_json</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;id&#39;: &#39;OpenRivers&#39;,
+ &#39;name&#39;: &#39;OS Open Rivers&#39;,
+ &#39;description&#39;: &#39;Understand how watercourses in Great Britain join up.&#39;,
+ &#39;version&#39;: &#39;2020-04&#39;,
+ &#39;documentationUrl&#39;: &#39;https://www.ordnancesurvey.co.uk/business-government/products/open-map-rivers&#39;,
+ &#39;dataStructures&#39;: [&#39;Vector&#39;],
+ &#39;category&#39;: &#39;Networks&#39;,
+ &#39;formats&#39;: [{&#39;format&#39;: &#39;ESRI® Shapefile&#39;},
+  {&#39;format&#39;: &#39;GML&#39;, &#39;subformat&#39;: &#39;3&#39;},
+  {&#39;format&#39;: &#39;GeoPackage&#39;}],
+ &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRivers&#39;,
+ &#39;areas&#39;: [&#39;GB&#39;],
+ &#39;imageCount&#39;: 3,
+ &#39;imageTemplate&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRivers/images/{index}&#39;,
+ &#39;downloadsUrl&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRivers/downloads&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rivers_json</span><span class="p">[</span><span class="s1">&#39;downloadsUrl&#39;</span><span class="p">])</span>
+<span class="n">download_json</span> <span class="o">=</span> <span class="n">download</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">download_json</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;md5&#39;: &#39;80479F3A41EF2DB802F4B1D45C8FECF1&#39;,
+  &#39;size&#39;: 38392248,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRivers/downloads?area=GB&amp;format=ESRI%C2%AE+Shapefile&amp;redirect&#39;,
+  &#39;format&#39;: &#39;ESRI® Shapefile&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;oprvrs_essh_gb.zip&#39;},
+ {&#39;md5&#39;: &#39;A5E9FA79510B4B30D1FFC0F00A76B2EB&#39;,
+  &#39;size&#39;: 39484486,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRivers/downloads?area=GB&amp;format=GML&amp;subformat=3&amp;redirect&#39;,
+  &#39;format&#39;: &#39;GML&#39;,
+  &#39;subformat&#39;: &#39;3&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;oprvrs_gml3_gb.zip&#39;},
+ {&#39;md5&#39;: &#39;62157F02DA12C1C134FD003B030E61F7&#39;,
+  &#39;size&#39;: 53972360,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/OpenRivers/downloads?area=GB&amp;format=GeoPackage&amp;redirect&#39;,
+  &#39;format&#39;: &#39;GeoPackage&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;oprvrs_gpkg_gb.zip&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">fileformat</span> <span class="ow">in</span> <span class="n">download_json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GeoPackage&#39;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">],</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">down</span><span class="p">:</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpkg</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">])</span>
+<span class="n">gpkg</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;readme.txt&#39;, &#39;data/oprvrs_gb.gpkg&#39;, &#39;doc/licence.txt&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fiona</span><span class="o">.</span><span class="n">listlayers</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">gpkg</span><span class="o">.</span><span class="n">namelist</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;HydroNode&#39;, &#39;WatercourseLink&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://&#39;</span> <span class="o">+</span> <span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;!&#39;</span> <span class="o">+</span> <span class="n">gpkg</span><span class="o">.</span><span class="n">namelist</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;WatercourseLink&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gdf</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;openrivers_200909&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="save-samples-of-os-mastermap-building-height-layer-to-parquet-files">
 <h2>Save samples of OS MasterMap Building height layer to parquet files<a class="headerlink" href="#save-samples-of-os-mastermap-building-height-layer-to-parquet-files" title="Permalink to this headline">¶</a></h2>
 <p>Processing raw downloads of OS MasterMap Building height layer from <code class="docutils literal notranslate"><span class="pre">digimap.edina.ac.uk</span></code> to a single parquet file per city. Initial downloaded zip files have been extracted and renamed to indicate the location. The contents of each folder is unchanged.</p>
@@ -1071,7 +1198,7 @@ data/OV/OV.gml does not contain Woodland layer.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
 </pre></div>
 </div>
-<img alt="../_images/Fetch_OS_Data_46_1.png" src="../_images/Fetch_OS_Data_46_1.png" />
+<img alt="../_images/Fetch_OS_Data_55_1.png" src="../_images/Fetch_OS_Data_55_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
