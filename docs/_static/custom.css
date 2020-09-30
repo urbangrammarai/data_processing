@@ -13,3 +13,7 @@
 main.bd-content #main-content a, main.bd-content #main-content a:visited {
     color: #0ea48f;
 }
+
+#urban-grammar-ai-research-project img {
+    display: inline!important;
+}
