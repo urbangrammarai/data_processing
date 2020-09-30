@@ -270,6 +270,10 @@ the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo jupyter lab --allow-root
 </pre></div>
 </div>
+<p>If you want to start Jupyter with custom environment variables (those passes during <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> will not work since we’re starting Jupyter as root):</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo <span class="nv">DB_PORT</span><span class="o">=</span><span class="m">0000</span> <span class="nv">DB_USER</span><span class="o">=</span>user jupyter lab --allow-root
+</pre></div>
+</div>
 </div>
 <div class="section" id="unmount-the-drive">
 <h3>Unmount the drive<a class="headerlink" href="#unmount-the-drive" title="Permalink to this headline">¶</a></h3>
