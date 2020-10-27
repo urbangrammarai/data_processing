@@ -1,21 +1,40 @@
 
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Fetch Ordnance Survey (Open) Data &#8212; Urban Grammar Data Processing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-    <link href="../_static/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <title>Fetch Ordnance Survey (Open) Data &#8212; Urban Grammar AI | WP1 - Data Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.bfb7730f9caf2ec0b46a44615585038c.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.30270b6e4c972e43c488.js">
+
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/sphinx-book-theme.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -23,8 +42,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/sphinx-book-theme.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -37,8 +56,8 @@
     <link rel="next" title="Load data from PostGIS" href="Load_data_from_PostGIS.html" />
     <link rel="prev" title="Set up ad-hoc Dask cluster" href="../infrastructure/dask_cluster.html" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="docsearch:language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
 
 
 
@@ -54,10 +73,10 @@
         <div class="navbar-brand-box">
 <a class="navbar-brand text-wrap" href="../index.html">
   
-  <img src="../_static/logo.jpeg" class="logo" alt="logo">
+  <img src="../_static/logo.svg" class="logo" alt="logo">
   
   
-  <h1 class="site-logo" id="site-title">Urban Grammar Data Processing</h1>
+  <h1 class="site-logo" id="site-title">Urban Grammar AI | WP1 - Data Processing</h1>
   
 </a>
 </div>
@@ -68,10 +87,24 @@
 </form>
 
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <ul class="nav sidenav_l1">
+  <p class="caption">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../intro.html">
-   Intro
+  <a class="reference external" href="http://urbangrammarai.github.io">
+   Project homepage
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.github.io/spatial_signatures">
+   WP2 - Spatial signatures
+   <i class="fas fa-external-link-alt">
+   </i>
   </a>
  </li>
 </ul>
@@ -129,10 +162,6 @@
 
  <!-- To handle the deprecated key -->
 
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
 </div>
 
 
@@ -176,6 +205,19 @@
 </div>
         <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/urbangrammarai/data_processing"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
 
         <!-- Full screen (wrap in <a> to have style consistency -->
         <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -205,6 +247,7 @@
 
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
+        
         <div class="tocsection onthispage pt-5 pb-3">
             <i class="fas fa-list"></i> Contents
         </div>
@@ -294,6 +337,7 @@
 </ul>
 
         </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -1208,6 +1252,272 @@ data/OV/OV.gml does not contain Woodland layer.
 </div>
 </div>
 </div>
+<p>However, that proved to be unprecise. Coastline layer from Strategi product (although deprecated now) is better for our purpose.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Strategi&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">product</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">strategi</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">strategi_json</span> <span class="o">=</span> <span class="n">strategi</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">strategi_json</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;id&#39;: &#39;Strategi&#39;,
+ &#39;name&#39;: &#39;Strategi®&#39;,
+ &#39;description&#39;: &#39;A regional vector map dataset, railways, airports, rivers, villages, woods, land use and place names.&#39;,
+ &#39;version&#39;: &#39;2016-01&#39;,
+ &#39;documentationUrl&#39;: &#39;https://www.ordnancesurvey.co.uk/business-government/products/strategi&#39;,
+ &#39;dataStructures&#39;: [&#39;Vector&#39;],
+ &#39;category&#39;: &#39;Mapping&#39;,
+ &#39;formats&#39;: [{&#39;format&#39;: &#39;DXF&#39;},
+  {&#39;format&#39;: &#39;ESRI® Shapefile&#39;},
+  {&#39;format&#39;: &#39;MapInfo® TAB&#39;}],
+ &#39;warning&#39;: &quot;(Note: Strategi won&#39;t be updated again. We released our final update in January 2016.)&quot;,
+ &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/Strategi&#39;,
+ &#39;imageCount&#39;: 3,
+ &#39;imageTemplate&#39;: &#39;https://api.os.uk/downloads/v1/products/Strategi/images/{index}&#39;,
+ &#39;downloadsUrl&#39;: &#39;https://api.os.uk/downloads/v1/products/Strategi/downloads&#39;,
+ &#39;areas&#39;: [&#39;GB&#39;]}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">strategi_json</span><span class="p">[</span><span class="s1">&#39;downloadsUrl&#39;</span><span class="p">])</span>
+<span class="n">download_json</span> <span class="o">=</span> <span class="n">download</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">download_json</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;md5&#39;: &#39;AE5655AD0F52B777AF53462552222CE4&#39;,
+  &#39;size&#39;: 58134716,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/Strategi/downloads?area=GB&amp;format=DXF&amp;redirect&#39;,
+  &#39;format&#39;: &#39;DXF&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;strtgi_dxf_gb.zip&#39;},
+ {&#39;md5&#39;: &#39;374550DB97DDC152554F97DBA2421E80&#39;,
+  &#39;size&#39;: 40443471,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/Strategi/downloads?area=GB&amp;format=ESRI%C2%AE+Shapefile&amp;redirect&#39;,
+  &#39;format&#39;: &#39;ESRI® Shapefile&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;strtgi_essh_gb.zip&#39;},
+ {&#39;md5&#39;: &#39;7550A30048FABDA32FAF16D8217A2687&#39;,
+  &#39;size&#39;: 55439034,
+  &#39;url&#39;: &#39;https://api.os.uk/downloads/v1/products/Strategi/downloads?area=GB&amp;format=MapInfo%C2%AE+TAB&amp;redirect&#39;,
+  &#39;format&#39;: &#39;MapInfo® TAB&#39;,
+  &#39;area&#39;: &#39;GB&#39;,
+  &#39;fileName&#39;: &#39;strtgi_mapt_gb.zip&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">fileformat</span> <span class="ow">in</span> <span class="n">download_json</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ESRI® Shapefile&#39;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;fileName&#39;</span><span class="p">],</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">down</span><span class="p">:</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fileformat</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">down</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gml</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;strtgi_essh_gb.zip&#39;</span><span class="p">)</span>
+<span class="n">gml</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;strtgi_essh_gb/&#39;,
+ &#39;strtgi_essh_gb/data/&#39;,
+ &#39;strtgi_essh_gb/data/admin_line.dbf&#39;,
+ &#39;strtgi_essh_gb/data/admin_line.prj&#39;,
+ &#39;strtgi_essh_gb/data/admin_line.shp&#39;,
+ &#39;strtgi_essh_gb/data/admin_line.shx&#39;,
+ &#39;strtgi_essh_gb/data/admin_seed.dbf&#39;,
+ &#39;strtgi_essh_gb/data/admin_seed.prj&#39;,
+ &#39;strtgi_essh_gb/data/admin_seed.shp&#39;,
+ &#39;strtgi_essh_gb/data/admin_seed.shx&#39;,
+ &#39;strtgi_essh_gb/data/antiquity_line.dbf&#39;,
+ &#39;strtgi_essh_gb/data/antiquity_line.prj&#39;,
+ &#39;strtgi_essh_gb/data/antiquity_line.shp&#39;,
+ &#39;strtgi_essh_gb/data/antiquity_line.shx&#39;,
+ &#39;strtgi_essh_gb/data/a_road.dbf&#39;,
+ &#39;strtgi_essh_gb/data/a_road.prj&#39;,
+ &#39;strtgi_essh_gb/data/a_road.shp&#39;,
+ &#39;strtgi_essh_gb/data/a_road.shx&#39;,
+ &#39;strtgi_essh_gb/data/b_road.dbf&#39;,
+ &#39;strtgi_essh_gb/data/b_road.prj&#39;,
+ &#39;strtgi_essh_gb/data/b_road.shp&#39;,
+ &#39;strtgi_essh_gb/data/b_road.shx&#39;,
+ &#39;strtgi_essh_gb/data/coastline.dbf&#39;,
+ &#39;strtgi_essh_gb/data/coastline.prj&#39;,
+ &#39;strtgi_essh_gb/data/coastline.shp&#39;,
+ &#39;strtgi_essh_gb/data/coastline.shx&#39;,
+ &#39;strtgi_essh_gb/data/ferry_box.dbf&#39;,
+ &#39;strtgi_essh_gb/data/ferry_box.prj&#39;,
+ &#39;strtgi_essh_gb/data/ferry_box.shp&#39;,
+ &#39;strtgi_essh_gb/data/ferry_box.shx&#39;,
+ &#39;strtgi_essh_gb/data/ferry_line.dbf&#39;,
+ &#39;strtgi_essh_gb/data/ferry_line.prj&#39;,
+ &#39;strtgi_essh_gb/data/ferry_line.shp&#39;,
+ &#39;strtgi_essh_gb/data/ferry_line.shx&#39;,
+ &#39;strtgi_essh_gb/data/foreshor_region.dbf&#39;,
+ &#39;strtgi_essh_gb/data/foreshor_region.prj&#39;,
+ &#39;strtgi_essh_gb/data/foreshor_region.shp&#39;,
+ &#39;strtgi_essh_gb/data/foreshor_region.shx&#39;,
+ &#39;strtgi_essh_gb/data/general_text/&#39;,
+ &#39;strtgi_essh_gb/data/general_text/bnd.adf&#39;,
+ &#39;strtgi_essh_gb/data/general_text/lab.adf&#39;,
+ &#39;strtgi_essh_gb/data/general_text/text.tat&#39;,
+ &#39;strtgi_essh_gb/data/general_text/text.txt&#39;,
+ &#39;strtgi_essh_gb/data/general_text/text.txx&#39;,
+ &#39;strtgi_essh_gb/data/general_text/tic.adf&#39;,
+ &#39;strtgi_essh_gb/data/general_text/tol.adf&#39;,
+ &#39;strtgi_essh_gb/data/general_text.dbf&#39;,
+ &#39;strtgi_essh_gb/data/general_text.prj&#39;,
+ &#39;strtgi_essh_gb/data/general_text.shp&#39;,
+ &#39;strtgi_essh_gb/data/general_text.shx&#39;,
+ &#39;strtgi_essh_gb/data/gridlines.dbf&#39;,
+ &#39;strtgi_essh_gb/data/gridlines.prj&#39;,
+ &#39;strtgi_essh_gb/data/gridlines.shp&#39;,
+ &#39;strtgi_essh_gb/data/gridlines.shx&#39;,
+ &#39;strtgi_essh_gb/data/info/&#39;,
+ &#39;strtgi_essh_gb/data/info/arc.dir&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0000.dat&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0000.nit&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0001.dat&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0001.nit&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0002.dat&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0002.nit&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0003.dat&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0003.nit&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0004.dat&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0004.nit&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0005.dat&#39;,
+ &#39;strtgi_essh_gb/data/info/arc0005.nit&#39;,
+ &#39;strtgi_essh_gb/data/lakes_region.dbf&#39;,
+ &#39;strtgi_essh_gb/data/lakes_region.prj&#39;,
+ &#39;strtgi_essh_gb/data/lakes_region.shp&#39;,
+ &#39;strtgi_essh_gb/data/lakes_region.shx&#39;,
+ &#39;strtgi_essh_gb/data/land_use_seed.dbf&#39;,
+ &#39;strtgi_essh_gb/data/land_use_seed.prj&#39;,
+ &#39;strtgi_essh_gb/data/land_use_seed.shp&#39;,
+ &#39;strtgi_essh_gb/data/land_use_seed.shx&#39;,
+ &#39;strtgi_essh_gb/data/land_use_symbol.dbf&#39;,
+ &#39;strtgi_essh_gb/data/land_use_symbol.prj&#39;,
+ &#39;strtgi_essh_gb/data/land_use_symbol.shp&#39;,
+ &#39;strtgi_essh_gb/data/land_use_symbol.shx&#39;,
+ &#39;strtgi_essh_gb/data/minor_road.dbf&#39;,
+ &#39;strtgi_essh_gb/data/minor_road.prj&#39;,
+ &#39;strtgi_essh_gb/data/minor_road.shp&#39;,
+ &#39;strtgi_essh_gb/data/minor_road.shx&#39;,
+ &#39;strtgi_essh_gb/data/motorway.dbf&#39;,
+ &#39;strtgi_essh_gb/data/motorway.prj&#39;,
+ &#39;strtgi_essh_gb/data/motorway.shp&#39;,
+ &#39;strtgi_essh_gb/data/motorway.shx&#39;,
+ &#39;strtgi_essh_gb/data/national_park.dbf&#39;,
+ &#39;strtgi_essh_gb/data/national_park.prj&#39;,
+ &#39;strtgi_essh_gb/data/national_park.shp&#39;,
+ &#39;strtgi_essh_gb/data/national_park.shx&#39;,
+ &#39;strtgi_essh_gb/data/primary_road.dbf&#39;,
+ &#39;strtgi_essh_gb/data/primary_road.prj&#39;,
+ &#39;strtgi_essh_gb/data/primary_road.shp&#39;,
+ &#39;strtgi_essh_gb/data/primary_road.shx&#39;,
+ &#39;strtgi_essh_gb/data/railway_line.dbf&#39;,
+ &#39;strtgi_essh_gb/data/railway_line.prj&#39;,
+ &#39;strtgi_essh_gb/data/railway_line.shp&#39;,
+ &#39;strtgi_essh_gb/data/railway_line.shx&#39;,
+ &#39;strtgi_essh_gb/data/railway_point.dbf&#39;,
+ &#39;strtgi_essh_gb/data/railway_point.prj&#39;,
+ &#39;strtgi_essh_gb/data/railway_point.shp&#39;,
+ &#39;strtgi_essh_gb/data/railway_point.shx&#39;,
+ &#39;strtgi_essh_gb/data/rivers_line.dbf&#39;,
+ &#39;strtgi_essh_gb/data/rivers_line.prj&#39;,
+ &#39;strtgi_essh_gb/data/rivers_line.shp&#39;,
+ &#39;strtgi_essh_gb/data/rivers_line.shx&#39;,
+ &#39;strtgi_essh_gb/data/road_point.dbf&#39;,
+ &#39;strtgi_essh_gb/data/road_point.prj&#39;,
+ &#39;strtgi_essh_gb/data/road_point.shp&#39;,
+ &#39;strtgi_essh_gb/data/road_point.shx&#39;,
+ &#39;strtgi_essh_gb/data/settlement_seed.dbf&#39;,
+ &#39;strtgi_essh_gb/data/settlement_seed.prj&#39;,
+ &#39;strtgi_essh_gb/data/settlement_seed.shp&#39;,
+ &#39;strtgi_essh_gb/data/settlement_seed.shx&#39;,
+ &#39;strtgi_essh_gb/data/spot_height.dbf&#39;,
+ &#39;strtgi_essh_gb/data/spot_height.prj&#39;,
+ &#39;strtgi_essh_gb/data/spot_height.shp&#39;,
+ &#39;strtgi_essh_gb/data/spot_height.shx&#39;,
+ &#39;strtgi_essh_gb/data/Strategi.lyr&#39;,
+ &#39;strtgi_essh_gb/data/tourist_symbol.dbf&#39;,
+ &#39;strtgi_essh_gb/data/tourist_symbol.prj&#39;,
+ &#39;strtgi_essh_gb/data/tourist_symbol.shp&#39;,
+ &#39;strtgi_essh_gb/data/tourist_symbol.shx&#39;,
+ &#39;strtgi_essh_gb/data/transport_symbol.dbf&#39;,
+ &#39;strtgi_essh_gb/data/transport_symbol.prj&#39;,
+ &#39;strtgi_essh_gb/data/transport_symbol.shp&#39;,
+ &#39;strtgi_essh_gb/data/transport_symbol.shx&#39;,
+ &#39;strtgi_essh_gb/data/transport_text.dbf&#39;,
+ &#39;strtgi_essh_gb/data/transport_text.prj&#39;,
+ &#39;strtgi_essh_gb/data/transport_text.shp&#39;,
+ &#39;strtgi_essh_gb/data/transport_text.shx&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/bnd.adf&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/lab.adf&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/text.tat&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/text.txt&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/text.txx&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/tic.adf&#39;,
+ &#39;strtgi_essh_gb/data/transport_txt/tol.adf&#39;,
+ &#39;strtgi_essh_gb/data/urban_region.dbf&#39;,
+ &#39;strtgi_essh_gb/data/urban_region.prj&#39;,
+ &#39;strtgi_essh_gb/data/urban_region.shp&#39;,
+ &#39;strtgi_essh_gb/data/urban_region.shx&#39;,
+ &#39;strtgi_essh_gb/data/woodland_region.dbf&#39;,
+ &#39;strtgi_essh_gb/data/woodland_region.prj&#39;,
+ &#39;strtgi_essh_gb/data/woodland_region.shp&#39;,
+ &#39;strtgi_essh_gb/data/woodland_region.shx&#39;,
+ &#39;strtgi_essh_gb/doc/&#39;,
+ &#39;strtgi_essh_gb/doc/licence.txt&#39;,
+ &#39;strtgi_essh_gb/doc/StrategiSymbols.ttf&#39;,
+ &#39;strtgi_essh_gb/doc/Strategi_Area.txt&#39;,
+ &#39;strtgi_essh_gb/doc/Strategi_Release_2016_Change.txt&#39;,
+ &#39;strtgi_essh_gb/gazetteer/&#39;,
+ &#39;strtgi_essh_gb/gazetteer/Strategi_Gazetteer_2016.txt&#39;,
+ &#39;strtgi_essh_gb/Strategi_Readme.txt&#39;,
+ &#39;strtgi_essh_gb/doc/Styling_Guide.pdf&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coastline</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;zip://strtgi_essh_gb.zip!strtgi_essh_gb/data/coastline.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coastline</span><span class="o">.</span><span class="n">to_postgis</span><span class="p">(</span><span class="s2">&quot;gb_coastline_2016&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -1259,7 +1569,10 @@ data/OV/OV.gml does not contain Woodland layer.
       </div>
     </div>
 
-    <script src="../_static/js/index.js"></script>
+    
+  <script src="../_static/js/index.30270b6e4c972e43c488.js"></script>
+
+
     
   </body>
 </html>

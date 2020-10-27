@@ -1,7 +1,7 @@
 # Book settings
-title: Urban Grammar Data Processing
+title: Urban Grammar AI | WP1 - Data Processing
 author: Dani Arribas-Bel, Martin Fleischmann
-logo: logo.jpeg
+logo: logo.svg
 
 execute:
   execute_notebooks: "off"
@@ -9,3 +9,5 @@ repository:
   url: https://github.com/urbangrammarai/data_processing
 launch_buttons:
   binderhub_url: https://mybinder.org
+html:
+  use_repository_button: true
