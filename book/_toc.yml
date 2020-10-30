@@ -19,3 +19,9 @@
     - file: code/Load_data_from_PostGIS
     - file: code/Network_Consolidation_Test
     - file: code/OpenRoads_Topology
+
+- chapter: Imagery
+  sections:
+    - file: code/GHS-composite-S2_meta
+    - file: code/GHS-composite-S2_mirror
+
