@@ -3,6 +3,7 @@ Utilities for the data_processing module
 """
 
 import os
+import subprocess
 import requests
 import rasterio
 import geopandas
