@@ -24,4 +24,4 @@
   sections:
     - file: code/GHS-composite-S2_meta
     - file: code/GHS-composite-S2_mirror
-
+    - file: code/terracotta_explore
