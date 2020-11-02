@@ -4,6 +4,7 @@ build-book:
 	# list folders with notebooks here. Notebooks must be present in _toc.yml.
 	cp -r infrastructure book/
 	cp -r vector_data book/code
+	cp -r imagery book/code
 	jupyter-book build book
 	cp -r book/_build/html docs
 	rm -rf book/code
