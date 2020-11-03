@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Mount samba drives on linux from the command line &#8212; Urban Grammar AI | WP1 - Data Processing</title>
+    <title>Explore Imagery with terracotta &#8212; Urban Grammar AI | WP1 - Data Processing</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -53,8 +53,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Set up ad-hoc Dask cluster" href="dask_cluster.html" />
-    <link rel="prev" title="Computational platform" href="platform.html" />
+    <link rel="prev" title="Mirror GHS-composite-S2" href="GHS-composite-S2_mirror.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -113,19 +112,19 @@
   Infrastructure
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="platform.html">
+  <a class="reference internal" href="../infrastructure/platform.html">
    Computational platform
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/storage_drives.html">
    Mount samba drives on linux from the command line
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="dask_cluster.html">
+  <a class="reference internal" href="../infrastructure/dask_cluster.html">
    Set up ad-hoc Dask cluster
   </a>
  </li>
@@ -137,22 +136,22 @@
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../code/Fetch_OS_Data.html">
+  <a class="reference internal" href="Fetch_OS_Data.html">
    Fetch Ordnance Survey (Open) Data
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../code/Load_data_from_PostGIS.html">
+  <a class="reference internal" href="Load_data_from_PostGIS.html">
    Load data from PostGIS
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../code/Network_Consolidation_Test.html">
+  <a class="reference internal" href="Network_Consolidation_Test.html">
    Assessment of the correctness of OpenRoads network
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../code/OpenRoads_Topology.html">
+  <a class="reference internal" href="OpenRoads_Topology.html">
    Cleaning OpenRoads topology
   </a>
  </li>
@@ -162,19 +161,19 @@
   Imagery
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../code/GHS-composite-S2_meta.html">
+  <a class="reference internal" href="GHS-composite-S2_meta.html">
    Build metadata GHS-composite-S2 R2020A
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../code/GHS-composite-S2_mirror.html">
+  <a class="reference internal" href="GHS-composite-S2_mirror.html">
    Mirror GHS-composite-S2
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../code/terracotta_explore.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Explore Imagery with
    <code class="docutils literal notranslate">
     <span class="pre">
@@ -221,7 +220,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/infrastructure/storage_drives.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/code/terracotta_explore.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -265,31 +264,29 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-cifs">
-   Using
+  <a class="reference internal nav-link" href="#build-terracotta">
+   Build
    <code class="docutils literal notranslate">
     <span class="pre">
-     cifs
+     terracotta
     </span>
    </code>
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#requirements">
-     Requirements
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mount-the-drive">
-     Mount the drive
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unmount-the-drive">
-     Unmount the drive
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#serving">
+   Serving
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploring">
+   Exploring
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimising">
+   Optimising
+  </a>
  </li>
 </ul>
 
@@ -302,58 +299,70 @@
         
               <div>
                 
-  <div class="section" id="mount-samba-drives-on-linux-from-the-command-line">
-<h1>Mount samba drives on linux from the command line<a class="headerlink" href="#mount-samba-drives-on-linux-from-the-command-line" title="Permalink to this headline">¶</a></h1>
-<p>This document covers how to (un)mount and access data on a samba drive from Ubuntu, using the command line and have it
-accessible for read/write access within docker jupyter lab instance.</p>
-<div class="section" id="using-cifs">
-<h2>Using <code class="docutils literal notranslate"><span class="pre">cifs</span></code><a class="headerlink" href="#using-cifs" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="requirements">
-<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
-<p>For this route, you will need:</p>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">cifs</span></code> tools. If you do not have them, you can install them:</p></li>
-</ul>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt-get install cifs-utils
+  <div class="section" id="explore-imagery-with-terracotta">
+<h1>Explore Imagery with <code class="docutils literal notranslate"><span class="pre">terracotta</span></code><a class="headerlink" href="#explore-imagery-with-terracotta" title="Permalink to this headline">¶</a></h1>
+<p>For quick exploration of imagery in the browser, we can use
+<a class="reference external" href="https://terracotta-python.readthedocs.io/en/latest/index.html"><code class="docutils literal notranslate"><span class="pre">terracotta</span></code></a>.
+This document captures how to serve a folder of images and explore it
+interactively.</p>
+<div class="section" id="build-terracotta">
+<h2>Build <code class="docutils literal notranslate"><span class="pre">terracotta</span></code><a class="headerlink" href="#build-terracotta" title="Permalink to this headline">¶</a></h2>
+<p>A containerised version of <code class="docutils literal notranslate"><span class="pre">terracotta</span></code> can be built using the
+<span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code></span>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker built -t terracotta -f ./Dockerfile.terracotta .
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>The address of the samba server you’d like to mount. For this example we will use <code class="docutils literal notranslate"><span class="pre">&lt;server-url&gt;</span></code> for the address, <code class="docutils literal notranslate"><span class="pre">&lt;drive&gt;</span></code> for the folder you want to mount and <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;</span></code></p></li>
-<li><p>sudo rights</p></li>
-</ul>
+<p>This is a relatively lightweight image based off the <a class="reference external" href="https://hub.docker.com/r/continuumio/miniconda3/tags">Alpine version of
+miniconda3</a> (v.<code class="docutils literal notranslate"><span class="pre">4.8.2-alpine</span></code>).</p>
 </div>
-<div class="section" id="mount-the-drive">
-<h3>Mount the drive<a class="headerlink" href="#mount-the-drive" title="Permalink to this headline">¶</a></h3>
-<p>First create an empty folder where you will mount the drive:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir &lt;mount-point&gt;
+<div class="section" id="serving">
+<h2>Serving<a class="headerlink" href="#serving" title="Permalink to this headline">¶</a></h2>
+<p>The approach follows a client/server model so, first, we need to spin up a
+server that makes the imagery available. For that, we first launch the server
+container:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm <span class="se">\</span>
+           -ti <span class="se">\</span>
+           -p <span class="m">5000</span>:5000 <span class="se">\</span>
+           -v /media/dani/DataStore/GHS-composite-S2/:/data <span class="se">\</span>
+           terracotta sh
 </pre></div>
 </div>
-<p>To mount the drive, you can:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo mount -t cifs &lt;server-url&gt;/&lt;drive&gt; &lt;mount-point&gt; -o <span class="nv">domain</span><span class="o">=</span>&lt;domain&gt;,sec<span class="o">=</span>ntlm,vers<span class="o">=</span><span class="m">1</span>.0,username<span class="o">=</span>&lt;samba_username&gt;,password<span class="o">=</span>&lt;samba_password&gt;
+<p>This needs to be run off the same machine where the imagery is stored.</p>
+<p>Once inside the container, launch the server with:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/opt/conda/bin/terracotta serve <span class="se">\</span>
+                          --allow-all-ips <span class="se">\</span>
+                          -r /path/to/data/folder/S2_percentile_UTM_<span class="o">{</span>tile<span class="o">}</span>-<span class="o">{</span>scene1<span class="o">}</span>-<span class="o">{</span>scene2<span class="o">}</span>_osgb.tif
 </pre></div>
 </div>
-<p>Note that <code class="docutils literal notranslate"><span class="pre">sec=ntlm,vers=1.0</span></code> may not be needed for your server or it may use different settings.</p>
-<p>The drive is now mounted under the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point&gt;</span></code> path and you can read from there. To have it accessible within docker,
-the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point&gt;</span></code> should be within your current working dierectory which you pass as a volume to a container:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm -ti --user root -e <span class="nv">GRANT_SUDO</span><span class="o">=</span>yes -e <span class="nv">NB_UID</span><span class="o">=</span><span class="nv">$UID</span> -e <span class="nv">NB_GID</span><span class="o">=</span><span class="m">100</span> -p <span class="m">8888</span>:8888 -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/home/jovyan/work darribas/gds_dev:5.0 start.sh
+<p>This should open a Flask server that will listen to port 5000 for requests.</p>
+</div>
+<div class="section" id="exploring">
+<h2>Exploring<a class="headerlink" href="#exploring" title="Permalink to this headline">¶</a></h2>
+<p>Once the imagery is being served, we can launch a web app through a separate
+(local or remote) container:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm <span class="se">\</span>
+           -ti <span class="se">\</span>
+           -p <span class="m">5005</span>:5005 <span class="se">\</span>
+           -v /path/to/data/folder/:/data <span class="se">\</span>
+           --network host 
+           terracotta sh
 </pre></div>
 </div>
-<p>Container will open shell, from which you have to start Jupyter lab with sudo access:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo jupyter lab --allow-root
+<p>Note that although the command is similar to that we use for the server, here
+we set <code class="docutils literal notranslate"><span class="pre">--network</span> <span class="pre">host</span></code> so the client can be reached from the guest’s browser.</p>
+</div>
+<div class="section" id="optimising">
+<h2>Optimising<a class="headerlink" href="#optimising" title="Permalink to this headline">¶</a></h2>
+<p>The above process “works”, but if the imagery is too heavy, it’ll choke and
+will struggle to be responsive enough for exploration. If that is the case,
+consider pre-optimising the images. Following the <a class="reference external" href="https://terracotta-python.readthedocs.io/en/latest/get-started.html"><code class="docutils literal notranslate"><span class="pre">terracotta</span></code> tutorial</a>, we can generate optimised versions by:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/opt/conda/bin/terracotta optimize-rasters -o /target/folder <span class="se">\</span>
+                                           --reproject <span class="se">\</span>
+                                           /path/to/data/*.tif
 </pre></div>
 </div>
-<p>If you want to start Jupyter with custom environment variables (those passes during <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> will not work since we’re starting Jupyter as root):</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo <span class="nv">DB_PORT</span><span class="o">=</span><span class="m">0000</span> <span class="nv">DB_USER</span><span class="o">=</span>user jupyter lab --allow-root
-</pre></div>
-</div>
-</div>
-<div class="section" id="unmount-the-drive">
-<h3>Unmount the drive<a class="headerlink" href="#unmount-the-drive" title="Permalink to this headline">¶</a></h3>
-<p>Simply run:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo umount &lt;mount-point&gt;
-</pre></div>
-</div>
-</div>
+<p>Once this finishes, you can serve as <a class="reference external" href="#Serving">above</a>, with the modification
+of the data path.</p>
 </div>
 </div>
 
@@ -370,7 +379,7 @@ the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./infrastructure"
+            path: "./code"
         },
         predefinedOutput: true
     }
@@ -385,8 +394,7 @@ the <code class="docutils literal notranslate"><span class="pre">&lt;mount-point
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="platform.html" title="previous page">Computational platform</a>
-    <a class='right-next' id="next-link" href="dask_cluster.html" title="next page">Set up ad-hoc Dask cluster</a>
+    <a class='left-prev' id="prev-link" href="GHS-composite-S2_mirror.html" title="previous page">Mirror GHS-composite-S2</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

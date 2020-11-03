@@ -53,6 +53,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Build metadata GHS-composite-S2 R2020A" href="GHS-composite-S2_meta.html" />
     <link rel="prev" title="Assessment of the correctness of OpenRoads network" href="Network_Consolidation_Test.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -153,6 +154,33 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Cleaning OpenRoads topology
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Imagery
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_meta.html">
+   Build metadata GHS-composite-S2 R2020A
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_mirror.html">
+   Mirror GHS-composite-S2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="terracotta_explore.html">
+   Explore Imagery with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     terracotta
+    </span>
+   </code>
   </a>
  </li>
 </ul>
@@ -258,6 +286,10 @@
   <div class="section" id="cleaning-openroads-topology">
 <h1>Cleaning OpenRoads topology<a class="headerlink" href="#cleaning-openroads-topology" title="Permalink to this headline">¶</a></h1>
 <p>OpenRoads data are not always topologically correct, meaning that they introduce nodes of a degree 2. Topologically precise network has a single LineString between two junctions. This notebook fixes topology of OpenRoads data and saves resulting GeoDataFrame to PostGIS.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">consolidate</span></code> is a <a class="reference external" href="https://github.com/urbangrammarai/data_processing/blob/master/vector_data/consolidate.py">custom python file</a> containing definitions of required functions. Even though these were originally written for this project, in future they will be included in the existing Python ecosystem:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">topology</span></code> will be included in <a class="reference external" href="https://github.com/martinfleis/momepy">momepy 0.4</a> as <code class="docutils literal notranslate"><span class="pre">remove_false_nodes</span></code></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -370,6 +402,7 @@
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="Network_Consolidation_Test.html" title="previous page">Assessment of the correctness of OpenRoads network</a>
+    <a class='right-next' id="next-link" href="GHS-composite-S2_meta.html" title="next page">Build metadata GHS-composite-S2 R2020A</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
