@@ -187,6 +187,7 @@ def download_reproject(
     verbose=True,
     check_if_available=True,
     progressbar=True,
+    remove_intermediate=True,
 ):
     """
     Download a GeoTIFF and reproject
@@ -207,6 +208,8 @@ def download_reproject(
                         [Optional. Default=True] If True, check if `dst_path` exists and exit if so
     progressbar : Boolean
                  [Optional. Default=True] If True, print dynamic progress bar for download
+    remove_intermediate : Boolean
+                          [Optional. Default=True] If True, remove intermediate files created
     
     Returns
     -------
@@ -232,16 +235,17 @@ def download_reproject(
                     verbose=verbose,
                     progressbar=progressbar,
                 )
-    cmd = f"rio warp {row['dst_path']} " f"{tgt_path} " f"--dst-crs EPSG:27700"
+    cmd = f"rio warp {row['dst_path']} " f"{tgt_path} " f"--threads 16 --dst-crs EPSG:27700"
     if dryrun is False:
         if verbose:
             print(f"\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | {cmd}")
         output = subprocess.call(cmd, shell=True)
-    cmd = f"rm {row['dst_path']}"
-    if dryrun is False:
-        if verbose:
-            print(f"\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | {cmd}")
-        output = subprocess.call(cmd, shell=True)
+    if remove_intermediate:
+        cmd = f"rm {row['dst_path']}"
+        if dryrun is False:
+            if verbose:
+                print(f"\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | {cmd}")
+            output = subprocess.call(cmd, shell=True)
     return None
 
 
