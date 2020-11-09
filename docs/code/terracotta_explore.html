@@ -53,7 +53,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Mirror GHS-composite-S2" href="GHS-composite-S2_mirror.html" />
+    <link rel="prev" title="Explore the mosaic" href="GHS-composite-S2_explore_mosaic.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -170,6 +170,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="GHS-composite-S2_mirror.html">
    Mirror GHS-composite-S2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_explore_mosaic.html">
+   Explore the mosaic
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -344,12 +349,17 @@ container:</p>
            -ti <span class="se">\</span>
            -p <span class="m">5005</span>:5005 <span class="se">\</span>
            -v /path/to/data/folder/:/data <span class="se">\</span>
-           --network host 
+           --network host <span class="se">\</span>
            terracotta sh
 </pre></div>
 </div>
 <p>Note that although the command is similar to that we use for the server, here
 we set <code class="docutils literal notranslate"><span class="pre">--network</span> <span class="pre">host</span></code> so the client can be reached from the guest’s browser.</p>
+<p>Inside the container, then launch the app:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/opt/conda/bin/terracotta connect --port <span class="m">5005</span> localhost:5000
+</pre></div>
+</div>
+<p>Then point your browser to <code class="docutils literal notranslate"><span class="pre">localhost:5005</span></code>.</p>
 </div>
 <div class="section" id="optimising">
 <h2>Optimising<a class="headerlink" href="#optimising" title="Permalink to this headline">¶</a></h2>
@@ -394,7 +404,7 @@ of the data path.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="GHS-composite-S2_mirror.html" title="previous page">Mirror GHS-composite-S2</a>
+    <a class='left-prev' id="prev-link" href="GHS-composite-S2_explore_mosaic.html" title="previous page">Explore the mosaic</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
