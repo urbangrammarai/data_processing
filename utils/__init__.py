@@ -11,6 +11,7 @@ from datetime import datetime
 from shapely.geometry import box
 from pathlib import Path
 from download import download
+from .terracotta import optimize_rasters
 
 BASE_URL = (
     "http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/"
@@ -18,6 +19,7 @@ BASE_URL = (
     "GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/"
 )
 
+BANDS = [None, "R", "G", "B", "I"]
 
 def get_filesize(url, human_unit=True):
     """
@@ -180,16 +182,17 @@ def parse_tile_meta(tile, base_url=BASE_URL, verbose=True):
     return tile_meta
 
 
-def download_reproject(
+def process_scene(
     row,
     t_crs="EPSG:2770",
     dryrun=False,
     verbose=True,
     check_if_available=True,
     progressbar=True,
+    remove_intermediate=True,
 ):
     """
-    Download a GeoTIFF and reproject
+    Download a GeoTIFF and process (reproject+optimise)
     ...
     
     Arguments
@@ -207,12 +210,15 @@ def download_reproject(
                         [Optional. Default=True] If True, check if `dst_path` exists and exit if so
     progressbar : Boolean
                  [Optional. Default=True] If True, print dynamic progress bar for download
+    remove_intermediate : Boolean
+                          [Optional. Default=True] If True, remove intermediate files created
     
     Returns
     -------
     None
     """
-    tgt_path = row["dst_path"].replace(".tif", "_osgb.tif")
+    osgb_path = row["dst_path"].replace(".tif", "_osgb.tif")
+    optd_path = osgb_path.replace(".tif", "_optimised.tif")
     if verbose:
         print(
             (
@@ -220,29 +226,69 @@ def download_reproject(
                 f"on Tile {row['UTMtile']} - File: {row['dst_path'].split('/')[-1]}"
             )
         )
-    if check_if_available:
-        if Path(tgt_path).is_file():
-            print("\tTarget file available locally, skipping...")
-            return None
+    # Download
+    if dryrun:
+        print(f"Downloading {row['URL']}")
+    else:
+        _ = download(
+            row["URL"],
+            row["dst_path"],
+            verbose=verbose,
+            progressbar=progressbar,
+        )
+    # Reproject
+    run = True
+    if check_if_available and Path(osgb_path).is_file():
+        print("\tReprojected file available locally, skipping reprojection...")
+        run = False
+    if run:
+        cmd = f"rio warp {row['dst_path']} " f"{osgb_path} " f"--threads 16 --dst-crs EPSG:27700"
+        if dryrun:
+            print(cmd)
         else:
-            if dryrun is False:
-                _ = download(
-                    row["URL"],
-                    row["dst_path"],
-                    verbose=verbose,
-                    progressbar=progressbar,
-                )
-    cmd = f"rio warp {row['dst_path']} " f"{tgt_path} " f"--dst-crs EPSG:27700"
-    if dryrun is False:
-        if verbose:
-            print(f"\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | {cmd}")
-        output = subprocess.call(cmd, shell=True)
-    cmd = f"rm {row['dst_path']}"
-    if dryrun is False:
-        if verbose:
-            print(f"\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | {cmd}")
-        output = subprocess.call(cmd, shell=True)
-    return None
+            if verbose:
+                print(f"\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | {cmd}")
+            output = subprocess.call(cmd, shell=True)
+        if remove_intermediate:
+            cmd = f"rm {row['dst_path']}"
+            if dryrun:
+                print(cmd)
+            else:
+                if verbose:
+                    print(f"\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | {cmd}")
+                output = subprocess.call(cmd, shell=True)
+    # Optimise
+    run = True
+    if check_if_available and Path(optd_path).is_file():
+        print("\tOptimised file available locally, skipping optimisation...")
+        run = False
+    if run:
+        if dryrun:
+            print(f"Optimise {osgb_path}")
+        else:
+            if verbose:
+                print("\tSplit-opt.")
+            # Reproject to web mercator
+            wm_path = osgb_path.replace('osgb.tif', 'wm.tif')
+            cmd = f"gdalwarp -t_srs 'EPSG:3857' {osgb_path} {wm_path}"
+            output = subprocess.call(cmd, shell=True)
+            for b in range(1, rasterio.open(osgb_path).count+1):
+                tgt_p = osgb_path.replace('_osgb.tif', f"_wm_{BANDS[b]}.tif")
+                print(f"\t\t{datetime.now().strftime('%d/%m/%Y %H:%M:%S')} | Optimising {tgt_p.split('/')[-1]}")
+
+                # Pull out band
+                cmd = f"gdal_translate -b {b} {wm_path} {tgt_p}"
+                output = subprocess.call(cmd, shell=True)
+                # Optimise
+                folder = "/".join(tgt_p.split("/")[:-1])
+                _ = optimize_rasters([tgt_p],
+                                     folder,
+                                     overwrite=True,
+                                     quiet=True
+                                    )
+            cmd = f"rm {wm_path}"
+            output = subprocess.call(cmd, shell=True)    
+            return None
 
 
 if __name__ == "__main__":

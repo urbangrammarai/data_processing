@@ -1,0 +1,763 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mirror GHS-composite-S2 &#8212; Urban Grammar AI | WP1 - Data Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Explore the mosaic" href="GHS-composite-S2_explore_mosaic.html" />
+    <link rel="prev" title="Build metadata GHS-composite-S2 R2020A" href="GHS-composite-S2_meta.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.svg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Urban Grammar AI | WP1 - Data Processing</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.github.io">
+   Project homepage
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.github.io/spatial_signatures">
+   WP2 - Spatial signatures
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Infrastructure
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/platform.html">
+   Computational platform
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/storage_drives.html">
+   Mount samba drives on linux from the command line
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/dask_cluster.html">
+   Set up ad-hoc Dask cluster
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Vector data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fetch_OS_Data.html">
+   Fetch Ordnance Survey (Open) Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Load_data_from_PostGIS.html">
+   Load data from PostGIS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Network_Consolidation_Test.html">
+   Assessment of the correctness of OpenRoads network
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OpenRoads_Topology.html">
+   Cleaning OpenRoads topology
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Imagery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_meta.html">
+   Build metadata GHS-composite-S2 R2020A
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Mirror GHS-composite-S2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_explore_mosaic.html">
+   Explore the mosaic
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="terracotta_explore.html">
+   Explore Imagery with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     terracotta
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/code/GHS-composite-S2_mirror.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/urbangrammarai/data_processing"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/urbangrammarai/data_processing/master?urlpath=tree/code/GHS-composite-S2_mirror.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#set-up">
+   Set up
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#download-scenes">
+   Download scenes
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-a-column-with-target-file">
+     Generate a column with target file
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#parallel-download-reprojection">
+     Parallel download/reprojection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-vrt-file">
+     Generate
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       .vrt
+      </span>
+     </code>
+     file
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="mirror-ghs-composite-s2">
+<h1>Mirror GHS-composite-S2<a class="headerlink" href="#mirror-ghs-composite-s2" title="Permalink to this headline">¶</a></h1>
+<p>This section covers mirroring locally the UK section of the cloud-free composite Sentinel-2 mosaic created by the European Commission. Official website is over at:</p>
+<blockquote>
+<div><p>https://ghsl.jrc.ec.europa.eu/ghs_s2composite.php</p>
+</div></blockquote>
+<p>And paper for the dataset is:</p>
+<blockquote>
+<div><p>Corbane, C., Politis, P., Kempeneers, P., Simonetti, D., Soille, P., Burger, A., … &amp; Kemper, T. (2020). <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2352340920306314">A global cloud free pixel-based image composite from Sentinel-2 data</a>. <em>Data in Brief</em>, 105737.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;../&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">utils</span>
+<span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="kn">from</span> <span class="nn">dask</span> <span class="kn">import</span> <span class="n">dataframe</span> <span class="k">as</span> <span class="n">dd</span>
+<span class="kn">from</span> <span class="nn">dask.system</span> <span class="kn">import</span> <span class="n">cpu_count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="set-up">
+<h2>Set up<a class="headerlink" href="#set-up" title="Permalink to this headline">¶</a></h2>
+<p>Before accessing and downloading each GeoTIFF, let’s set up the target folder:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">local_dir</span> <span class="o">=</span> <span class="s2">&quot;../../data/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The set of UTM tiles we require for GB are the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gb_utm_tiles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;30U&quot;</span><span class="p">,</span> <span class="s2">&quot;31U&quot;</span><span class="p">,</span> <span class="s2">&quot;29V&quot;</span><span class="p">,</span> <span class="s2">&quot;30V&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The metadata for the grid of tiles and their URLs is available as a GeoJSON. We read the file and exclude every tile that does not cover GB:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">meta_p</span> <span class="o">=</span> <span class="s2">&quot;GHS-composite-S2.geojson&quot;</span>
+<span class="n">meta</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">meta_p</span><span class="p">)</span>
+<span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;UTMtile&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">gb_utm_tiles</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="download-scenes">
+<h2>Download scenes<a class="headerlink" href="#download-scenes" title="Permalink to this headline">¶</a></h2>
+<p>All of the scenes will be stored in the same folder (<code class="docutils literal notranslate"><span class="pre">local_dir</span></code>) in the OSGB 1936 British National Grid (<a class="reference external" href="http://epsg.io/27700"><code class="docutils literal notranslate"><span class="pre">EPSG:EPSG:27700</span></code></a>). This aligns with the rest of data in the project and will also allow setting up a single virtual raster (see next section).</p>
+<div class="section" id="generate-a-column-with-target-file">
+<h3>Generate a column with target file<a class="headerlink" href="#generate-a-column-with-target-file" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;dst_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;URL&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">local_dir</span><span class="o">+</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="parallel-download-reprojection">
+<h3>Parallel download/reprojection<a class="headerlink" href="#parallel-download-reprojection" title="Permalink to this headline">¶</a></h3>
+<p>In parallel:</p>
+<ul class="simple">
+<li><p>Download each file on its each location</p></li>
+<li><p>Reproject to OSGB grid</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ship `meta` to Dask</span>
+<span class="n">dmeta</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">meta</span><span class="p">[[</span><span class="s2">&quot;dst_path&quot;</span><span class="p">,</span> <span class="s2">&quot;UTMtile&quot;</span><span class="p">,</span> <span class="s2">&quot;URL&quot;</span><span class="p">]],</span>
+                       <span class="n">npartitions</span><span class="o">=</span><span class="mi">10</span>
+                      <span class="p">)</span>
+<span class="c1"># Apply in parallel</span>
+<span class="n">dout</span> <span class="o">=</span> <span class="n">dmeta</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">process_scene</span><span class="p">,</span> 
+                   <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                   <span class="n">meta</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Output&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                   <span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">remove_intermediate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">dout</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>05/11/2020 22:09:54 | Working on Tile 29V - File: S2_percentile_UTM_148-0000069888-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+05/11/2020 22:09:54 | Working on Tile 30U - File: S2_percentile_UTM_209-0000023296-0000023296.tif
+05/11/2020 22:09:54 | Working on Tile 29V - File: S2_percentile_UTM_148-0000023296-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+05/11/2020 22:09:54 | Working on Tile 30V - File: S2_percentile_UTM_149-0000069888-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+	Split-opt.
+05/11/2020 22:09:54 | Working on Tile 30U - File: S2_percentile_UTM_209-0000069888-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+05/11/2020 22:09:54 | Working on Tile 30V - File: S2_percentile_UTM_149-0000023296-0000023296.tif
+	Split-opt.
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.05/11/2020 22:09:54 | Working on Tile 31U - File: S2_percentile_UTM_210-0000069888-0000023296.tif
+
+	Reprojected file available locally, skipping reprojection...
+05/11/2020 22:09:54 | Working on Tile 31U - File: S2_percentile_UTM_210-0000023296-0000023296.tif
+
+	Split-opt.
+	Split-opt.
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.	Split-opt.
+
+		05/11/2020 22:10:34 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_R.tif
+		05/11/2020 22:10:52 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_R.tif
+		05/11/2020 22:10:54 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_R.tif
+		05/11/2020 22:10:56 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_R.tif
+		05/11/2020 22:11:19 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_R.tif
+		05/11/2020 22:11:25 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_R.tif
+		05/11/2020 22:11:29 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_R.tif
+		05/11/2020 22:11:31 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_G.tif
+		05/11/2020 22:11:47 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_R.tif
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/rasterio/io.py:133: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  return writer(mempath, &#39;w+&#39;, driver=driver, width=width,
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>		05/11/2020 22:11:50 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_G.tif
+		05/11/2020 22:12:23 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_G.tif
+		05/11/2020 22:12:24 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_G.tif
+		05/11/2020 22:12:43 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_G.tif
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/rasterio/io.py:133: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  return writer(mempath, &#39;w+&#39;, driver=driver, width=width,
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>		05/11/2020 22:12:53 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_B.tif
+		05/11/2020 22:12:53 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_G.tif
+		05/11/2020 22:13:21 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_B.tif
+		05/11/2020 22:13:39 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_G.tif
+		05/11/2020 22:13:57 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_B.tif
+		05/11/2020 22:14:01 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_B.tif
+		05/11/2020 22:14:03 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_G.tif
+		05/11/2020 22:14:05 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_I.tif
+		05/11/2020 22:14:39 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_I.tif
+		05/11/2020 22:14:50 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_B.tif
+		05/11/2020 22:14:50 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_B.tif
+		05/11/2020 22:15:17 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_I.tif
+05/11/2020 22:15:23 | Working on Tile 30V - File: S2_percentile_UTM_149-0000069888-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:15:37 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_I.tif
+		05/11/2020 22:15:59 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_B.tif
+05/11/2020 22:16:03 | Working on Tile 29V - File: S2_percentile_UTM_148-0000069888-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:16:07 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_B.tif
+		05/11/2020 22:16:39 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_I.tif
+		05/11/2020 22:16:39 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_I.tif
+05/11/2020 22:16:39 | Working on Tile 30V - File: S2_percentile_UTM_149-0000023296-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:17:00 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_R.tif
+05/11/2020 22:17:01 | Working on Tile 29V - File: S2_percentile_UTM_148-0000023296-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:17:37 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_I.tif
+		05/11/2020 22:17:42 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_I.tif
+		05/11/2020 22:17:51 | Optimising S2_percentile_UTM_148-0000069888-0000000000_wm_R.tif
+05/11/2020 22:17:55 | Working on Tile 31U - File: S2_percentile_UTM_210-0000069888-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+05/11/2020 22:18:07 | Working on Tile 30U - File: S2_percentile_UTM_209-0000069888-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:18:31 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_R.tif
+		05/11/2020 22:18:32 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_G.tif
+05/11/2020 22:18:47 | Working on Tile 30U - File: S2_percentile_UTM_209-0000023296-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:18:54 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_R.tif
+		05/11/2020 22:19:39 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_R.tif
+05/11/2020 22:19:40 | Working on Tile 31U - File: S2_percentile_UTM_210-0000023296-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:19:56 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_R.tif
+		05/11/2020 22:20:26 | Optimising S2_percentile_UTM_148-0000069888-0000000000_wm_G.tif
+		05/11/2020 22:20:35 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_R.tif
+		05/11/2020 22:20:47 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_B.tif
+		05/11/2020 22:21:07 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_G.tif
+		05/11/2020 22:21:21 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_G.tif
+		05/11/2020 22:21:22 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_G.tif
+		05/11/2020 22:21:37 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_R.tif
+		05/11/2020 22:21:37 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_G.tif
+		05/11/2020 22:22:20 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_G.tif
+		05/11/2020 22:22:41 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_I.tif
+		05/11/2020 22:22:48 | Optimising S2_percentile_UTM_148-0000069888-0000000000_wm_B.tif
+		05/11/2020 22:23:36 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_B.tif
+		05/11/2020 22:23:54 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_G.tif
+		05/11/2020 22:23:55 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_B.tif
+05/11/2020 22:24:03 | Working on Tile 30V - File: S2_percentile_UTM_149-0000046592-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:24:19 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_B.tif
+		05/11/2020 22:24:43 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_B.tif
+		05/11/2020 22:24:55 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_R.tif
+		05/11/2020 22:25:14 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_B.tif
+		05/11/2020 22:25:14 | Optimising S2_percentile_UTM_148-0000069888-0000000000_wm_I.tif
+		05/11/2020 22:25:55 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_I.tif
+		05/11/2020 22:26:24 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_I.tif
+		05/11/2020 22:26:34 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_G.tif
+		05/11/2020 22:26:34 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_B.tif
+		05/11/2020 22:27:04 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_I.tif
+		05/11/2020 22:27:04 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_I.tif
+05/11/2020 22:27:42 | Working on Tile 31U - File: S2_percentile_UTM_210-0000046592-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+05/11/2020 22:27:52 | Working on Tile 29V - File: S2_percentile_UTM_148-0000046592-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:28:08 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_I.tif
+		05/11/2020 22:28:14 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_B.tif
+05/11/2020 22:28:38 | Working on Tile 30V - File: S2_percentile_UTM_149-0000000000-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:28:54 | Optimising S2_percentile_UTM_148-0000046592-0000023296_wm_R.tif
+05/11/2020 22:29:10 | Working on Tile 30U - File: S2_percentile_UTM_209-0000046592-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:29:15 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_I.tif
+		05/11/2020 22:29:28 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_R.tif
+		05/11/2020 22:29:36 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_I.tif
+		05/11/2020 22:29:38 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_R.tif
+05/11/2020 22:29:49 | Working on Tile 29V - File: S2_percentile_UTM_148-0000000000-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:30:13 | Optimising S2_percentile_UTM_148-0000046592-0000023296_wm_G.tif
+05/11/2020 22:30:27 | Working on Tile 30U - File: S2_percentile_UTM_209-0000000000-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:30:27 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_G.tif
+		05/11/2020 22:30:33 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_R.tif
+		05/11/2020 22:30:55 | Optimising S2_percentile_UTM_209-0000046592-0000023296_wm_R.tif
+05/11/2020 22:31:03 | Working on Tile 30V - File: S2_percentile_UTM_149-0000046592-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:31:22 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_G.tif
+		05/11/2020 22:31:26 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_G.tif
+		05/11/2020 22:31:42 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_B.tif
+		05/11/2020 22:31:46 | Optimising S2_percentile_UTM_148-0000046592-0000023296_wm_B.tif
+		05/11/2020 22:32:01 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_R.tif
+		05/11/2020 22:32:14 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_B.tif
+05/11/2020 22:32:25 | Working on Tile 31U - File: S2_percentile_UTM_210-0000000000-0000023296.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:32:31 | Optimising S2_percentile_UTM_209-0000046592-0000023296_wm_G.tif
+		05/11/2020 22:32:40 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_I.tif
+		05/11/2020 22:32:57 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_R.tif
+		05/11/2020 22:33:03 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_I.tif
+		05/11/2020 22:33:16 | Optimising S2_percentile_UTM_148-0000046592-0000023296_wm_I.tif
+		05/11/2020 22:33:29 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_B.tif
+05/11/2020 22:33:43 | Working on Tile 30V - File: S2_percentile_UTM_149-0000000000-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:33:50 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_G.tif
+		05/11/2020 22:33:50 | Optimising S2_percentile_UTM_210-0000000000-0000023296_wm_R.tif
+05/11/2020 22:33:51 | Working on Tile 29V - File: S2_percentile_UTM_148-0000000000-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:34:42 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_R.tif
+		05/11/2020 22:34:44 | Optimising S2_percentile_UTM_209-0000046592-0000023296_wm_B.tif
+05/11/2020 22:35:08 | Working on Tile 29V - File: S2_percentile_UTM_148-0000046592-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:35:18 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_R.tif
+		05/11/2020 22:35:50 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_G.tif
+		05/11/2020 22:35:51 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_I.tif
+		05/11/2020 22:35:52 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_B.tif
+		05/11/2020 22:35:57 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_G.tif
+		05/11/2020 22:36:24 | Optimising S2_percentile_UTM_210-0000000000-0000023296_wm_G.tif
+		05/11/2020 22:36:36 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_G.tif
+		05/11/2020 22:36:57 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_B.tif
+		05/11/2020 22:36:58 | Optimising S2_percentile_UTM_209-0000046592-0000023296_wm_I.tif
+		05/11/2020 22:37:04 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_R.tif
+05/11/2020 22:37:42 | Working on Tile 31U - File: S2_percentile_UTM_210-0000046592-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:38:15 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_I.tif
+		05/11/2020 22:38:18 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_B.tif
+		05/11/2020 22:38:19 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_I.tif
+05/11/2020 22:38:31 | Working on Tile 30U - File: S2_percentile_UTM_209-0000046592-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:38:45 | Optimising S2_percentile_UTM_210-0000000000-0000023296_wm_B.tif
+		05/11/2020 22:38:49 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_B.tif
+05/11/2020 22:39:19 | Working on Tile 30U - File: S2_percentile_UTM_209-0000000000-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:39:24 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_R.tif
+		05/11/2020 22:40:11 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_G.tif
+		05/11/2020 22:40:20 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_R.tif
+		05/11/2020 22:40:28 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_I.tif
+		05/11/2020 22:40:48 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_I.tif
+		05/11/2020 22:41:04 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_R.tif
+		05/11/2020 22:41:04 | Optimising S2_percentile_UTM_210-0000000000-0000023296_wm_I.tif
+		05/11/2020 22:41:23 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_G.tif
+		05/11/2020 22:42:22 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_G.tif
+		05/11/2020 22:42:49 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_B.tif		05/11/2020 22:42:49 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_G.tif
+
+05/11/2020 22:43:07 | Working on Tile 31U - File: S2_percentile_UTM_210-0000000000-0000000000.tif
+Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
+	Reprojected file available locally, skipping reprojection...
+	Split-opt.
+		05/11/2020 22:43:35 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_B.tif
+		05/11/2020 22:43:55 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_B.tif
+		05/11/2020 22:44:15 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_B.tif
+		05/11/2020 22:44:20 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_R.tif
+		05/11/2020 22:44:49 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_I.tif
+		05/11/2020 22:44:58 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_I.tif
+		05/11/2020 22:45:34 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_I.tif
+		05/11/2020 22:45:41 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_I.tif
+		05/11/2020 22:46:04 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_G.tif
+		05/11/2020 22:47:12 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_B.tif
+		05/11/2020 22:48:08 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_I.tif
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="generate-vrt-file">
+<h3>Generate <code class="docutils literal notranslate"><span class="pre">.vrt</span></code> file<a class="headerlink" href="#generate-vrt-file" title="Permalink to this headline">¶</a></h3>
+<p><strong>NOTE</strong> - The command below does not seem to work from the notebook. If you run the equivalent from the terminal without backtracking folders (<code class="docutils literal notranslate"><span class="pre">../</span></code>) it should work.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span> gdalbuildvrt <span class="nv">$local_dir</span><span class="s2">&quot;GHS-composite-S2.vrt&quot;</span> <span class="nv">$local_dir</span><span class="s2">&quot;S2_percentile_UTM_*_osgb.tif&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./code"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="GHS-composite-S2_meta.html" title="previous page">Build metadata GHS-composite-S2 R2020A</a>
+    <a class='right-next' id="next-link" href="GHS-composite-S2_explore_mosaic.html" title="next page">Explore the mosaic</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dani Arribas-Bel, Martin Fleischmann<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
