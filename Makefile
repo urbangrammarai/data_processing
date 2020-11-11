@@ -5,6 +5,7 @@ build-book:
 	cp -r infrastructure book/
 	cp -r vector_data book/code
 	cp -r imagery/* book/code
+    cp -r functional_data/* book/code
 	jupyter-book build book
 	cp -r book/_build/html docs
 	rm -rf book/code
