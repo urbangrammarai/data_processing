@@ -400,11 +400,6 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cultural-venues">
-   Cultural venues
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#corine-land-cover">
    Corine land cover
   </a>
@@ -1785,97 +1780,36 @@ Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/p
 <p>Dowload workplace population data from scottish census and english census, combine together and link to geometry.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://www.scotlandscensus.gov.uk/documents/additional_tables/WP101SC.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://www.scotlandscensus.gov.uk/documents/additional_tables/WP605SCwz.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">HTTPError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="nn">/opt/conda/lib/python3.7/site-packages/download/download.py</span> in <span class="ni">_fetch_file</span><span class="nt">(url, file_name, resume, hash_, timeout, progressbar, verbose)</span>
-<span class="g g-Whitespace">    </span><span class="mi">207</span>             <span class="n">req</span> <span class="o">=</span> <span class="n">request_agent</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">208</span>             <span class="n">u</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">209</span>             <span class="n">u</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.scotlandscensus.gov.uk/documents/additional_tables/WP605SCwz.csv (234 kB)
 
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">urlopen</span><span class="nt">(url, data, timeout, cafile, capath, cadefault, context)</span>
-<span class="g g-Whitespace">    </span><span class="mi">221</span>         <span class="n">opener</span> <span class="o">=</span> <span class="n">_opener</span>
-<span class="ne">--&gt; </span><span class="mi">222</span>     <span class="k">return</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">223</span> 
+file_sizes: 100%|████████████████████████████| 239k/239k [00:00&lt;00:00, 2.47MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1314_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=TYPE262&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1314_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=TYPE262 (5.1 MB)
 
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">open</span><span class="nt">(self, fullurl, data, timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">530</span>             <span class="n">meth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">processor</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">531</span>             <span class="n">response</span> <span class="o">=</span> <span class="n">meth</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">532</span> 
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">http_response</span><span class="nt">(self, request, response)</span>
-<span class="g g-Whitespace">    </span><span class="mi">640</span>             <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">641</span>                 <span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">642</span> 
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">error</span><span class="nt">(self, proto, *args)</span>
-<span class="g g-Whitespace">    </span><span class="mi">562</span>         <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">proto</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span> <span class="o">+</span> <span class="n">args</span>
-<span class="ne">--&gt; </span><span class="mi">563</span>         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_chain</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">564</span>         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">_call_chain</span><span class="nt">(self, chain, kind, meth_name, *args)</span>
-<span class="g g-Whitespace">    </span><span class="mi">502</span>             <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">503</span>             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">504</span>             <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">http_error_302</span><span class="nt">(self, req, fp, code, msg, headers)</span>
-<span class="g g-Whitespace">    </span><span class="mi">754</span> 
-<span class="ne">--&gt; </span><span class="mi">755</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">req</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">756</span> 
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">open</span><span class="nt">(self, fullurl, data, timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">530</span>             <span class="n">meth</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">processor</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">531</span>             <span class="n">response</span> <span class="o">=</span> <span class="n">meth</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">532</span> 
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">http_response</span><span class="nt">(self, request, response)</span>
-<span class="g g-Whitespace">    </span><span class="mi">640</span>             <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-<span class="ne">--&gt; </span><span class="mi">641</span>                 <span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">642</span> 
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">error</span><span class="nt">(self, proto, *args)</span>
-<span class="g g-Whitespace">    </span><span class="mi">568</span>             <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="s1">&#39;http_error_default&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">orig_args</span>
-<span class="ne">--&gt; </span><span class="mi">569</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_chain</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">570</span> 
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">_call_chain</span><span class="nt">(self, chain, kind, meth_name, *args)</span>
-<span class="g g-Whitespace">    </span><span class="mi">502</span>             <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">503</span>             <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">504</span>             <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-
-<span class="nn">/opt/conda/lib/python3.7/urllib/request.py</span> in <span class="ni">http_error_default</span><span class="nt">(self, req, fp, code, msg, hdrs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">648</span>     <span class="k">def</span> <span class="nf">http_error_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">649</span>         <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">full_url</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">650</span> 
-
-<span class="ne">HTTPError</span>: HTTP Error 404: Not Found
-
-<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
-
-<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">43</span><span class="o">-</span><span class="n">f12c25afda1c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://www.scotlandscensus.gov.uk/documents/additional_tables/WP102SC.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland.csv&#39;</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="nn">/opt/conda/lib/python3.7/site-packages/download/download.py</span> in <span class="ni">download</span><span class="nt">(url, path, kind, progressbar, replace, timeout, verbose)</span>
-<span class="g g-Whitespace">    </span><span class="mi">122</span>             <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span>             <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">124</span>             <span class="n">progressbar</span><span class="o">=</span><span class="n">progressbar</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">125</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">126</span>         <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Successfully downloaded file to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-
-<span class="nn">/opt/conda/lib/python3.7/site-packages/download/download.py</span> in <span class="ni">_fetch_file</span><span class="nt">(url, file_name, resume, hash_, timeout, progressbar, verbose)</span>
-<span class="g g-Whitespace">    </span><span class="mi">277</span>         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">278</span>             <span class="s2">&quot;Error while fetching file </span><span class="si">%s</span><span class="s2">.&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">279</span>             <span class="s2">&quot; Dataset fetching aborted.</span><span class="se">\n</span><span class="s2">Error: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">ee</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">280</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">281</span> 
-
-<span class="ne">RuntimeError</span>: Error while fetching file http://www.scotlandscensus.gov.uk/documents/additional_tables/WP102SC.csv. Dataset fetching aborted.
-<span class="ne">Error</span>: HTTP Error 404: Not Found
+file_sizes: 100%|██████████████████████████| 5.35M/5.35M [00:00&lt;00:00, 7.41MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv&#39;
 </pre></div>
 </div>
 </div>
@@ -2530,10 +2464,505 @@ import warnings; warnings.filterwarnings(&#39;ignore&#39;, message=&#39;.*initia
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">wpz_ind_s</span> <span class="o">=</span> <span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">5378</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;Unnamed&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">])</span>
+<span class="n">wpz_ind_s</span>
+</pre></div>
 </div>
-<div class="section" id="cultural-venues">
-<h2>Cultural venues<a class="headerlink" href="#cultural-venues" title="Permalink to this headline">¶</a></h2>
-<p>Download cinemas and theatres from OSM based on chunks, remove duplicates, reproject to OSGB.</p>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>2011 Workplace Zone</th>
+      <th>All workplace population aged 16 to 74</th>
+      <th>A, B, D, E. Agriculture, energy and water</th>
+      <th>C. Manufacturing</th>
+      <th>F. Construction</th>
+      <th>G, I. Distribution, hotels and restaurants</th>
+      <th>H, J. Transport and communication</th>
+      <th>K, L, M, N. Financial, real estate, professional and administrative activities</th>
+      <th>O,P,Q. Public administration, education and health</th>
+      <th>R, S, T, U. Other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>S34000001</td>
+      <td>269</td>
+      <td>4</td>
+      <td>9</td>
+      <td>1</td>
+      <td>107</td>
+      <td>2</td>
+      <td>115</td>
+      <td>23</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S34000002</td>
+      <td>1,270</td>
+      <td>233</td>
+      <td>55</td>
+      <td>27</td>
+      <td>96</td>
+      <td>22</td>
+      <td>775</td>
+      <td>49</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>S34000003</td>
+      <td>272</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>98</td>
+      <td>2</td>
+      <td>107</td>
+      <td>50</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>S34000004</td>
+      <td>206</td>
+      <td>0</td>
+      <td>3</td>
+      <td>0</td>
+      <td>98</td>
+      <td>2</td>
+      <td>19</td>
+      <td>4</td>
+      <td>80</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>S34000005</td>
+      <td>432</td>
+      <td>0</td>
+      <td>5</td>
+      <td>5</td>
+      <td>111</td>
+      <td>12</td>
+      <td>91</td>
+      <td>192</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5374</th>
+      <td>S34005371</td>
+      <td>257</td>
+      <td>2</td>
+      <td>6</td>
+      <td>11</td>
+      <td>39</td>
+      <td>9</td>
+      <td>29</td>
+      <td>125</td>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>5375</th>
+      <td>S34005372</td>
+      <td>218</td>
+      <td>0</td>
+      <td>8</td>
+      <td>6</td>
+      <td>39</td>
+      <td>5</td>
+      <td>44</td>
+      <td>104</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>5376</th>
+      <td>S34005373</td>
+      <td>1,572</td>
+      <td>14</td>
+      <td>194</td>
+      <td>16</td>
+      <td>111</td>
+      <td>508</td>
+      <td>199</td>
+      <td>510</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>5377</th>
+      <td>S34005374</td>
+      <td>218</td>
+      <td>1</td>
+      <td>118</td>
+      <td>5</td>
+      <td>11</td>
+      <td>12</td>
+      <td>53</td>
+      <td>16</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5378</th>
+      <td>S34005375</td>
+      <td>348</td>
+      <td>5</td>
+      <td>20</td>
+      <td>27</td>
+      <td>50</td>
+      <td>47</td>
+      <td>65</td>
+      <td>97</td>
+      <td>37</td>
+    </tr>
+  </tbody>
+</table>
+<p>5375 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;2011 Workplace Zone&#39;, &#39;All workplace population aged 16 to 74&#39;,
+       &#39;A, B, D, E. Agriculture, energy and water&#39;, &#39;C. Manufacturing&#39;,
+       &#39;F. Construction&#39;, &#39;G, I. Distribution, hotels and restaurants&#39;,
+       &#39;H, J. Transport and communication&#39;,
+       &#39;K, L, M, N. Financial, real estate, professional and administrative activities&#39;,
+       &#39;O,P,Q. Public administration, education and health&#39;,
+       &#39;R, S, T, U. Other&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_ew</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv&#39;</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;date&#39;, &#39;geography&#39;, &#39;geography code&#39;,
+       &#39;Industry: All categories: Industry; measures: Value&#39;,
+       &#39;Industry: A Agriculture, forestry and fishing; measures: Value&#39;,
+       &#39;Industry: B Mining and quarrying; measures: Value&#39;,
+       &#39;Industry: C Manufacturing; measures: Value&#39;,
+       &#39;Industry: C10-12 Manufacturing: Food, beverages and tobacco; measures: Value&#39;,
+       &#39;Industry: C13-15 Manufacturing: Textiles, wearing apparel and leather and related products; measures: Value&#39;,
+       &#39;Industry: C16,17 Manufacturing: Wood, paper and paper products; measures: Value&#39;,
+       &#39;Industry: C19-22 Manufacturing: Chemicals, chemical products, rubber and plastic; measures: Value&#39;,
+       &#39;Industry: C23-25 Manufacturing: Low tech; measures: Value&#39;,
+       &#39;Industry: C26-30 Manufacturing: High tech; measures: Value&#39;,
+       &#39;Industry: C18, 31, 32 Manufacturing: Other; measures: Value&#39;,
+       &#39;Industry: D Electricity, gas, steam and air conditioning supply; measures: Value&#39;,
+       &#39;Industry: E Water supply, sewerage, waste management and remediation activities; measures: Value&#39;,
+       &#39;Industry: F Construction; measures: Value&#39;,
+       &#39;Industry: G Wholesale and retail trade; repair of motor vehicles and motor cycles; measures: Value&#39;,
+       &#39;Industry: H Transport and storage; measures: Value&#39;,
+       &#39;Industry: I Accommodation and food service activities; measures: Value&#39;,
+       &#39;Industry: J Information and communication; measures: Value&#39;,
+       &#39;Industry: K Financial and insurance activities; measures: Value&#39;,
+       &#39;Industry: L Real estate activities; measures: Value&#39;,
+       &#39;Industry: M Professional, scientific and technical activities; measures: Value&#39;,
+       &#39;Industry: N Administrative and support service activities; measures: Value&#39;,
+       &#39;Industry: O Public administration and defence; compulsory social security; measures: Value&#39;,
+       &#39;Industry: P Education; measures: Value&#39;,
+       &#39;Industry: Q Human health and social work activities; measures: Value&#39;,
+       &#39;Industry: R,S Arts, entertainment and recreation; other service activities; measures: Value&#39;,
+       &#39;Industry: T Activities of households as employers; undifferentiated goods - and services - producing activities of households for own use; measures: Value&#39;,
+       &#39;Industry: U Activities of extraterritorial organisations and bodies; measures: Value&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;A, B, D, E. Agriculture, energy and water&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;C. Manufacturing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;F. Construction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;G, I. Distribution, hotels and restaurants&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;H, J. Transport and communication&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;K, L, M, N. Financial, real estate, professional and administrative activities&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;O,P,Q. Public administration, education and health&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;R, S, T, U. Other&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="s1">&#39;geography code&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;2011 Workplace Zone&#39;</span><span class="p">:</span> <span class="s1">&#39;geography code&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;All workplace population aged 16 to 74&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span> <span class="o">=</span> <span class="n">wpz_geom</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">wpz</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;WZ11CD&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;geography code&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">wpz_merged</span> <span class="o">=</span> <span class="n">wpz_merged</span><span class="p">[</span><span class="o">~</span><span class="n">wpz_merged</span><span class="o">.</span><span class="n">WZ11CD</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span> <span class="o">=</span> <span class="n">wpz_merged</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="nb">list</span><span class="p">(</span><span class="n">wpz</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]]</span>
+<span class="n">wpz_merged</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;geography code&#39;, &#39;A, B, D, E. Agriculture, energy and water&#39;,
+       &#39;C. Manufacturing&#39;, &#39;F. Construction&#39;,
+       &#39;G, I. Distribution, hotels and restaurants&#39;,
+       &#39;H, J. Transport and communication&#39;,
+       &#39;K, L, M, N. Financial, real estate, professional and administrative activities&#39;,
+       &#39;O,P,Q. Public administration, education and health&#39;,
+       &#39;R, S, T, U. Other&#39;, &#39;geometry&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_merged</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">wpz_merged</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_merged</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>geography code</th>
+      <th>A, B, D, E. Agriculture, energy and water</th>
+      <th>C. Manufacturing</th>
+      <th>F. Construction</th>
+      <th>G, I. Distribution, hotels and restaurants</th>
+      <th>H, J. Transport and communication</th>
+      <th>K, L, M, N. Financial, real estate, professional and administrative activities</th>
+      <th>O,P,Q. Public administration, education and health</th>
+      <th>R, S, T, U. Other</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>E33000001</td>
+      <td>32.0</td>
+      <td>64.0</td>
+      <td>172.0</td>
+      <td>115.0</td>
+      <td>37.0</td>
+      <td>213.0</td>
+      <td>389.0</td>
+      <td>4.0</td>
+      <td>POLYGON ((426363.000 563750.000, 426477.836 56...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>E33000002</td>
+      <td>0.0</td>
+      <td>10.0</td>
+      <td>3.0</td>
+      <td>113.0</td>
+      <td>50.0</td>
+      <td>33.0</td>
+      <td>121.0</td>
+      <td>5.0</td>
+      <td>POLYGON ((426497.000 563046.000, 426487.000 56...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>E33000003</td>
+      <td>5.0</td>
+      <td>370.0</td>
+      <td>81.0</td>
+      <td>184.0</td>
+      <td>114.0</td>
+      <td>155.0</td>
+      <td>39.0</td>
+      <td>15.0</td>
+      <td>POLYGON ((426786.032 563536.860, 426602.875 56...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>E33000004</td>
+      <td>21.0</td>
+      <td>298.0</td>
+      <td>50.0</td>
+      <td>47.0</td>
+      <td>18.0</td>
+      <td>48.0</td>
+      <td>13.0</td>
+      <td>8.0</td>
+      <td>POLYGON ((427052.405 563318.499, 427011.334 56...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>E33000005</td>
+      <td>2.0</td>
+      <td>84.0</td>
+      <td>12.0</td>
+      <td>61.0</td>
+      <td>106.0</td>
+      <td>85.0</td>
+      <td>346.0</td>
+      <td>16.0</td>
+      <td>POLYGON ((425818.791 562796.341, 425806.657 56...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>58948</th>
+      <td>W35002706</td>
+      <td>2.0</td>
+      <td>18.0</td>
+      <td>11.0</td>
+      <td>21.0</td>
+      <td>8.0</td>
+      <td>29.0</td>
+      <td>83.0</td>
+      <td>11.0</td>
+      <td>POLYGON ((318762.325 174960.625, 318647.719 17...</td>
+    </tr>
+    <tr>
+      <th>58949</th>
+      <td>W35002707</td>
+      <td>1.0</td>
+      <td>24.0</td>
+      <td>11.0</td>
+      <td>40.0</td>
+      <td>23.0</td>
+      <td>95.0</td>
+      <td>78.0</td>
+      <td>21.0</td>
+      <td>POLYGON ((319066.795 174842.341, 319078.000 17...</td>
+    </tr>
+    <tr>
+      <th>58950</th>
+      <td>W35002708</td>
+      <td>6.0</td>
+      <td>14.0</td>
+      <td>16.0</td>
+      <td>26.0</td>
+      <td>67.0</td>
+      <td>134.0</td>
+      <td>156.0</td>
+      <td>28.0</td>
+      <td>POLYGON ((319154.263 175562.432, 319108.261 17...</td>
+    </tr>
+    <tr>
+      <th>58951</th>
+      <td>W35002709</td>
+      <td>15.0</td>
+      <td>96.0</td>
+      <td>207.0</td>
+      <td>116.0</td>
+      <td>31.0</td>
+      <td>70.0</td>
+      <td>183.0</td>
+      <td>29.0</td>
+      <td>POLYGON ((318768.685 175656.549, 319035.000 17...</td>
+    </tr>
+    <tr>
+      <th>58952</th>
+      <td>W35002710</td>
+      <td>0.0</td>
+      <td>20.0</td>
+      <td>23.0</td>
+      <td>39.0</td>
+      <td>46.0</td>
+      <td>75.0</td>
+      <td>195.0</td>
+      <td>40.0</td>
+      <td>MULTIPOLYGON (((318537.460 174145.029, 318441....</td>
+    </tr>
+  </tbody>
+</table>
+<p>58953 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/workplace_by_industry_gb.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
