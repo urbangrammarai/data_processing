@@ -11,6 +11,7 @@
   sections:
     - file: infrastructure/platform
     - file: infrastructure/storage_drives.md
+    - file: infrastructure/kubernetes_cluster
     - file: infrastructure/dask_cluster
 
 - chapter: Morphological data
