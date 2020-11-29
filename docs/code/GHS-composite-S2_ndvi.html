@@ -363,6 +363,35 @@
 <p>Since we will run some computations on a Dask cluster, let’s set it up first:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span> cat ../../worker-spec.yml
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>kind: Pod
+metadata:
+  labels:
+    foo: bar
+spec:
+  restartPolicy: Never
+  containers:
+  - image: darribas/gds_py:6.0alpha1
+    imagePullPolicy: IfNotPresent
+    args: [start.sh, dask-worker, --nthreads, &#39;2&#39;, --no-dashboard, --memory-limit, 2GB, --death-timeout, &#39;60&#39;]
+    name: dask
+    resources:
+      limits:
+        cpu: &quot;1&quot;
+        memory: 2G
+      requests:
+        cpu: &quot;1&quot;
+        memory: 2G
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask_kubernetes</span> <span class="kn">import</span> <span class="n">KubeCluster</span>
 <span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">import</span> <span class="nn">dask.array</span> <span class="k">as</span> <span class="nn">da</span>
@@ -370,7 +399,7 @@
 <span class="c1"># Set up cluster</span>
 <span class="n">cluster</span> <span class="o">=</span> <span class="n">KubeCluster</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s1">&#39;../../worker-spec.yml&#39;</span><span class="p">)</span>
 <span class="c1"># Provision with up to 30 pods</span>
-<span class="n">cluster</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">cluster</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="c1"># Connect Dask to the cluster</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
 </pre></div>
@@ -378,9 +407,9 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>distributed.scheduler - INFO - Clear task state
-distributed.scheduler - INFO -   Scheduler at: tcp://138.253.73.24:43517
+distributed.scheduler - INFO -   Scheduler at: tcp://138.253.73.24:37297
 distributed.scheduler - INFO -   dashboard at:                     :8787
-distributed.scheduler - INFO - Receive client connection: Client-81db27d0-325c-11eb-8346-80e82cd20b5e
+distributed.scheduler - INFO - Receive client connection: Client-106cf4b4-3296-11eb-8594-80e82cd20b5e
 distributed.core - INFO - Starting established connection
 </pre></div>
 </div>
@@ -393,15 +422,26 @@ distributed.core - INFO - Starting established connection
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.210:36721&#39;, name: 36, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.210:36721
+</pre></div>
+</div>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "732c4e5602114b5a92b25ebbb64998ef", "version_major": 2, "version_minor": 0}
-</script></div>
+{"model_id": "f9db4156184d43f99621e2288a03b83b", "version_major": 2, "version_minor": 0}
+</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>distributed.core - INFO - Starting established connection
+</pre></div>
+</div>
+</div>
 </div>
 <p>Bring on other libs we’ll use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">fsspec</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">geopandas</span>
 <span class="kn">import</span> <span class="nn">rioxarray</span><span class="o">,</span> <span class="nn">xarray</span>
+<span class="kn">from</span> <span class="nn">dask</span> <span class="kn">import</span> <span class="n">dataframe</span> <span class="k">as</span> <span class="n">dd</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">percentile</span>
 </pre></div>
 </div>
@@ -881,7 +921,7 @@ Attributes:
     _FillValue:    0.0
     scale_factor:  1.0
     add_offset:    0.0
-    grid_mapping:  spatial_ref</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>band</span>: 4</li><li><span class='xr-has-index'>y</span>: 182437</li><li><span class='xr-has-index'>x</span>: 121865</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-98b78903-dda0-4be8-bfe4-a6f51c8a5567' class='xr-array-in' type='checkbox' checked><label for='section-98b78903-dda0-4be8-bfe4-a6f51c8a5567' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>dask.array&lt;chunksize=(4, 1280, 1280), meta=np.ndarray&gt;</span></div><div class='xr-array-data'><table>
+    grid_mapping:  spatial_ref</pre><div class='xr-wrap' hidden><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-array-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>band</span>: 4</li><li><span class='xr-has-index'>y</span>: 182437</li><li><span class='xr-has-index'>x</span>: 121865</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-a42f0b2b-3f09-4f33-ae49-fa326c503afb' class='xr-array-in' type='checkbox' checked><label for='section-a42f0b2b-3f09-4f33-ae49-fa326c503afb' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>dask.array&lt;chunksize=(4, 1280, 1280), meta=np.ndarray&gt;</span></div><div class='xr-array-data'><table>
 <tr>
 <td>
 <table>
@@ -1011,9 +1051,9 @@ Attributes:
 </svg>
 </td>
 </tr>
-</table></div></div></li><li class='xr-section-item'><input id='section-708dc8d4-7ec7-4a53-a42b-9d282ae50384' class='xr-section-summary-in' type='checkbox'  checked><label for='section-708dc8d4-7ec7-4a53-a42b-9d282ae50384' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>band</span></div><div class='xr-var-dims'>(band)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4</div><input id='attrs-5d089c35-bbbf-4df2-adcd-c7e4643498ba' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5d089c35-bbbf-4df2-adcd-c7e4643498ba' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-cc984049-7e58-4894-834c-4d43d35274f1' class='xr-var-data-in' type='checkbox'><label for='data-cc984049-7e58-4894-834c-4d43d35274f1' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1, 2, 3, 4])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>y</span></div><div class='xr-var-dims'>(y)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>1.612e+06 1.612e+06 ... -2.136e+05</div><input id='attrs-9aea7468-f70e-4e66-985e-07f36088e931' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9aea7468-f70e-4e66-985e-07f36088e931' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8a28cc8d-8a8c-465a-b9d6-f6f463aad241' class='xr-var-data-in' type='checkbox'><label for='data-8a28cc8d-8a8c-465a-b9d6-f6f463aad241' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1612232.376629, 1612222.368727, 1612212.360825, ..., -213549.231322,
-       -213559.239224, -213569.247126])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>x</span></div><div class='xr-var-dims'>(x)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-2.228e+05 -2.228e+05 ... 9.968e+05</div><input id='attrs-2b84443f-c34e-41de-8196-070b969f5d49' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2b84443f-c34e-41de-8196-070b969f5d49' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ff683a4a-2014-46c3-925a-1aa99a997c5a' class='xr-var-data-in' type='checkbox'><label for='data-ff683a4a-2014-46c3-925a-1aa99a997c5a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-222818.73324 , -222808.725338, -222798.717436, ...,  996764.229958,
-        996774.23786 ,  996784.245762])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-3d48c3b3-52ad-4fbe-8d41-c052f3b0b12d' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-3d48c3b3-52ad-4fbe-8d41-c052f3b0b12d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b2f83734-8aa3-4d6a-b1e7-2c81e1ad2a67' class='xr-var-data-in' type='checkbox'><label for='data-b2f83734-8aa3-4d6a-b1e7-2c81e1ad2a67' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>crs_wkt :</span></dt><dd>PROJCRS[&quot;OSGB 1936 / British National Grid&quot;,BASEGEOGCRS[&quot;OSGB 1936&quot;,DATUM[&quot;OSGB 1936&quot;,ELLIPSOID[&quot;Airy 1830&quot;,6377563.396,299.3249646,LENGTHUNIT[&quot;metre&quot;,1]]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],ID[&quot;EPSG&quot;,4277]],CONVERSION[&quot;unnamed&quot;,METHOD[&quot;Transverse Mercator&quot;,ID[&quot;EPSG&quot;,9807]],PARAMETER[&quot;Latitude of natural origin&quot;,49,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8801]],PARAMETER[&quot;Longitude of natural origin&quot;,-2,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8802]],PARAMETER[&quot;Scale factor at natural origin&quot;,0.9996012717,SCALEUNIT[&quot;unity&quot;,1],ID[&quot;EPSG&quot;,8805]],PARAMETER[&quot;False easting&quot;,400000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8806]],PARAMETER[&quot;False northing&quot;,-100000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8807]]],CS[Cartesian,2],AXIS[&quot;easting&quot;,east,ORDER[1],LENGTHUNIT[&quot;metre&quot;,1]],AXIS[&quot;northing&quot;,north,ORDER[2],LENGTHUNIT[&quot;metre&quot;,1]],ID[&quot;EPSG&quot;,27700]]</dd><dt><span>semi_major_axis :</span></dt><dd>6377563.396</dd><dt><span>semi_minor_axis :</span></dt><dd>6356256.909237285</dd><dt><span>inverse_flattening :</span></dt><dd>299.3249646</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>Airy 1830</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>OSGB 1936</dd><dt><span>horizontal_datum_name :</span></dt><dd>OSGB 1936</dd><dt><span>projected_crs_name :</span></dt><dd>OSGB 1936 / British National Grid</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>49.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>-2.0</dd><dt><span>false_easting :</span></dt><dd>400000.0</dd><dt><span>false_northing :</span></dt><dd>-100000.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996012717</dd><dt><span>spatial_ref :</span></dt><dd>PROJCRS[&quot;OSGB 1936 / British National Grid&quot;,BASEGEOGCRS[&quot;OSGB 1936&quot;,DATUM[&quot;OSGB 1936&quot;,ELLIPSOID[&quot;Airy 1830&quot;,6377563.396,299.3249646,LENGTHUNIT[&quot;metre&quot;,1]]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],ID[&quot;EPSG&quot;,4277]],CONVERSION[&quot;unnamed&quot;,METHOD[&quot;Transverse Mercator&quot;,ID[&quot;EPSG&quot;,9807]],PARAMETER[&quot;Latitude of natural origin&quot;,49,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8801]],PARAMETER[&quot;Longitude of natural origin&quot;,-2,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8802]],PARAMETER[&quot;Scale factor at natural origin&quot;,0.9996012717,SCALEUNIT[&quot;unity&quot;,1],ID[&quot;EPSG&quot;,8805]],PARAMETER[&quot;False easting&quot;,400000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8806]],PARAMETER[&quot;False northing&quot;,-100000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8807]]],CS[Cartesian,2],AXIS[&quot;easting&quot;,east,ORDER[1],LENGTHUNIT[&quot;metre&quot;,1]],AXIS[&quot;northing&quot;,north,ORDER[2],LENGTHUNIT[&quot;metre&quot;,1]],ID[&quot;EPSG&quot;,27700]]</dd><dt><span>GeoTransform :</span></dt><dd>-222823.73719089525 10.007902079383749 0.0 1612237.380579703 0.0 -10.007902079383749</dd></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c1e31d40-3015-49f3-ac74-dface907c195' class='xr-section-summary-in' type='checkbox'  checked><label for='section-c1e31d40-3015-49f3-ac74-dface907c195' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>_FillValue :</span></dt><dd>0.0</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>grid_mapping :</span></dt><dd>spatial_ref</dd></dl></div></li></ul></div></div></div></div>
+</table></div></div></li><li class='xr-section-item'><input id='section-64c8bd70-8a66-48fa-a2be-06956d3f066b' class='xr-section-summary-in' type='checkbox'  checked><label for='section-64c8bd70-8a66-48fa-a2be-06956d3f066b' class='xr-section-summary' >Coordinates: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>band</span></div><div class='xr-var-dims'>(band)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>1 2 3 4</div><input id='attrs-85160c02-b5f9-4ba3-a010-d8f30052054b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-85160c02-b5f9-4ba3-a010-d8f30052054b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a1d1c277-0d80-4507-9dfd-840743519023' class='xr-var-data-in' type='checkbox'><label for='data-a1d1c277-0d80-4507-9dfd-840743519023' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1, 2, 3, 4])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>y</span></div><div class='xr-var-dims'>(y)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>1.612e+06 1.612e+06 ... -2.136e+05</div><input id='attrs-33dc7c08-b391-4f7f-ae62-3c5e7f3d0f94' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-33dc7c08-b391-4f7f-ae62-3c5e7f3d0f94' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ece6d123-0a84-4393-8dc1-1aa205825dc2' class='xr-var-data-in' type='checkbox'><label for='data-ece6d123-0a84-4393-8dc1-1aa205825dc2' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([1612232.376629, 1612222.368727, 1612212.360825, ..., -213549.231322,
+       -213559.239224, -213569.247126])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>x</span></div><div class='xr-var-dims'>(x)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-2.228e+05 -2.228e+05 ... 9.968e+05</div><input id='attrs-e66b33d8-6bcb-46b2-8f87-59c56c84341d' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e66b33d8-6bcb-46b2-8f87-59c56c84341d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a70d768e-f0bf-43b9-ae88-ef66c63a2061' class='xr-var-data-in' type='checkbox'><label for='data-a70d768e-f0bf-43b9-ae88-ef66c63a2061' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-222818.73324 , -222808.725338, -222798.717436, ...,  996764.229958,
+        996774.23786 ,  996784.245762])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>spatial_ref</span></div><div class='xr-var-dims'>()</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-aebca1be-3928-48cd-a7e1-ee93dc2495a2' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-aebca1be-3928-48cd-a7e1-ee93dc2495a2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e7e0a606-c503-40d4-b11b-5af0b299ad2d' class='xr-var-data-in' type='checkbox'><label for='data-e7e0a606-c503-40d4-b11b-5af0b299ad2d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>crs_wkt :</span></dt><dd>PROJCRS[&quot;OSGB 1936 / British National Grid&quot;,BASEGEOGCRS[&quot;OSGB 1936&quot;,DATUM[&quot;OSGB 1936&quot;,ELLIPSOID[&quot;Airy 1830&quot;,6377563.396,299.3249646,LENGTHUNIT[&quot;metre&quot;,1]]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],ID[&quot;EPSG&quot;,4277]],CONVERSION[&quot;unnamed&quot;,METHOD[&quot;Transverse Mercator&quot;,ID[&quot;EPSG&quot;,9807]],PARAMETER[&quot;Latitude of natural origin&quot;,49,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8801]],PARAMETER[&quot;Longitude of natural origin&quot;,-2,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8802]],PARAMETER[&quot;Scale factor at natural origin&quot;,0.9996012717,SCALEUNIT[&quot;unity&quot;,1],ID[&quot;EPSG&quot;,8805]],PARAMETER[&quot;False easting&quot;,400000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8806]],PARAMETER[&quot;False northing&quot;,-100000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8807]]],CS[Cartesian,2],AXIS[&quot;easting&quot;,east,ORDER[1],LENGTHUNIT[&quot;metre&quot;,1]],AXIS[&quot;northing&quot;,north,ORDER[2],LENGTHUNIT[&quot;metre&quot;,1]],ID[&quot;EPSG&quot;,27700]]</dd><dt><span>semi_major_axis :</span></dt><dd>6377563.396</dd><dt><span>semi_minor_axis :</span></dt><dd>6356256.909237285</dd><dt><span>inverse_flattening :</span></dt><dd>299.3249646</dd><dt><span>reference_ellipsoid_name :</span></dt><dd>Airy 1830</dd><dt><span>longitude_of_prime_meridian :</span></dt><dd>0.0</dd><dt><span>prime_meridian_name :</span></dt><dd>Greenwich</dd><dt><span>geographic_crs_name :</span></dt><dd>OSGB 1936</dd><dt><span>horizontal_datum_name :</span></dt><dd>OSGB 1936</dd><dt><span>projected_crs_name :</span></dt><dd>OSGB 1936 / British National Grid</dd><dt><span>grid_mapping_name :</span></dt><dd>transverse_mercator</dd><dt><span>latitude_of_projection_origin :</span></dt><dd>49.0</dd><dt><span>longitude_of_central_meridian :</span></dt><dd>-2.0</dd><dt><span>false_easting :</span></dt><dd>400000.0</dd><dt><span>false_northing :</span></dt><dd>-100000.0</dd><dt><span>scale_factor_at_central_meridian :</span></dt><dd>0.9996012717</dd><dt><span>spatial_ref :</span></dt><dd>PROJCRS[&quot;OSGB 1936 / British National Grid&quot;,BASEGEOGCRS[&quot;OSGB 1936&quot;,DATUM[&quot;OSGB 1936&quot;,ELLIPSOID[&quot;Airy 1830&quot;,6377563.396,299.3249646,LENGTHUNIT[&quot;metre&quot;,1]]],PRIMEM[&quot;Greenwich&quot;,0,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433]],ID[&quot;EPSG&quot;,4277]],CONVERSION[&quot;unnamed&quot;,METHOD[&quot;Transverse Mercator&quot;,ID[&quot;EPSG&quot;,9807]],PARAMETER[&quot;Latitude of natural origin&quot;,49,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8801]],PARAMETER[&quot;Longitude of natural origin&quot;,-2,ANGLEUNIT[&quot;degree&quot;,0.0174532925199433],ID[&quot;EPSG&quot;,8802]],PARAMETER[&quot;Scale factor at natural origin&quot;,0.9996012717,SCALEUNIT[&quot;unity&quot;,1],ID[&quot;EPSG&quot;,8805]],PARAMETER[&quot;False easting&quot;,400000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8806]],PARAMETER[&quot;False northing&quot;,-100000,LENGTHUNIT[&quot;metre&quot;,1],ID[&quot;EPSG&quot;,8807]]],CS[Cartesian,2],AXIS[&quot;easting&quot;,east,ORDER[1],LENGTHUNIT[&quot;metre&quot;,1]],AXIS[&quot;northing&quot;,north,ORDER[2],LENGTHUNIT[&quot;metre&quot;,1]],ID[&quot;EPSG&quot;,27700]]</dd><dt><span>GeoTransform :</span></dt><dd>-222823.73719089525 10.007902079383749 0.0 1612237.380579703 0.0 -10.007902079383749</dd></dl></div><div class='xr-var-data'><pre>array(0)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-913ebe7e-c298-4b7d-adab-e452704ff5ad' class='xr-section-summary-in' type='checkbox'  checked><label for='section-913ebe7e-c298-4b7d-adab-e452704ff5ad' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>_FillValue :</span></dt><dd>0.0</dd><dt><span>scale_factor :</span></dt><dd>1.0</dd><dt><span>add_offset :</span></dt><dd>0.0</dd><dt><span>grid_mapping :</span></dt><dd>spatial_ref</dd></dl></div></li></ul></div></div></div></div>
 </div>
 <p>This will make each chunk in <code class="docutils literal notranslate"><span class="pre">r</span></code> read ten tiles at a time.</p>
 </div>
@@ -1554,15 +1594,25 @@ Wall time: 571 ms
 <p><strong>NOTE</strong> For this to work effectively, the extent of <code class="docutils literal notranslate"><span class="pre">db.total_bounds</span></code> needs to fit comfortably in memory</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ndvi_from_chunk</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">mosaic_path</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="s2">&quot;geometry&quot;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ndvi_from_chunk</span><span class="p">(</span><span class="n">db_path</span><span class="p">,</span>
+                    <span class="n">mosaic_path</span><span class="o">=</span><span class="n">mosaic_url</span><span class="p">,</span> 
+                    <span class="n">geom</span><span class="o">=</span><span class="s2">&quot;tessellation&quot;</span>
+                   <span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">db_path</span><span class="p">)</span> <span class="ow">is</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="n">db_path</span> <span class="o">=</span> <span class="n">db_path</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">with</span> <span class="n">fsspec</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> 
+                                    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;hindex&quot;</span><span class="p">,</span> <span class="s2">&quot;tessellation&quot;</span><span class="p">]</span>
+                                   <span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;hindex&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1"># &lt;-- head only!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">rioxarray</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="n">mosaic_path</span><span class="p">,</span>
-                                <span class="n">chunks</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1280</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">1280</span><span class="p">}</span>
+                                <span class="n">chunks</span><span class="o">=</span><span class="p">{</span>
+                                    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span> 
+                                    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">640</span>
+                                <span class="p">}</span>
                                <span class="p">)</span>
     <span class="n">ndvi</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="n">r</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> \
            <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Streaming bits into memory...&quot;</span><span class="p">)</span>
     <span class="n">ndvi_vals</span> <span class="o">=</span> <span class="n">ndvi</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">clip_box</span><span class="p">(</span><span class="o">*</span><span class="n">db</span><span class="o">.</span><span class="n">total_bounds</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DataArray loaded&quot;</span><span class="p">)</span>
     <span class="n">rower</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">geom2ndvi</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">ndvi_vals</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="n">geom</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">rower</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -1572,15 +1622,555 @@ Wall time: 571 ms
 <p>For example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> ndvis = ndvi_from_chunk(tst_sub.head(100).set_index(&quot;hindex&quot;), mosaic_url, geom=&quot;tessellation&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> ndvis = ndvi_from_chunk(tst_url, mosaic_url, geom=&quot;tessellation&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Streaming bits into memory...
-DataArray loaded
-CPU times: user 7.13 s, sys: 225 ms, total: 7.36 s
-Wall time: 8.43 s
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>distributed.utils_perf - INFO - full garbage collection released 782.16 MB from 96619 reference cycles (threshold: 10.00 MB)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 10.5 s, sys: 2.1 s, total: 12.6 s
+Wall time: 23.5 s
+</pre></div>
+</div>
+</div>
+</div>
+<p>To run the above distributedly, we will set up a Dask DataFrame with all the URLs of the file names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tess_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://</span><span class="si">{</span><span class="n">SERVER_IP</span><span class="si">}</span><span class="s2">:8000/spatial_signatures/tessellation/&quot;</span>
+<span class="n">tess_path</span> <span class="o">=</span> <span class="s2">&quot;../../urbangrammar_samba/spatial_signatures/tessellation/&quot;</span>
+<span class="n">chunk_names</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tess_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">tess_path</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span><span class="o">==</span><span class="s2">&quot;.pq&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">chunk_names</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">chunk_names</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can map the computation of each chunk across the cluster:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">ndvis</span> <span class="o">=</span> <span class="n">chunk_names</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map_partitions</span><span class="p">(</span><span class="n">ndvi_from_chunk</span><span class="p">,</span> 
+                                   <span class="n">meta</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;f8&#39;</span><span class="p">)</span>
+                                  <span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>distributed.scheduler - INFO - Receive client connection: Client-worker-55b22b09-3296-11eb-8020-a664d571bf36
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5698289a-3296-11eb-8020-26e77d64672b
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-56a81d51-3296-11eb-8020-da52d610c47f
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-56e002a9-3296-11eb-8021-46bbc0b220bc
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-57aebdd3-3296-11eb-8020-8a07bd078ccd
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-57d9493f-3296-11eb-8020-32d454b4058c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-590e2848-3296-11eb-8018-f66e0c7bf712
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5963bf1c-3296-11eb-8020-9add2da1730b
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-596a0912-3296-11eb-8020-d66cedeaf12a
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-59bacb64-3296-11eb-8018-a647dcf1fc15
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-59d99005-3296-11eb-8018-b60cc73f3200
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5a226de2-3296-11eb-8018-5a0031d0e3cf
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5a2e61f8-3296-11eb-8020-b29e3257f6c0
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5a52f222-3296-11eb-8018-760aa81de444
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5a871f0b-3296-11eb-8018-da4b82bf9f34
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5ac73eaa-3296-11eb-8020-aec8951e461c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5b864215-3296-11eb-8021-be4d8e2adea6
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5bb630f2-3296-11eb-8018-4a9d32bdf6dd
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5cb46abe-3296-11eb-8018-c618d46e670c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5cf682b0-3296-11eb-8020-864182d5fd8e
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5d88013d-3296-11eb-8020-3aa4aae649b1
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5d8e2560-3296-11eb-8020-3aa4aae649b1
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5e1feaea-3296-11eb-8018-ea1c961d4253
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5e68fb96-3296-11eb-8019-9ac631e0a87f
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5e6abcd6-3296-11eb-8019-660300c5058e
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5ed7a82f-3296-11eb-8020-76dbf3cd6c0d
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5ee6dd44-3296-11eb-8020-76dbf3cd6c0d
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5ffa2eff-3296-11eb-8020-eae6c588133c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5ff9922a-3296-11eb-8018-d287349d8f33
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5fea194a-3296-11eb-8020-eae6c588133c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-5f99a712-3296-11eb-8018-967382918c54
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-61d93abf-3296-11eb-8018-12460ee0bc66
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-596a0912-3296-11eb-8020-d66cedeaf12a
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.198:44713&#39;, name: 9, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.198:44713
+distributed.scheduler - INFO - Close client connection: Client-worker-596a0912-3296-11eb-8020-d66cedeaf12a
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.198:37199&#39;, name: 9, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.198:37199
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5a2e61f8-3296-11eb-8020-b29e3257f6c0
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.208:40795&#39;, name: 6, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.208:40795
+distributed.scheduler - INFO - Close client connection: Client-worker-5a2e61f8-3296-11eb-8020-b29e3257f6c0
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.208:45923&#39;, name: 6, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.208:45923
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-55b22b09-3296-11eb-8020-a664d571bf36
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.249:45679&#39;, name: 20, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.249:45679
+distributed.scheduler - INFO - Close client connection: Client-worker-55b22b09-3296-11eb-8020-a664d571bf36
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.249:42599&#39;, name: 20, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.249:42599
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-57d9493f-3296-11eb-8020-32d454b4058c
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.205:34033&#39;, name: 7, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.205:34033
+distributed.scheduler - INFO - Close client connection: Client-worker-57d9493f-3296-11eb-8020-32d454b4058c
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.205:34105&#39;, name: 7, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.205:34105
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-57aebdd3-3296-11eb-8020-8a07bd078ccd
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.201:42181&#39;, name: 2, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.201:42181
+distributed.scheduler - INFO - Close client connection: Client-worker-57aebdd3-3296-11eb-8020-8a07bd078ccd
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.201:35079&#39;, name: 2, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.201:35079
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5cf682b0-3296-11eb-8020-864182d5fd8e
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.210:36721&#39;, name: 36, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.210:36721
+distributed.scheduler - INFO - Close client connection: Client-worker-5cf682b0-3296-11eb-8020-864182d5fd8e
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.210:36491&#39;, name: 36, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.210:36491
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5d8e2560-3296-11eb-8020-3aa4aae649b1
+distributed.scheduler - INFO - Remove client Client-worker-5d88013d-3296-11eb-8020-3aa4aae649b1
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.196:43893&#39;, name: 38, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.196:43893
+distributed.scheduler - INFO - Close client connection: Client-worker-5d8e2560-3296-11eb-8020-3aa4aae649b1
+distributed.scheduler - INFO - Close client connection: Client-worker-5d88013d-3296-11eb-8020-3aa4aae649b1
+distributed.scheduler - INFO - Remove client Client-worker-5b864215-3296-11eb-8021-be4d8e2adea6
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.209:34401&#39;, name: 27, memory: 4, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.209:34401
+distributed.scheduler - INFO - Close client connection: Client-worker-5b864215-3296-11eb-8021-be4d8e2adea6
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.196:40599&#39;, name: 38, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.196:40599
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.209:41543&#39;, name: 27, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.209:41543
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5963bf1c-3296-11eb-8020-9add2da1730b
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.215:35979&#39;, name: 15, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.215:35979
+distributed.scheduler - INFO - Close client connection: Client-worker-5963bf1c-3296-11eb-8020-9add2da1730b
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.215:45677&#39;, name: 15, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.215:45677
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5ac73eaa-3296-11eb-8020-aec8951e461c
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.203:36373&#39;, name: 4, memory: 5, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.203:36373
+distributed.scheduler - INFO - Close client connection: Client-worker-5ac73eaa-3296-11eb-8020-aec8951e461c
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.203:46093&#39;, name: 4, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.203:46093
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5e1feaea-3296-11eb-8018-ea1c961d4253
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.207:33467&#39;, name: 18, memory: 3, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.207:33467
+distributed.scheduler - INFO - Close client connection: Client-worker-5e1feaea-3296-11eb-8018-ea1c961d4253
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.207:44703&#39;, name: 18, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.207:44703
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5fea194a-3296-11eb-8020-eae6c588133c
+distributed.scheduler - INFO - Remove client Client-worker-5ffa2eff-3296-11eb-8020-eae6c588133c
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.202:42087&#39;, name: 46, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.202:42087
+distributed.scheduler - INFO - Close client connection: Client-worker-5fea194a-3296-11eb-8020-eae6c588133c
+distributed.scheduler - INFO - Close client connection: Client-worker-5ffa2eff-3296-11eb-8020-eae6c588133c
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.202:32965&#39;, name: 46, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.202:32965
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5ee6dd44-3296-11eb-8020-76dbf3cd6c0d
+distributed.scheduler - INFO - Remove client Client-worker-5ed7a82f-3296-11eb-8020-76dbf3cd6c0d
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.199:37465&#39;, name: 37, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.199:37465
+distributed.scheduler - INFO - Close client connection: Client-worker-5ee6dd44-3296-11eb-8020-76dbf3cd6c0d
+distributed.scheduler - INFO - Close client connection: Client-worker-5ed7a82f-3296-11eb-8020-76dbf3cd6c0d
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.199:34077&#39;, name: 37, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.199:34077
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-777d05df-3296-11eb-8068-d66cedeaf12a
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-56a81d51-3296-11eb-8020-da52d610c47f
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.206:33661&#39;, name: 49, memory: 5, processing: 5&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.206:33661
+distributed.scheduler - INFO - Close client connection: Client-worker-56a81d51-3296-11eb-8020-da52d610c47f
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.206:39377&#39;, name: 49, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.206:39377
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-590e2848-3296-11eb-8018-f66e0c7bf712
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.205:44521&#39;, name: 44, memory: 5, processing: 5&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.205:44521
+distributed.scheduler - INFO - Close client connection: Client-worker-590e2848-3296-11eb-8018-f66e0c7bf712
+distributed.scheduler - INFO - Remove client Client-worker-59bacb64-3296-11eb-8018-a647dcf1fc15
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.206:35669&#39;, name: 3, memory: 5, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.206:35669
+distributed.scheduler - INFO - Close client connection: Client-worker-59bacb64-3296-11eb-8018-a647dcf1fc15
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.205:45309&#39;, name: 44, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.205:45309
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.206:43207&#39;, name: 3, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.206:43207
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5ff9922a-3296-11eb-8018-d287349d8f33
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.232.22:46875&#39;, name: 26, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.232.22:46875
+distributed.scheduler - INFO - Close client connection: Client-worker-5ff9922a-3296-11eb-8018-d287349d8f33
+distributed.scheduler - INFO - Remove client Client-worker-5bb630f2-3296-11eb-8018-4a9d32bdf6dd
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.204:44569&#39;, name: 5, memory: 4, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.204:44569
+distributed.scheduler - INFO - Close client connection: Client-worker-5bb630f2-3296-11eb-8018-4a9d32bdf6dd
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.232.22:45289&#39;, name: 26, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.232.22:45289
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.204:37585&#39;, name: 5, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.204:37585
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-56e002a9-3296-11eb-8021-46bbc0b220bc
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.217:32889&#39;, name: 43, memory: 5, processing: 5&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.217:32889
+distributed.scheduler - INFO - Close client connection: Client-worker-56e002a9-3296-11eb-8021-46bbc0b220bc
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.217:36755&#39;, name: 43, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.217:36755
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5a226de2-3296-11eb-8018-5a0031d0e3cf
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.232.19:33371&#39;, name: 34, memory: 4, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.232.19:33371
+distributed.scheduler - INFO - Close client connection: Client-worker-5a226de2-3296-11eb-8018-5a0031d0e3cf
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.232.19:36777&#39;, name: 34, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.232.19:36777
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-7cbbc198-3296-11eb-8069-8a07bd078ccd
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5e68fb96-3296-11eb-8019-9ac631e0a87f
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.232.24:43055&#39;, name: 33, memory: 6, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.232.24:43055
+distributed.scheduler - INFO - Close client connection: Client-worker-5e68fb96-3296-11eb-8019-9ac631e0a87f
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.232.24:43753&#39;, name: 33, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.232.24:43753
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5f99a712-3296-11eb-8018-967382918c54
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.232.25:44151&#39;, name: 35, memory: 7, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.232.25:44151
+distributed.scheduler - INFO - Close client connection: Client-worker-5f99a712-3296-11eb-8018-967382918c54
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.232.25:41963&#39;, name: 35, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.232.25:41963
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-80d881d1-3296-11eb-8069-9add2da1730b
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-8473b705-3296-11eb-8051-ea1c961d4253
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-59d99005-3296-11eb-8018-b60cc73f3200
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.208:38619&#39;, name: 29, memory: 5, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.208:38619
+distributed.scheduler - INFO - Close client connection: Client-worker-59d99005-3296-11eb-8018-b60cc73f3200
+distributed.scheduler - INFO - Receive client connection: Client-worker-855512f1-3296-11eb-8068-b29e3257f6c0
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.208:34769&#39;, name: 29, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.208:34769
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-8645292c-3296-11eb-806b-be4d8e2adea6
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5a52f222-3296-11eb-8018-760aa81de444
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.210:44887&#39;, name: 39, memory: 5, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.210:44887
+distributed.scheduler - INFO - Close client connection: Client-worker-5a52f222-3296-11eb-8018-760aa81de444
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.210:37067&#39;, name: 39, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.210:37067
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-855512f1-3296-11eb-8068-b29e3257f6c0
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.208:45923&#39;, name: 6, memory: 4, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.208:45923
+distributed.scheduler - INFO - Close client connection: Client-worker-855512f1-3296-11eb-8068-b29e3257f6c0
+distributed.scheduler - INFO - Remove client Client-worker-5e6abcd6-3296-11eb-8019-660300c5058e
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.232.26:36823&#39;, name: 41, memory: 5, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.232.26:36823
+distributed.scheduler - INFO - Close client connection: Client-worker-5e6abcd6-3296-11eb-8019-660300c5058e
+distributed.scheduler - INFO - Receive client connection: Client-worker-87df6a0d-3296-11eb-8068-864182d5fd8e
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.208:37203&#39;, name: 6, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.208:37203
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.232.26:39933&#39;, name: 41, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.232.26:39933
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-8944c37e-3296-11eb-806a-aec8951e461c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-89524c8d-3296-11eb-806a-3aa4aae649b1
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5698289a-3296-11eb-8020-26e77d64672b
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.194:43243&#39;, name: 31, memory: 6, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.194:43243
+distributed.batched - INFO - Batched Comm Closed: 
+distributed.scheduler - INFO - Close client connection: Client-worker-5698289a-3296-11eb-8020-26e77d64672b
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.194:45023&#39;, name: 31, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.194:45023
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-8dd1daa0-3296-11eb-8069-a664d571bf36
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5a871f0b-3296-11eb-8018-da4b82bf9f34
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.209:41009&#39;, name: 32, memory: 7, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.209:41009
+distributed.scheduler - INFO - Close client connection: Client-worker-5a871f0b-3296-11eb-8018-da4b82bf9f34
+distributed.scheduler - INFO - Receive client connection: Client-worker-8e08186b-3296-11eb-806a-da52d610c47f
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.209:34055&#39;, name: 32, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.209:34055
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-9030f79b-3296-11eb-8052-a647dcf1fc15
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-90acc70d-3296-11eb-8052-f66e0c7bf712
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-61d93abf-3296-11eb-8018-12460ee0bc66
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.232.15:35113&#39;, name: 40, memory: 6, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.232.15:35113
+distributed.scheduler - INFO - Close client connection: Client-worker-61d93abf-3296-11eb-8018-12460ee0bc66
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.232.15:40547&#39;, name: 40, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.232.15:40547
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-923aa6ba-3296-11eb-8052-5a0031d0e3cf
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-89524c8d-3296-11eb-806a-3aa4aae649b1
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.196:40599&#39;, name: 38, memory: 10, processing: 18&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.196:40599
+distributed.scheduler - INFO - Close client connection: Client-worker-89524c8d-3296-11eb-806a-3aa4aae649b1
+distributed.scheduler - INFO - Receive client connection: Client-worker-925d9eb2-3296-11eb-806a-32d454b4058c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.196:33653&#39;, name: 38, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.196:33653
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-932743ae-3296-11eb-806b-46bbc0b220bc
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-93763a87-3296-11eb-8052-967382918c54
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-944867d9-3296-11eb-8052-4a9d32bdf6dd
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-956e26c2-3296-11eb-806a-76dbf3cd6c0d
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-96024b84-3296-11eb-806a-eae6c588133c
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-9918bc88-3296-11eb-8053-9ac631e0a87f
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-9a063093-3296-11eb-8051-d287349d8f33
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-90acc70d-3296-11eb-8052-f66e0c7bf712
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.205:45309&#39;, name: 44, memory: 10, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.205:45309
+distributed.scheduler - INFO - Close client connection: Client-worker-90acc70d-3296-11eb-8052-f66e0c7bf712
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.193.205:34911&#39;, name: 44, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.193.205:34911
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-8645292c-3296-11eb-806b-be4d8e2adea6
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.209:41543&#39;, name: 27, memory: 4, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.209:41543
+distributed.scheduler - INFO - Close client connection: Client-worker-8645292c-3296-11eb-806b-be4d8e2adea6
+distributed.scheduler - INFO - Receive client connection: Client-worker-9c201fc9-3296-11eb-806a-26e77d64672b
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-9c2078fe-3296-11eb-8052-b60cc73f3200
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.209:46419&#39;, name: 27, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.209:46419
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-8dd1daa0-3296-11eb-8069-a664d571bf36
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.249:42599&#39;, name: 20, memory: 6, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.249:42599
+distributed.scheduler - INFO - Close client connection: Client-worker-8dd1daa0-3296-11eb-8069-a664d571bf36
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.249:46389&#39;, name: 20, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.249:46389
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-9e6f54bd-3296-11eb-80af-b29e3257f6c0
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-9f8f8d71-3296-11eb-8052-760aa81de444
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-8944c37e-3296-11eb-806a-aec8951e461c
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.203:46093&#39;, name: 4, memory: 7, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.203:46093
+distributed.scheduler - INFO - Close client connection: Client-worker-8944c37e-3296-11eb-806a-aec8951e461c
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.203:35899&#39;, name: 4, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.203:35899
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-a1efc14c-3296-11eb-8052-da4b82bf9f34
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-a2621df1-3296-11eb-8054-660300c5058e
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-a2bfefb4-3296-11eb-8052-12460ee0bc66
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-777d05df-3296-11eb-8068-d66cedeaf12a
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.198:37199&#39;, name: 9, memory: 6, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.198:37199
+distributed.scheduler - INFO - Close client connection: Client-worker-777d05df-3296-11eb-8068-d66cedeaf12a
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.198:46339&#39;, name: 9, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.198:46339
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Receive client connection: Client-worker-a4e5d353-3296-11eb-80b1-3aa4aae649b1
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-5cb46abe-3296-11eb-8018-c618d46e670c
+distributed.scheduler - INFO - Close client connection: Client-worker-5cb46abe-3296-11eb-8018-c618d46e670c
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.232.21:46163&#39;, name: 30, memory: 5, processing: 2&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.232.21:46163
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.232.21:37671&#39;, name: 30, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.232.21:37671
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-7cbbc198-3296-11eb-8069-8a07bd078ccd
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.201:35079&#39;, name: 2, memory: 6, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.201:35079
+distributed.scheduler - INFO - Close client connection: Client-worker-7cbbc198-3296-11eb-8069-8a07bd078ccd
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.201:37461&#39;, name: 2, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.201:37461
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-9e6f54bd-3296-11eb-80af-b29e3257f6c0
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.208:37203&#39;, name: 6, memory: 8, processing: 3&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.208:37203
+distributed.scheduler - INFO - Close client connection: Client-worker-9e6f54bd-3296-11eb-80af-b29e3257f6c0
+distributed.scheduler - INFO - Remove client Client-worker-87df6a0d-3296-11eb-8068-864182d5fd8e
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.151.210:36491&#39;, name: 36, memory: 6, processing: 5&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.151.210:36491
+distributed.scheduler - INFO - Close client connection: Client-worker-87df6a0d-3296-11eb-8068-864182d5fd8e
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.208:42501&#39;, name: 6, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.208:42501
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Register worker &lt;Worker &#39;tcp://10.1.151.210:38901&#39;, name: 36, memory: 0, processing: 0&gt;
+distributed.scheduler - INFO - Starting worker compute stream, tcp://10.1.151.210:38901
+distributed.core - INFO - Starting established connection
+distributed.scheduler - INFO - Remove client Client-worker-9030f79b-3296-11eb-8052-a647dcf1fc15
+distributed.scheduler - INFO - Remove worker &lt;Worker &#39;tcp://10.1.193.206:43207&#39;, name: 3, memory: 6, processing: 4&gt;
+distributed.core - INFO - Removing comms to tcp://10.1.193.206:43207
+distributed.scheduler - INFO - Close client connection: Client-worker-9030f79b-3296-11eb-8052-a647dcf1fc15
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KilledWorker</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">timed</span> <span class="n">exec</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/dask/base.py</span> in <span class="ni">compute</span><span class="nt">(self, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">165</span>         <span class="n">dask</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">compute</span>
+<span class="g g-Whitespace">    </span><span class="mi">166</span>         <span class="s2">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">167</span><span class="s2">         (result,) = compute(self, traverse=False, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">168</span><span class="s2">         return result</span>
+<span class="g g-Whitespace">    </span><span class="mi">169</span><span class="s2"> </span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/dask/base.py</span> in <span class="ni">compute</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span><span class="s2">         postcomputes.append(x.__dask_postcompute__())</span>
+<span class="g g-Whitespace">    </span><span class="mi">451</span><span class="s2"> </span>
+<span class="ne">--&gt; </span><span class="mi">452</span><span class="s2">     results = schedule(dsk, keys, **kwargs)</span>
+<span class="nn">    453     return repack([f(r, *a) for r, (f, a)</span> in <span class="ni">zip</span><span class="nt">(results, postcomputes)])</span>
+<span class="g g-Whitespace">    </span><span class="mi">454</span><span class="s2"> </span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/distributed/client.py</span> in <span class="ni">get</span><span class="nt">(self, dsk, keys, restrictions, loose_restrictions, resources, sync, asynchronous, direct, retries, priority, fifo_timeout, actors, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2723</span><span class="s2">                     should_rejoin = False</span>
+<span class="g g-Whitespace">   </span><span class="mi">2724</span><span class="s2">             try:</span>
+<span class="ne">-&gt; </span><span class="mi">2725</span><span class="s2">                 results = self.gather(packed, asynchronous=asynchronous, direct=direct)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2726</span><span class="s2">             finally:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2727</span><span class="s2">                 for f in futures.values():</span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/distributed/client.py</span> in <span class="ni">gather</span><span class="nt">(self, futures, errors, direct, asynchronous)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1984</span><span class="s2">             else:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1985</span><span class="s2">                 local_worker = None</span>
+<span class="ne">-&gt; </span><span class="mi">1986</span><span class="s2">             return self.sync(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1987</span><span class="s2">                 self._gather,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1988</span><span class="s2">                 futures,</span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/distributed/client.py</span> in <span class="ni">sync</span><span class="nt">(self, func, asynchronous, callback_timeout, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">830</span><span class="s2">             return future</span>
+<span class="g g-Whitespace">    </span><span class="mi">831</span><span class="s2">         else:</span>
+<span class="ne">--&gt; </span><span class="mi">832</span><span class="s2">             return sync(</span>
+<span class="g g-Whitespace">    </span><span class="mi">833</span><span class="s2">                 self.loop, func, *args, callback_timeout=callback_timeout, **kwargs</span>
+<span class="g g-Whitespace">    </span><span class="mi">834</span><span class="s2">             )</span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/distributed/utils.py</span> in <span class="ni">sync</span><span class="nt">(loop, func, callback_timeout, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">338</span><span class="s2">     if error[0]:</span>
+<span class="g g-Whitespace">    </span><span class="mi">339</span><span class="s2">         typ, exc, tb = error[0]</span>
+<span class="ne">--&gt; </span><span class="mi">340</span><span class="s2">         raise exc.with_traceback(tb)</span>
+<span class="g g-Whitespace">    </span><span class="mi">341</span><span class="s2">     else:</span>
+<span class="g g-Whitespace">    </span><span class="mi">342</span><span class="s2">         return result[0]</span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/distributed/utils.py</span> in <span class="ni">f</span><span class="nt">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">322</span><span class="s2">             if callback_timeout is not None:</span>
+<span class="g g-Whitespace">    </span><span class="mi">323</span><span class="s2">                 future = asyncio.wait_for(future, callback_timeout)</span>
+<span class="ne">--&gt; </span><span class="mi">324</span><span class="s2">             result[0] = yield future</span>
+<span class="g g-Whitespace">    </span><span class="mi">325</span><span class="s2">         except Exception as exc:</span>
+<span class="g g-Whitespace">    </span><span class="mi">326</span><span class="s2">             error[0] = sys.exc_info()</span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/tornado/gen.py</span> in <span class="ni">run</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">760</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">761</span><span class="s2">                     try:</span>
+<span class="ne">--&gt; </span><span class="mi">762</span><span class="s2">                         value = future.result()</span>
+<span class="g g-Whitespace">    </span><span class="mi">763</span><span class="s2">                     except Exception:</span>
+<span class="g g-Whitespace">    </span><span class="mi">764</span><span class="s2">                         exc_info = sys.exc_info()</span>
+
+<span class="nn">/opt/conda/lib/python3.8/site-packages/distributed/client.py</span> in <span class="ni">_gather</span><span class="nt">(self, futures, errors, direct, local_worker)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1849</span><span class="s2">                             exc = CancelledError(key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1850</span><span class="s2">                         else:</span>
+<span class="ne">-&gt; </span><span class="mi">1851</span><span class="s2">                             raise exception.with_traceback(traceback)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1852</span><span class="s2">                         raise exc</span>
+<span class="g g-Whitespace">   </span><span class="mi">1853</span><span class="s2">                     if errors == &quot;skip&quot;:</span>
+
+<span class="ne">KilledWorker</span>: (&quot;(&#39;ndvi_from_chunk-d563b338d9a3ff805a9851789d5dd4c6&#39;, 89)&quot;, &lt;Worker &#39;tcp://10.1.193.206:43207&#39;, name: 3, memory: 0, processing: 4&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndvis</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>hindex
+c011e675448t0000    0.550900
+c011e675448t0052    0.505567
+c011e675448t0053    0.485811
+c011e675448t0054    0.526588
+c011e675448t0037    0.521815
+c046e432985t0000    0.448482
+c046e432985t0059    0.198398
+c046e432985t0040    0.335527
+c046e432985t0041    0.623561
+c046e432985t0038    0.613240
+c040e541154t0000    0.224681
+c040e541154t0001    0.229765
+c040e160280t0002    0.463784
+c040e160280t0015    0.631372
+c040e160280t0012    0.293753
+c073e716445t0053    0.351165
+c073e716445t0010    0.412447
+c073e716445t0011    0.405551
+c073e716445t0012    0.521756
+c073e716445t0013    0.358216
+dtype: float64
 </pre></div>
 </div>
 </div>
