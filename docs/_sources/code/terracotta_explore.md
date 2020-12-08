@@ -53,12 +53,20 @@ docker run --rm \
            -ti \
            -p 5005:5005 \
            -v /path/to/data/folder/:/data \
-           --network host 
+           --network host \
            terracotta sh
 ```
 
 Note that although the command is similar to that we use for the server, here
 we set `--network host` so the client can be reached from the guest's browser.
+
+Inside the container, then launch the app:
+
+```shell
+/opt/conda/bin/terracotta connect --port 5005 localhost:5000
+```
+
+Then point your browser to `localhost:5005`.
 
 ## Optimising
 

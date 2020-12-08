@@ -24,7 +24,7 @@
     href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -43,7 +43,7 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -53,7 +53,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Explore Imagery with terracotta" href="terracotta_explore.html" />
+    <link rel="next" title="Explore the mosaic" href="GHS-composite-S2_explore_mosaic.html" />
     <link rel="prev" title="Build metadata GHS-composite-S2 R2020A" href="GHS-composite-S2_meta.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,15 +79,12 @@
   <h1 class="site-logo" id="site-title">Urban Grammar AI | WP1 - Data Processing</h1>
   
 </a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
-
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Project
  </span>
@@ -108,7 +105,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Infrastructure
  </span>
@@ -125,14 +122,19 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/kubernetes_cluster.html">
+   Manage Kubernetes cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../infrastructure/dask_cluster.html">
    Set up ad-hoc Dask cluster
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
-  Vector data
+  Morphological data
  </span>
 </p>
 <ul class="nav sidenav_l1">
@@ -157,7 +159,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Imagery
  </span>
@@ -174,6 +176,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_explore_mosaic.html">
+   Explore the mosaic
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="terracotta_explore.html">
    Explore Imagery with
    <code class="docutils literal notranslate">
@@ -184,10 +191,20 @@
   </a>
  </li>
 </ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Functional data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="fetch_data.html">
+   Download data for a functional layer of Spatial Signatures
+  </a>
+ </li>
+</ul>
 
-</nav>
-
- <!-- To handle the deprecated key -->
+</nav> <!-- To handle the deprecated key -->
 
 </div>
 
@@ -212,11 +229,11 @@
             <i class="fas fa-arrow-up"></i>
         </button>
         
-        <div class="dropdown-buttons-trigger">
+        
+<div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
 
-    
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         
@@ -228,8 +245,8 @@
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
-    
 </div>
+
         <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -301,18 +318,18 @@
      Parallel download/reprojection
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generate-vrt-file">
+     Generate
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       .vrt
+      </span>
+     </code>
+     file
+    </a>
+   </li>
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-a-master-vrt-file">
-   Create a master
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     .vrt
-    </span>
-   </code>
-   file
-  </a>
  </li>
 </ul>
 
@@ -352,7 +369,7 @@
 <p>Before accessing and downloading each GeoTIFF, let’s set up the target folder:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">local_dir</span> <span class="o">=</span> <span class="s2">&quot;../../data/&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">local_dir</span> <span class="o">=</span> <span class="s2">&quot;../../urbangrammar_samba/ghs_composite_s2/&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -400,186 +417,353 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ship `meta` to Dask</span>
 <span class="n">dmeta</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">meta</span><span class="p">[[</span><span class="s2">&quot;dst_path&quot;</span><span class="p">,</span> <span class="s2">&quot;UTMtile&quot;</span><span class="p">,</span> <span class="s2">&quot;URL&quot;</span><span class="p">]],</span>
-                       <span class="n">npartitions</span><span class="o">=</span><span class="n">cpu_count</span><span class="p">()</span>
+                       <span class="n">npartitions</span><span class="o">=</span><span class="mi">10</span>
                       <span class="p">)</span>
 <span class="c1"># Apply in parallel</span>
-<span class="n">dout</span> <span class="o">=</span> <span class="n">dmeta</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">download_reproject</span><span class="p">,</span> 
+<span class="n">dout</span> <span class="o">=</span> <span class="n">dmeta</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">process_scene</span><span class="p">,</span> 
                    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                    <span class="n">meta</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Output&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-                   <span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span>
-                  <span class="p">)</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+                   <span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">remove_intermediate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">dout</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30/10/2020 08:04:19 | Working on Tile 29V - File: S2_percentile_UTM_148-0000069888-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 29V - File: S2_percentile_UTM_148-0000023296-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 29V - File: S2_percentile_UTM_148-0000046592-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 29V - File: S2_percentile_UTM_148-0000000000-0000023296.tif
-	Target file available locally, skipping...
-30/10/2020 08:04:19 | Working on Tile 29V - File: S2_percentile_UTM_148-0000000000-0000000000.tif
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_148-0000000000-0000000000.tif ../../data/S2_percentile_UTM_148-0000000000-0000000000_osgb.tif --dst-crs EPSG:27700
-30/10/2020 08:04:19 | Working on Tile 30U - File: S2_percentile_UTM_209-0000069888-0000023296.tif
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_148-0000046592-0000023296.tif ../../data/S2_percentile_UTM_148-0000046592-0000023296_osgb.tif --dst-crs EPSG:2770030/10/2020 08:04:19 | Working on Tile 30U - File: S2_percentile_UTM_209-0000046592-0000023296.tif
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>09/11/2020 14:59:05 | Working on Tile 29V - File: S2_percentile_UTM_148-0000069888-0000023296.tif
+09/11/2020 14:59:05 | Working on Tile 31U - File: S2_percentile_UTM_210-0000069888-0000023296.tif
+09/11/2020 14:59:05 | Working on Tile 29V - File: S2_percentile_UTM_148-0000023296-0000023296.tif
+09/11/2020 14:59:05 | Working on Tile 30U - File: S2_percentile_UTM_209-0000069888-0000023296.tif
+09/11/2020 14:59:05 | Working on Tile 30U - File: S2_percentile_UTM_209-0000023296-0000023296.tif
+09/11/2020 14:59:05 | Working on Tile 31U - File: S2_percentile_UTM_210-0000023296-0000023296.tif
+09/11/2020 14:59:05 | Working on Tile 30V - File: S2_percentile_UTM_149-0000069888-0000023296.tif
+09/11/2020 14:59:05 | Working on Tile 30V - File: S2_percentile_UTM_149-0000023296-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000023296-0000023296.tif (1.90 GB)
 
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_148-0000023296-0000023296.tif ../../data/S2_percentile_UTM_148-0000023296-0000023296_osgb.tif --dst-crs EPSG:27700
-30/10/2020 08:04:19 | Working on Tile 30U - File: S2_percentile_UTM_209-0000023296-0000023296.tif
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_209-0000023296-0000023296.tif ../../data/S2_percentile_UTM_209-0000023296-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_209-0000069888-0000023296.tif ../../data/S2_percentile_UTM_209-0000069888-0000023296_osgb.tif --dst-crs EPSG:27700
-30/10/2020 08:04:19 | Working on Tile 30U - File: S2_percentile_UTM_209-0000000000-0000023296.tif
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.30/10/2020 08:04:19 | Working on Tile 30V - File: S2_percentile_UTM_149-0000069888-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000069888-0000023296.tif (2.29 GB)
 
-30/10/2020 08:04:19 | Working on Tile 30V - File: S2_percentile_UTM_149-0000046592-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 30V - File: S2_percentile_UTM_149-0000023296-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 30V - File: S2_percentile_UTM_149-0000000000-0000023296.tif
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_209-0000000000-0000023296.tif ../../data/S2_percentile_UTM_209-0000000000-0000023296_osgb.tif --dst-crs EPSG:27700
-30/10/2020 08:04:19 | Working on Tile 31U - File: S2_percentile_UTM_210-0000069888-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 31U - File: S2_percentile_UTM_210-0000046592-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 31U - File: S2_percentile_UTM_210-0000023296-0000023296.tif
-30/10/2020 08:04:19 | Working on Tile 31U - File: S2_percentile_UTM_210-0000000000-0000023296.tif
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_148-0000069888-0000023296.tif ../../data/S2_percentile_UTM_148-0000069888-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_209-0000046592-0000023296.tif ../../data/S2_percentile_UTM_209-0000046592-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_149-0000046592-0000023296.tif ../../data/S2_percentile_UTM_149-0000046592-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_149-0000023296-0000023296.tif ../../data/S2_percentile_UTM_149-0000023296-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_210-0000069888-0000023296.tif ../../data/S2_percentile_UTM_210-0000069888-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_149-0000069888-0000023296.tif ../../data/S2_percentile_UTM_149-0000069888-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_210-0000023296-0000023296.tif ../../data/S2_percentile_UTM_210-0000023296-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_149-0000000000-0000023296.tif ../../data/S2_percentile_UTM_149-0000000000-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_210-0000046592-0000023296.tif ../../data/S2_percentile_UTM_210-0000046592-0000023296_osgb.tif --dst-crs EPSG:27700
-Replace is False and data exists, so doing nothing. Use replace=True to re-download the data.
-	30/10/2020 08:04:19 | rio warp ../../data/S2_percentile_UTM_210-0000000000-0000023296.tif ../../data/S2_percentile_UTM_210-0000000000-0000023296_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 08:08:57 | rm ../../data/S2_percentile_UTM_149-0000000000-0000023296.tif
-30/10/2020 08:08:57 | Working on Tile 30V - File: S2_percentile_UTM_149-0000000000-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000000000-0000000000.tif (678.9 MB)
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000069888-0000023296.tif (2.04 GB)
 
-	30/10/2020 08:09:37 | rm ../../data/S2_percentile_UTM_148-0000000000-0000000000.tif
-	30/10/2020 08:09:42 | rm ../../data/S2_percentile_UTM_148-0000069888-0000023296.tif
-30/10/2020 08:09:42 | Working on Tile 29V - File: S2_percentile_UTM_148-0000069888-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000069888-0000000000.tif (1.76 GB)
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000023296-0000023296.tif (1.09 GB)
 
-	30/10/2020 08:09:44 | rm ../../data/S2_percentile_UTM_149-0000023296-0000023296.tif
-30/10/2020 08:09:44 | Working on Tile 30V - File: S2_percentile_UTM_149-0000023296-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000023296-0000000000.tif (1.86 GB)
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000069888-0000023296.tif (1.06 GB)
 
-	30/10/2020 08:09:50 | rm ../../data/S2_percentile_UTM_149-0000069888-0000023296.tif
-30/10/2020 08:09:50 | Working on Tile 30V - File: S2_percentile_UTM_149-0000069888-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000023296-0000023296.tif (2.55 GB)
+
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000023296-0000023296.tif (1.11 GB)
+
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000069888-0000023296.tif (980.5 MB)
+
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000069888-0000023296.tif
+	09/11/2020 15:00:26 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000069888-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000069888-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000069888-0000023296.tif
+	09/11/2020 15:00:31 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000069888-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000069888-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000069888-0000023296.tif
+	09/11/2020 15:00:57 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000069888-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000069888-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000069888-0000023296.tif
+	09/11/2020 15:00:58 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000069888-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000069888-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000023296-0000023296.tif
+	09/11/2020 15:00:59 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000023296-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000023296-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000023296-0000023296.tif
+	09/11/2020 15:01:02 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000023296-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000023296-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000023296-0000023296.tif
+	09/11/2020 15:01:09 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000023296-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000023296-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000023296-0000023296.tif
+	09/11/2020 15:01:45 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000023296-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000023296-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+	Split-opt.
+	Split-opt.
+	Split-opt.
+	Split-opt.
+		09/11/2020 15:09:09 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_R.tif
+		09/11/2020 15:09:47 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_R.tif
+		09/11/2020 15:10:07 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_R.tif
+	Split-opt.
+	Split-opt.
+	Split-opt.
+	Split-opt.
+		09/11/2020 15:13:59 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_R.tif
+		09/11/2020 15:16:08 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_G.tif
+		09/11/2020 15:16:19 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_G.tif
+		09/11/2020 15:16:35 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_G.tif
+		09/11/2020 15:19:21 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_R.tif		09/11/2020 15:19:21 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_R.tif
+
+		09/11/2020 15:19:21 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_G.tif
+		09/11/2020 15:22:25 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_B.tif
+		09/11/2020 15:22:44 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_B.tif
+		09/11/2020 15:23:03 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_R.tif
+		09/11/2020 15:23:08 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_B.tif
+		09/11/2020 15:24:43 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_R.tif
+		09/11/2020 15:26:54 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_G.tif		09/11/2020 15:26:54 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_B.tif
+
+		09/11/2020 15:28:24 | Optimising S2_percentile_UTM_149-0000069888-0000023296_wm_I.tif
+		09/11/2020 15:31:13 | Optimising S2_percentile_UTM_149-0000023296-0000023296_wm_I.tif
+		09/11/2020 15:31:13 | Optimising S2_percentile_UTM_148-0000069888-0000023296_wm_I.tif
+09/11/2020 15:33:37 | Working on Tile 30V - File: S2_percentile_UTM_149-0000069888-0000000000.tif
 Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000069888-0000000000.tif (2.38 GB)
 
-	30/10/2020 08:09:51 | rm ../../data/S2_percentile_UTM_148-0000023296-0000023296.tif
-30/10/2020 08:09:51 | Working on Tile 29V - File: S2_percentile_UTM_148-0000023296-0000000000.tif
+		09/11/2020 15:34:29 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_G.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000069888-0000000000.tif
+	09/11/2020 15:34:42 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000069888-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000069888-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 15:36:42 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_G.tif
+09/11/2020 15:38:12 | Working on Tile 30V - File: S2_percentile_UTM_149-0000023296-0000000000.tif
+09/11/2020 15:38:12 | Working on Tile 29V - File: S2_percentile_UTM_148-0000069888-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000023296-0000000000.tif (1.86 GB)
+
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000069888-0000000000.tif (1.76 GB)
+
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000023296-0000000000.tif
+	09/11/2020 15:39:07 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000023296-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000023296-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000069888-0000000000.tif
+	09/11/2020 15:39:13 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000069888-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000069888-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 15:42:31 | Optimising S2_percentile_UTM_148-0000023296-0000023296_wm_I.tif
+		09/11/2020 15:43:59 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_B.tif
+		09/11/2020 15:45:48 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_B.tif
+	Split-opt.
+		09/11/2020 15:47:12 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_G.tif
+		09/11/2020 15:48:52 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_B.tif
+09/11/2020 15:48:52 | Working on Tile 29V - File: S2_percentile_UTM_148-0000023296-0000000000.tif
 Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000023296-0000000000.tif (1.47 GB)
 
-	30/10/2020 08:10:11 | rm ../../data/S2_percentile_UTM_148-0000046592-0000023296.tif
-30/10/2020 08:10:12 | Working on Tile 29V - File: S2_percentile_UTM_148-0000046592-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000046592-0000000000.tif (2.05 GB)
-
-	30/10/2020 08:10:20 | rm ../../data/S2_percentile_UTM_210-0000069888-0000023296.tif
-30/10/2020 08:10:21 | Working on Tile 31U - File: S2_percentile_UTM_210-0000069888-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000069888-0000000000.tif (2.49 GB)
-
-	30/10/2020 08:10:24 | rm ../../data/S2_percentile_UTM_149-0000046592-0000023296.tif
-30/10/2020 08:10:24 | Working on Tile 30V - File: S2_percentile_UTM_149-0000046592-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000046592-0000000000.tif (2.11 GB)
-
-	30/10/2020 08:10:54 | rm ../../data/S2_percentile_UTM_209-0000069888-0000023296.tif
-30/10/2020 08:10:54 | Working on Tile 30U - File: S2_percentile_UTM_209-0000069888-0000000000.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000023296-0000000000.tif
+	09/11/2020 15:49:27 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000023296-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000023296-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+	Split-opt.
+	Split-opt.
+		09/11/2020 15:53:20 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_R.tif
+		09/11/2020 15:53:23 | Optimising S2_percentile_UTM_210-0000069888-0000023296_wm_I.tif
+		09/11/2020 15:53:23 | Optimising S2_percentile_UTM_209-0000069888-0000023296_wm_I.tif
+		09/11/2020 15:55:41 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_B.tif
+		09/11/2020 15:56:37 | Optimising S2_percentile_UTM_209-0000023296-0000023296_wm_I.tif
+09/11/2020 15:59:49 | Working on Tile 30U - File: S2_percentile_UTM_209-0000069888-0000000000.tif
 Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000069888-0000000000.tif (1.82 GB)
 
-	30/10/2020 08:11:05 | rm ../../data/S2_percentile_UTM_209-0000023296-0000023296.tif
-30/10/2020 08:11:05 | Working on Tile 30U - File: S2_percentile_UTM_209-0000023296-0000000000.tif
+		09/11/2020 16:04:26 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_R.tif
+		09/11/2020 16:04:26 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_R.tif
+		09/11/2020 16:04:26 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_G.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000069888-0000000000.tif
+	09/11/2020 16:04:44 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000069888-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000069888-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 16:08:07 | Optimising S2_percentile_UTM_210-0000023296-0000023296_wm_I.tif
+09/11/2020 16:09:55 | Working on Tile 30U - File: S2_percentile_UTM_209-0000023296-0000000000.tif
 Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000023296-0000000000.tif (2.16 GB)
 
-	30/10/2020 08:11:08 | rm ../../data/S2_percentile_UTM_210-0000046592-0000023296.tif
-30/10/2020 08:11:08 | Working on Tile 31U - File: S2_percentile_UTM_210-0000046592-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000046592-0000000000.tif (2.40 GB)
-
-	30/10/2020 08:11:50 | rm ../../data/S2_percentile_UTM_209-0000000000-0000023296.tif
-30/10/2020 08:11:50 | Working on Tile 30U - File: S2_percentile_UTM_209-0000000000-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000000000-0000000000.tif (2.18 GB)
-
-	30/10/2020 08:12:02 | rm ../../data/S2_percentile_UTM_209-0000046592-0000023296.tif
-30/10/2020 08:12:02 | Working on Tile 30U - File: S2_percentile_UTM_209-0000046592-0000000000.tif
-Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000046592-0000000000.tif (2.22 GB)
-
-	30/10/2020 08:12:04 | rm ../../data/S2_percentile_UTM_210-0000023296-0000023296.tif
-30/10/2020 08:12:04 | Working on Tile 31U - File: S2_percentile_UTM_210-0000023296-0000000000.tif
+		09/11/2020 16:11:28 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_B.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000023296-0000000000.tif
+	09/11/2020 16:11:51 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000023296-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000023296-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+	Split-opt.
+		09/11/2020 16:15:20 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_G.tif
+		09/11/2020 16:15:21 | Optimising S2_percentile_UTM_148-0000069888-0000000000_wm_G.tif
+		09/11/2020 16:17:19 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_R.tif
+09/11/2020 16:17:22 | Working on Tile 31U - File: S2_percentile_UTM_210-0000023296-0000000000.tif
 Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000023296-0000000000.tif (2.12 GB)
 
-	30/10/2020 08:13:15 | rm ../../data/S2_percentile_UTM_210-0000000000-0000023296.tif
-30/10/2020 08:13:15 | Working on Tile 31U - File: S2_percentile_UTM_210-0000000000-0000000000.tif
+	Split-opt.
+		09/11/2020 16:19:50 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_G.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000023296-0000000000.tif
+	09/11/2020 16:19:50 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000023296-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000023296-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 16:20:43 | Optimising S2_percentile_UTM_149-0000069888-0000000000_wm_I.tif
+	Split-opt.
+		09/11/2020 16:23:09 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_R.tif
+		09/11/2020 16:27:00 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_B.tif
+		09/11/2020 16:27:01 | Optimising S2_percentile_UTM_148-0000069888-0000000000_wm_B.tif
+		09/11/2020 16:28:10 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_G.tif
+09/11/2020 16:30:34 | Working on Tile 30V - File: S2_percentile_UTM_149-0000046592-0000023296.tif
+	Split-opt.
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000046592-0000023296.tif (1.13 GB)
+
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000046592-0000023296.tif
+	09/11/2020 16:31:00 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000046592-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000046592-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 16:32:24 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_B.tif
+		09/11/2020 16:33:32 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_G.tif
+		09/11/2020 16:36:20 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_R.tif
+	Split-opt.
+		09/11/2020 16:40:36 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_R.tif
+		09/11/2020 16:40:36 | Optimising S2_percentile_UTM_149-0000023296-0000000000_wm_I.tif
+		09/11/2020 16:44:00 | Optimising S2_percentile_UTM_148-0000069888-0000000000_wm_I.tif
+		09/11/2020 16:47:00 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_B.tif
+		09/11/2020 16:47:00 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_R.tif
+		09/11/2020 16:49:55 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_B.tif
+		09/11/2020 16:52:25 | Optimising S2_percentile_UTM_148-0000023296-0000000000_wm_I.tif
+		09/11/2020 16:52:28 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_G.tif
+		09/11/2020 16:55:22 | Optimising S2_percentile_UTM_210-0000069888-0000000000_wm_I.tif
+		09/11/2020 16:55:22 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_G.tif
+09/11/2020 16:58:23 | Working on Tile 29V - File: S2_percentile_UTM_148-0000046592-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000046592-0000023296.tif (1.20 GB)
+
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000046592-0000023296.tif
+	09/11/2020 16:59:21 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000046592-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000046592-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+09/11/2020 17:01:14 | Working on Tile 30V - File: S2_percentile_UTM_149-0000000000-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000000000-0000023296.tif (813.0 MB)
+
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000000000-0000023296.tif
+	09/11/2020 17:01:36 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000000000-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000000000-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 17:03:40 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_G.tif
+		09/11/2020 17:06:36 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_B.tif
+09/11/2020 17:06:37 | Working on Tile 31U - File: S2_percentile_UTM_210-0000046592-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000046592-0000023296.tif (2.62 GB)
+
+	Split-opt.
+	Split-opt.
+		09/11/2020 17:07:33 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_B.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000046592-0000023296.tif
+	09/11/2020 17:08:30 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000046592-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000046592-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 17:08:38 | Optimising S2_percentile_UTM_209-0000069888-0000000000_wm_I.tif
+09/11/2020 17:12:29 | Working on Tile 29V - File: S2_percentile_UTM_148-0000000000-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000000000-0000023296.tif (407.2 MB)
+
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000000000-0000023296.tif
+	09/11/2020 17:12:39 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000000000-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000000000-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 17:13:45 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_R.tif
+		09/11/2020 17:13:45 | Optimising S2_percentile_UTM_149-0000046592-0000023296_wm_I.tif
+	Split-opt.
+		09/11/2020 17:16:24 | Optimising S2_percentile_UTM_148-0000046592-0000023296_wm_R.tif
+09/11/2020 17:16:25 | Working on Tile 30U - File: S2_percentile_UTM_209-0000046592-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000046592-0000023296.tif (2.20 GB)
+
+		09/11/2020 17:16:45 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_B.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000046592-0000023296.tif
+	09/11/2020 17:17:06 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000046592-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000046592-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 17:20:11 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_R.tif
+		09/11/2020 17:22:37 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_G.tif
+		09/11/2020 17:22:49 | Optimising S2_percentile_UTM_209-0000023296-0000000000_wm_I.tif
+		09/11/2020 17:24:09 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_G.tif
+		09/11/2020 17:27:20 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_R.tif
+		09/11/2020 17:29:07 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_B.tif
+		09/11/2020 17:29:08 | Optimising S2_percentile_UTM_210-0000023296-0000000000_wm_I.tif
+		09/11/2020 17:30:20 | Optimising S2_percentile_UTM_148-0000046592-0000023296_wm_B.tif
+		09/11/2020 17:32:00 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_B.tif
+	Split-opt.
+	Split-opt.
+09/11/2020 17:33:40 | Working on Tile 30U - File: S2_percentile_UTM_209-0000000000-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000000000-0000023296.tif (2.00 GB)
+
+		09/11/2020 17:34:16 | Optimising S2_percentile_UTM_149-0000000000-0000023296_wm_I.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000000000-0000023296.tif
+	09/11/2020 17:34:31 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000000000-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000000000-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 17:36:40 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_R.tif
+		09/11/2020 17:38:25 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_G.tif
+		09/11/2020 17:38:26 | Optimising S2_percentile_UTM_209-0000046592-0000023296_wm_R.tif
+		09/11/2020 17:40:28 | Optimising S2_percentile_UTM_148-0000046592-0000023296_wm_I.tif
+09/11/2020 17:42:27 | Working on Tile 31U - File: S2_percentile_UTM_210-0000000000-0000023296.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000000000-0000023296.tif (1.50 GB)
+
+09/11/2020 17:42:31 | Working on Tile 30V - File: S2_percentile_UTM_149-0000000000-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30V/S2_percentile_UTM_149-0000000000-0000000000.tif (678.9 MB)
+
+	Split-opt.
+		09/11/2020 17:42:49 | Optimising S2_percentile_UTM_148-0000000000-0000023296_wm_I.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000000000-0000000000.tif
+	09/11/2020 17:43:06 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000000000-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_149-0000000000-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000000000-0000023296.tif
+	09/11/2020 17:43:07 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000000000-0000023296.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000000000-0000023296_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 17:46:35 | Optimising S2_percentile_UTM_209-0000046592-0000023296_wm_G.tif
+		09/11/2020 17:46:36 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_R.tif
+	Split-opt.
+		09/11/2020 17:47:54 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_G.tif
+		09/11/2020 17:50:01 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_R.tif
+09/11/2020 17:50:04 | Working on Tile 29V - File: S2_percentile_UTM_148-0000046592-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000046592-0000000000.tif (2.05 GB)
+
+		09/11/2020 17:51:02 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_B.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000046592-0000000000.tif
+	09/11/2020 17:51:12 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000046592-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_148-0000046592-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+	Split-opt.
+09/11/2020 17:52:33 | Working on Tile 29V - File: S2_percentile_UTM_148-0000000000-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/29V/S2_percentile_UTM_148-0000000000-0000000000.tif (1.03 GB)
+
+		09/11/2020 17:57:54 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_G.tif
+		09/11/2020 17:59:45 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_B.tif
+		09/11/2020 18:01:16 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_G.tif
+	Split-opt.
+		09/11/2020 18:02:18 | Optimising S2_percentile_UTM_210-0000046592-0000023296_wm_I.tif
+	Split-opt.
+		09/11/2020 18:04:31 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_R.tif
+		09/11/2020 18:06:24 | Optimising S2_percentile_UTM_209-0000046592-0000023296_wm_I.tif
+		09/11/2020 18:08:09 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_B.tif
+		09/11/2020 18:08:09 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_R.tif
+		09/11/2020 18:12:11 | Optimising S2_percentile_UTM_149-0000046592-0000000000_wm_I.tif
+		09/11/2020 18:12:11 | Optimising S2_percentile_UTM_210-0000000000-0000023296_wm_G.tif
+		09/11/2020 18:13:57 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_B.tif
+09/11/2020 18:16:04 | Working on Tile 31U - File: S2_percentile_UTM_210-0000046592-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000046592-0000000000.tif (2.40 GB)
+
+09/11/2020 18:17:38 | Working on Tile 30U - File: S2_percentile_UTM_209-0000046592-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000046592-0000000000.tif (2.22 GB)
+
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000046592-0000000000.tif
+	09/11/2020 18:18:02 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000046592-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000046592-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000046592-0000000000.tif
+	09/11/2020 18:18:30 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000046592-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000046592-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 18:19:30 | Optimising S2_percentile_UTM_209-0000000000-0000023296_wm_I.tif
+		09/11/2020 18:21:02 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_G.tif
+		09/11/2020 18:22:40 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_G.tif
+		09/11/2020 18:25:33 | Optimising S2_percentile_UTM_210-0000000000-0000023296_wm_B.tif
+		09/11/2020 18:26:47 | Optimising S2_percentile_UTM_149-0000000000-0000000000_wm_I.tif
+	Split-opt.
+09/11/2020 18:27:43 | Working on Tile 30U - File: S2_percentile_UTM_209-0000000000-0000000000.tif
+Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/30U/S2_percentile_UTM_209-0000000000-0000000000.tif (2.18 GB)
+
+	Split-opt.
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000000000-0000000000.tif
+	09/11/2020 18:28:18 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000000000-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_209-0000000000-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 18:32:32 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_B.tif
+		09/11/2020 18:32:32 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_R.tif
+		09/11/2020 18:32:32 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_R.tif
+		09/11/2020 18:33:21 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_B.tif
+	Split-opt.
+		09/11/2020 18:38:30 | Optimising S2_percentile_UTM_210-0000000000-0000023296_wm_I.tif
+		09/11/2020 18:41:42 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_G.tif
+		09/11/2020 18:41:42 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_R.tif
+		09/11/2020 18:43:48 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_G.tif
+		09/11/2020 18:45:48 | Optimising S2_percentile_UTM_148-0000046592-0000000000_wm_I.tif
+09/11/2020 18:47:07 | Working on Tile 31U - File: S2_percentile_UTM_210-0000000000-0000000000.tif
 Downloading data from http://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A/GHS_composite_S2_L1C_2017-2018_GLOBE_R2020A_UTM_10/V1-0/31U/S2_percentile_UTM_210-0000000000-0000000000.tif (1.65 GB)
 
-Successfully downloaded file to ../../data/S2_percentile_UTM_149-0000000000-0000000000.tif
-	30/10/2020 09:04:36 | rio warp ../../data/S2_percentile_UTM_149-0000000000-0000000000.tif ../../data/S2_percentile_UTM_149-0000000000-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 09:07:02 | rm ../../data/S2_percentile_UTM_149-0000000000-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_148-0000023296-0000000000.tif
-	30/10/2020 10:21:39 | rio warp ../../data/S2_percentile_UTM_148-0000023296-0000000000.tif ../../data/S2_percentile_UTM_148-0000023296-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 10:25:31 | rm ../../data/S2_percentile_UTM_148-0000023296-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_209-0000069888-0000000000.tif
-	30/10/2020 10:54:59 | rio warp ../../data/S2_percentile_UTM_209-0000069888-0000000000.tif ../../data/S2_percentile_UTM_209-0000069888-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 10:59:50 | rm ../../data/S2_percentile_UTM_209-0000069888-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_149-0000046592-0000000000.tif
-	30/10/2020 11:04:45 | rio warp ../../data/S2_percentile_UTM_149-0000046592-0000000000.tif ../../data/S2_percentile_UTM_149-0000046592-0000000000_osgb.tif --dst-crs EPSG:27700
-Successfully downloaded file to ../../data/S2_percentile_UTM_210-0000000000-0000000000.tif
-	30/10/2020 11:06:51 | rio warp ../../data/S2_percentile_UTM_210-0000000000-0000000000.tif ../../data/S2_percentile_UTM_210-0000000000-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:10:28 | rm ../../data/S2_percentile_UTM_149-0000046592-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_149-0000023296-0000000000.tif
-	30/10/2020 11:11:52 | rio warp ../../data/S2_percentile_UTM_149-0000023296-0000000000.tif ../../data/S2_percentile_UTM_149-0000023296-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:12:42 | rm ../../data/S2_percentile_UTM_210-0000000000-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_210-0000046592-0000000000.tif
-	30/10/2020 11:13:25 | rio warp ../../data/S2_percentile_UTM_210-0000046592-0000000000.tif ../../data/S2_percentile_UTM_210-0000046592-0000000000_osgb.tif --dst-crs EPSG:27700
-Successfully downloaded file to ../../data/S2_percentile_UTM_209-0000046592-0000000000.tif
-	30/10/2020 11:16:44 | rio warp ../../data/S2_percentile_UTM_209-0000046592-0000000000.tif ../../data/S2_percentile_UTM_209-0000046592-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:17:44 | rm ../../data/S2_percentile_UTM_149-0000023296-0000000000.tif
-	30/10/2020 11:18:53 | rm ../../data/S2_percentile_UTM_210-0000046592-0000000000.tif
-	30/10/2020 11:22:10 | rm ../../data/S2_percentile_UTM_209-0000046592-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_148-0000046592-0000000000.tif
-	30/10/2020 11:27:29 | rio warp ../../data/S2_percentile_UTM_148-0000046592-0000000000.tif ../../data/S2_percentile_UTM_148-0000046592-0000000000_osgb.tif --dst-crs EPSG:27700
-Successfully downloaded file to ../../data/S2_percentile_UTM_210-0000023296-0000000000.tif
-	30/10/2020 11:32:09 | rio warp ../../data/S2_percentile_UTM_210-0000023296-0000000000.tif ../../data/S2_percentile_UTM_210-0000023296-0000000000_osgb.tif --dst-crs EPSG:27700
-Successfully downloaded file to ../../data/S2_percentile_UTM_209-0000000000-0000000000.tif
-	30/10/2020 11:33:05 | rio warp ../../data/S2_percentile_UTM_209-0000000000-0000000000.tif ../../data/S2_percentile_UTM_209-0000000000-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:33:11 | rm ../../data/S2_percentile_UTM_148-0000046592-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_148-0000069888-0000000000.tif
-	30/10/2020 11:33:55 | rio warp ../../data/S2_percentile_UTM_148-0000069888-0000000000.tif ../../data/S2_percentile_UTM_148-0000069888-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:37:38 | rm ../../data/S2_percentile_UTM_210-0000023296-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_210-0000069888-0000000000.tif
-	30/10/2020 11:38:02 | rio warp ../../data/S2_percentile_UTM_210-0000069888-0000000000.tif ../../data/S2_percentile_UTM_210-0000069888-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:38:04 | rm ../../data/S2_percentile_UTM_209-0000000000-0000000000.tif
-	30/10/2020 11:39:15 | rm ../../data/S2_percentile_UTM_148-0000069888-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_209-0000023296-0000000000.tif
-	30/10/2020 11:41:32 | rio warp ../../data/S2_percentile_UTM_209-0000023296-0000000000.tif ../../data/S2_percentile_UTM_209-0000023296-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:42:00 | rm ../../data/S2_percentile_UTM_210-0000069888-0000000000.tif
-Successfully downloaded file to ../../data/S2_percentile_UTM_149-0000069888-0000000000.tif
-	30/10/2020 11:43:02 | rio warp ../../data/S2_percentile_UTM_149-0000069888-0000000000.tif ../../data/S2_percentile_UTM_149-0000069888-0000000000_osgb.tif --dst-crs EPSG:27700
-	30/10/2020 11:46:42 | rm ../../data/S2_percentile_UTM_209-0000023296-0000000000.tif
-	30/10/2020 11:47:00 | rm ../../data/S2_percentile_UTM_149-0000069888-0000000000.tif
+		09/11/2020 18:47:51 | Optimising S2_percentile_UTM_148-0000000000-0000000000_wm_I.tif
+Successfully downloaded file to ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000000000-0000000000.tif
+	09/11/2020 18:47:57 | rio warp ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000000000-0000000000.tif ../../urbangrammar_samba/ghs_composite_s2/S2_percentile_UTM_210-0000000000-0000000000_osgb.tif --threads 16 --dst-crs EPSG:27700
+		09/11/2020 18:50:51 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_B.tif
+		09/11/2020 18:52:20 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_G.tif
+		09/11/2020 18:54:38 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_B.tif
+	Split-opt.
+		09/11/2020 18:58:34 | Optimising S2_percentile_UTM_209-0000046592-0000000000_wm_I.tif
+		09/11/2020 19:00:26 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_B.tif
+		09/11/2020 19:00:26 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_R.tif
+		09/11/2020 19:01:37 | Optimising S2_percentile_UTM_210-0000046592-0000000000_wm_I.tif
+		09/11/2020 19:06:32 | Optimising S2_percentile_UTM_209-0000000000-0000000000_wm_I.tif
+		09/11/2020 19:07:53 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_G.tif
+		09/11/2020 19:12:23 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_B.tif
+		09/11/2020 19:16:00 | Optimising S2_percentile_UTM_210-0000000000-0000000000_wm_I.tif
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="create-a-master-vrt-file">
-<h2>Create a master <code class="docutils literal notranslate"><span class="pre">.vrt</span></code> file<a class="headerlink" href="#create-a-master-vrt-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generate-vrt-file">
+<h3>Generate <code class="docutils literal notranslate"><span class="pre">.vrt</span></code> file<a class="headerlink" href="#generate-vrt-file" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span> gdalbuildvrt <span class="nv">$local_dir</span><span class="s2">&quot;GHS-composite-S2.vrt&quot;</span> <span class="nv">$local_dir</span><span class="s2">&quot;S2_percentile_UTM_*.tif&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 </pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="n">local_dir</span> <span class="o">+</span> <span class="s2">&quot;S2_percentile_UTM_*_osgb.tif&quot;</span><span class="p">)</span>
+<span class="n">vrt</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">BuildVRT</span><span class="p">(</span><span class="n">local_dir</span> <span class="o">+</span> <span class="s1">&#39;GHS-composite-S2.vrt&#39;</span><span class="p">,</span> <span class="n">files</span><span class="p">)</span>
+<span class="n">vrt</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># needed to close and save file due to some bug</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, you can use a command line tool to do the same.</p>
+<p><strong>NOTE</strong> - The command below does not seem to work from the notebook and in some other situations. If you run the equivalent from the terminal without backtracking folders (<code class="docutils literal notranslate"><span class="pre">../</span></code>) it should work.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span> gdalbuildvrt <span class="nv">$local_dir</span><span class="s2">&quot;GHS-composite-S2.vrt&quot;</span> <span class="nv">$local_dir</span><span class="s2">&quot;S2_percentile_UTM_*_osgb.tif&quot;</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -615,7 +799,7 @@ Successfully downloaded file to ../../data/S2_percentile_UTM_149-0000069888-0000
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="GHS-composite-S2_meta.html" title="previous page">Build metadata GHS-composite-S2 R2020A</a>
-    <a class='right-next' id="next-link" href="terracotta_explore.html" title="next page">Explore Imagery with <code class="docutils literal notranslate"><span class="pre">terracotta</span></code></a>
+    <a class='right-next' id="next-link" href="GHS-composite-S2_explore_mosaic.html" title="next page">Explore the mosaic</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -1,0 +1,3557 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Download data for a functional layer of Spatial Signatures &#8212; Urban Grammar AI | WP1 - Data Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Explore Imagery with terracotta" href="terracotta_explore.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.svg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Urban Grammar AI | WP1 - Data Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.github.io">
+   Project homepage
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.github.io/spatial_signatures">
+   WP2 - Spatial signatures
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Infrastructure
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/platform.html">
+   Computational platform
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/storage_drives.html">
+   Mount samba drives on linux from the command line
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/kubernetes_cluster.html">
+   Manage Kubernetes cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/dask_cluster.html">
+   Set up ad-hoc Dask cluster
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Morphological data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fetch_OS_Data.html">
+   Fetch Ordnance Survey (Open) Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Load_data_from_PostGIS.html">
+   Load data from PostGIS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Network_Consolidation_Test.html">
+   Assessment of the correctness of OpenRoads network
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OpenRoads_Topology.html">
+   Cleaning OpenRoads topology
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Imagery
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_meta.html">
+   Build metadata GHS-composite-S2 R2020A
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_mirror.html">
+   Mirror GHS-composite-S2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_explore_mosaic.html">
+   Explore the mosaic
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="terracotta_explore.html">
+   Explore Imagery with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     terracotta
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Functional data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Download data for a functional layer of Spatial Signatures
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/code/fetch_data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/urbangrammarai/data_processing"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/urbangrammarai/data_processing/master?urlpath=tree/code/fetch_data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#population-estimates">
+   Population estimates
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ons-data">
+     ONS data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#geometries">
+     Geometries
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-cleaning-and-processing">
+     Data cleaning and processing
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-scotland">
+     Add Scotland
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data">
+       Data
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#geometry">
+       Geometry
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#worldpop">
+   WorldPop
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reproject-to-osgb">
+     Reproject to OSGB
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pois">
+   POIs
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#geolytix-retail">
+     Geolytix retail
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#listed-buildings">
+     Listed buildings
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#processing">
+       Processing
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#night-lights">
+   Night lights
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clip-and-reproject">
+     Clip and reproject
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#postcodes">
+   Postcodes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#food-hygiene-rating-scheme">
+   Food hygiene rating scheme
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#business-census">
+   Business census
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#workplace-density">
+   Workplace density
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#corine-land-cover">
+   Corine land cover
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#land-cover-classification">
+   Land cover classification
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="download-data-for-a-functional-layer-of-spatial-signatures">
+<h1>Download data for a functional layer of Spatial Signatures<a class="headerlink" href="#download-data-for-a-functional-layer-of-spatial-signatures" title="Permalink to this headline">¶</a></h1>
+<p>This notebook downloads and prepares data for a functional layer of Spatial Signatures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">download</span> <span class="kn">import</span> <span class="n">download</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">osmnx</span> <span class="k">as</span> <span class="nn">ox</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">import</span> <span class="nn">rioxarray</span> <span class="k">as</span> <span class="nn">ra</span>
+<span class="kn">import</span> <span class="nn">pyproj</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">box</span><span class="p">,</span> <span class="n">mapping</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="population-estimates">
+<h2>Population estimates<a class="headerlink" href="#population-estimates" title="Permalink to this headline">¶</a></h2>
+<p>Population estimates for England, Scotland and Wales. England is split into regions.</p>
+<div class="section" id="ons-data">
+<h3>ONS data<a class="headerlink" href="#ons-data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesinthesouthwestregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10g/sape22dt10gmid2019southwest.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/south_west_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesinthesouthwestregionofengland%2fmid2019sape22dt10g/sape22dt10gmid2019southwest.zip (1 byte)
+
+file_sizes: 17.4MB [00:00, 72.8MB/s]                                            
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/south_west_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/south_west_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesintheyorkshireandthehumberregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10c/sape22dt10cmid2019yorkshireandthehumber.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/yorkshire_humber_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesintheyorkshireandthehumberregionofengland%2fmid2019sape22dt10c/sape22dt10cmid2019yorkshireandthehumber.zip (1 byte)
+
+file_sizes: 16.9MB [00:00, 72.4MB/s]                                            
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/yorkshire_humber_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/yorkshire_humber_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesinthesoutheastregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10i/sape22dt10imid2019southeast.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/south_east_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesinthesoutheastregionofengland%2fmid2019sape22dt10i/sape22dt10imid2019southeast.zip (1 byte)
+
+file_sizes: 27.6MB [00:00, 71.8MB/s]                                            
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/south_east_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/south_east_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesintheeastmidlandsregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10f/sape22dt10fmid2019eastmidlands.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/east_midlands_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesintheeastmidlandsregionofengland%2fmid2019sape22dt10f/sape22dt10fmid2019eastmidlands.zip (1 byte)
+
+file_sizes: 14.5MB [00:00, 104MB/s]                                             
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/east_midlands_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/east_midlands_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesinthenorthwestregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10b/sape22dt10bmid2019northwest.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/north_west_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesinthenorthwestregionofengland%2fmid2019sape22dt10b/sape22dt10bmid2019northwest.zip (1 byte)
+
+file_sizes: 23.0MB [00:00, 67.3MB/s]                                            
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/north_west_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/north_west_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesintheeastregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10h/sape22dt10hmid2019east.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/east_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesintheeastregionofengland%2fmid2019sape22dt10h/sape22dt10hmid2019east.zip (1 byte)
+
+file_sizes: 18.8MB [00:00, 111MB/s]                                             
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/east_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/east_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesinwales</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10j/sape22dt10jmid2019wales.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/wales&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesinwales%2fmid2019sape22dt10j/sape22dt10jmid2019wales.zip (1 byte)
+
+file_sizes: 9.60MB [00:00, 97.4MB/s]                                            
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/wales
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/wales&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesinthenortheastregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10d/sape22dt10dmid2019northeast.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/north_east_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesinthenortheastregionofengland%2fmid2019sape22dt10d/sape22dt10dmid2019northeast.zip (1 byte)
+
+file_sizes: 8.39MB [00:00, 68.0MB/s]                                            
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/north_east_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/north_east_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.ons.gov.uk/file?uri=</span><span class="si">%2f</span><span class="s1">peoplepopulationandcommunity</span><span class="si">%2f</span><span class="s1">populationandmigration</span><span class="si">%2f</span><span class="s1">populationestimates</span><span class="si">%2f</span><span class="s1">datasets</span><span class="si">%2f</span><span class="s1">censusoutputareaestimatesinthewestmidlandsregionofengland</span><span class="si">%2f</span><span class="s1">mid2019sape22dt10e/sape22dt10emid2019westmidlands.zip&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/west_midlands_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fpopulationandmigration%2fpopulationestimates%2fdatasets%2fcensusoutputareaestimatesinthewestmidlandsregionofengland%2fmid2019sape22dt10e/sape22dt10emid2019westmidlands.zip (1 byte)
+
+file_sizes: 17.7MB [00:00, 69.1MB/s]                                            
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/west_midlands_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/west_midlands_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="geometries">
+<h3>Geometries<a class="headerlink" href="#geometries" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/England_oa_2011.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_england&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/England_oa_2011.zip (388.3 MB)
+
+file_sizes: 100%|████████████████████████████| 407M/407M [00:08&lt;00:00, 49.9MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_england
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_england&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/Wales_oac_2011.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_wales&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://borders.ukdataservice.ac.uk/ukborders/easy_download/prebuilt/shape/Wales_oac_2011.zip (30.0 MB)
+
+file_sizes: 100%|██████████████████████████| 31.4M/31.4M [00:00&lt;00:00, 32.5MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_wales
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_wales&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="data-cleaning-and-processing">
+<h3>Data cleaning and processing<a class="headerlink" href="#data-cleaning-and-processing" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">england</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_england/england_oa_2011.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wales</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/oa_geometry_wales/wales_oac_2011.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">oa</span> <span class="o">=</span> <span class="n">england</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wales</span><span class="p">[[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/*/*.xlsx&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> merged = pd.concat([pd.read_excel(f, sheet_name=&#39;Mid-2019 Persons&#39;, header=0, skiprows=4) for f in files])
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 12min 2s, sys: 640 ms, total: 12min 2s
+Wall time: 12min 5s
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">population_est</span> <span class="o">=</span> <span class="n">oa</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;OA11CD&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="add-scotland">
+<h3>Add Scotland<a class="headerlink" href="#add-scotland" title="Permalink to this headline">¶</a></h3>
+<p>Scottish data are shipped differently.</p>
+<div class="section" id="data">
+<h4>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://statistics.gov.scot/downloads/file?id=438c9dc6-dca0-48d5-995c-e3bb1d34e29e</span><span class="si">%2F</span><span class="s1">SAPE_2011DZ_2001-2019_Five_and_broad_age_groups.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/scotland&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://scottish-government-files.s3.amazonaws.com/438c9dc6-dca0-48d5-995c-e3bb1d34e29e/SAPE_2011DZ_2001-2019_Five_and_broad_age_groups.zip (35.8 MB)
+
+file_sizes: 100%|██████████████████████████| 37.5M/37.5M [00:02&lt;00:00, 14.0MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/scotland
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/scotland&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pop_scot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/scotland/data - statistics.gov.scot - SAPE_2011DZ_2019_Five.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pop_scot</span> <span class="o">=</span> <span class="n">pop_scot</span><span class="p">[</span><span class="n">pop_scot</span><span class="o">.</span><span class="n">Sex</span> <span class="o">==</span> <span class="s1">&#39;All&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">pop_scot</span><span class="p">[[</span><span class="s1">&#39;GeographyCode&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;GeographyCode&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="geometry">
+<h4>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://sedsh127.sedsh.gov.uk/Atom_data/ScotGov/ZippedShapefiles/SG_DataZoneBdry_2011.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/dz_geometry_scotland&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from http://sedsh127.sedsh.gov.uk/Atom_data/ScotGov/ZippedShapefiles/SG_DataZoneBdry_2011.zip (18.2 MB)
+
+file_sizes: 100%|██████████████████████████| 19.1M/19.1M [00:06&lt;00:00, 3.05MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/population_estimates/dz_geometry_scotland
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/dz_geometry_scotland&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_zones</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/dz_geometry_scotland&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scotland</span> <span class="o">=</span> <span class="n">data_zones</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;DataZone&#39;</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scotland</span> <span class="o">=</span> <span class="n">scotland</span><span class="p">[[</span><span class="s1">&#39;DataZone&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;DataZone&#39;</span><span class="p">:</span> <span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="s1">&#39;population&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">population_est</span> <span class="o">=</span> <span class="n">population_est</span><span class="p">[[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;All Ages&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;All Ages&#39;</span><span class="p">:</span> <span class="s1">&#39;population&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scotland</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">population_est</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/gb_population_estimates.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.7/site-packages/ipykernel_launcher.py:1: UserWarning: this is an initial implementation of Parquet/Feather file support and associated metadata.  This is tracking version 0.1.0 of the metadata specification at https://github.com/geopandas/geo-arrow-spec
+
+This metadata specification does not yet make stability promises.  We do not yet recommend using this in a production setting unless you are able to rewrite your Parquet/Feather files.
+
+To further ignore this warning, you can do: 
+import warnings; warnings.filterwarnings(&#39;ignore&#39;, message=&#39;.*initial implementation of Parquet.*&#39;)
+  &quot;&quot;&quot;Entry point for launching an IPython kernel.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="worldpop">
+<h2>WorldPop<a class="headerlink" href="#worldpop" title="Permalink to this headline">¶</a></h2>
+<p>Data is dowloaded clipped to GB, so we only have to reproject to OSGB.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;ftp://ftp.worldpop.org.uk/GIS/Population/Global_2000_2020_Constrained/2020/BSGM/GBR/gbr_ppp_2020_constrained.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/population_estimates/world_pop/gbr_ppp_2020_constrained.tif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from ftp://ftp.worldpop.org.uk/GIS/Population/Global_2000_2020_Constrained/2020/BSGM/GBR/gbr_ppp_2020_constrained.tif (32.7 MB)
+
+file_sizes: 100%|██████████████████████████| 34.3M/34.3M [00:01&lt;00:00, 19.2MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/population_estimates/world_pop/gbr_ppp_2020_constrained.tif
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/population_estimates/world_pop/gbr_ppp_2020_constrained.tif&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="reproject-to-osgb">
+<h3>Reproject to OSGB<a class="headerlink" href="#reproject-to-osgb" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wp</span> <span class="o">=</span> <span class="n">ra</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/population_estimates/world_pop/gbr_ppp_2020_constrained.tif&quot;</span><span class="p">)</span>
+<span class="n">wp</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRS.from_epsg(4326)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> wp_osgb = wp.rio.reproject(pyproj.CRS(27700).to_wkt())
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 8.28 s, sys: 896 ms, total: 9.17 s
+Wall time: 9.18 s
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wp_osgb</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRS.from_epsg(27700)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wp_osgb</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/population_estimates/world_pop/gbr_ppp_2020_constrained_osgb.tif&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="pois">
+<h2>POIs<a class="headerlink" href="#pois" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="geolytix-retail">
+<h3>Geolytix retail<a class="headerlink" href="#geolytix-retail" title="Permalink to this headline">¶</a></h3>
+<p>Geolytix retail POIs: https://drive.google.com/u/0/uc?id=1B8M7m86rQg2sx2TsHhFa2d-x-dZ1DbSy (no idea how to get them programatically, so they were downloaded manually)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geolytix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/pois/GEOLYTIX - RetailPoints/geolytix_retailpoints_v17_202008.csv&#39;</span><span class="p">)</span>
+<span class="n">geolytix</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>retailer</th>
+      <th>fascia</th>
+      <th>store_name</th>
+      <th>add_one</th>
+      <th>add_two</th>
+      <th>town</th>
+      <th>suburb</th>
+      <th>postcode</th>
+      <th>long_wgs</th>
+      <th>lat_wgs</th>
+      <th>bng_e</th>
+      <th>bng_n</th>
+      <th>pqi</th>
+      <th>open_date</th>
+      <th>size_band</th>
+      <th>geom_p_4326</th>
+      <th>geom_p_27700</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1010015805</td>
+      <td>The Southern Co-operative</td>
+      <td>The Co-operative Food PFS</td>
+      <td>Co-op Lavant Road Chichester</td>
+      <td>Unit 2 Summersdale Retail Park</td>
+      <td>Lavant Road</td>
+      <td>Chichester</td>
+      <td>Summersdale</td>
+      <td>PO19 5RD</td>
+      <td>-0.784194</td>
+      <td>50.859193</td>
+      <td>485668.1622</td>
+      <td>107335.2522</td>
+      <td>Rooftop geocoded by Geolytix</td>
+      <td>NaN</td>
+      <td>&lt; 3,013 ft2 (280m2)</td>
+      <td>0101000020E6100000B52C23D51D18E9BF761C8509FA6D...</td>
+      <td>0101000020346C0000849822A690A41D4126241B097434...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1010014166</td>
+      <td>Marks and Spencer</td>
+      <td>Marks and Spencer BP</td>
+      <td>M&amp;S Colchester Eastwood BP</td>
+      <td>Ipswich Road</td>
+      <td>NaN</td>
+      <td>Colchester</td>
+      <td>Highwoods</td>
+      <td>CO4 0EU</td>
+      <td>0.923960</td>
+      <td>51.906927</td>
+      <td>601229.3812</td>
+      <td>227194.2254</td>
+      <td>Rooftop geocoded by Geolytix</td>
+      <td>NaN</td>
+      <td>&lt; 3,013 ft2 (280m2)</td>
+      <td>0101000020E6100000F09B5AF81391ED3FCF1F012C16F4...</td>
+      <td>0101000020346C0000DCFE2FC31A5922418A6885CDD1BB...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We already have coordinates in OSGB, no need to preprocess.</p>
+</div>
+<div class="section" id="listed-buildings">
+<h3>Listed buildings<a class="headerlink" href="#listed-buildings" title="Permalink to this headline">¶</a></h3>
+<p>We have to merge English, Scottish and Welsh data.</p>
+<p>England downloaded manually from https://services.historicengland.org.uk/NMRDataDownload/OpenPages/Download.aspx</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://inspire.hes.scot/AtomService/DATA/lb_scotland.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/pois/listed_buildings/scotland&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://inspire.hes.scot/AtomService/DATA/lb_scotland.zip (6.1 MB)
+
+file_sizes: 100%|██████████████████████████| 6.41M/6.41M [00:01&lt;00:00, 3.43MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/pois/listed_buildings/scotland
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/pois/listed_buildings/scotland&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://lle.gov.wales/catalogue/item/ListedBuildings.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/pois/listed_buildings/wales&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from http://lle.gov.wales/catalogue/item/ListedBuildings.zip (2.5 MB)
+
+file_sizes: 100%|██████████████████████████| 2.57M/2.57M [00:00&lt;00:00, 13.3MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/pois/listed_buildings/wales
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/pois/listed_buildings/wales&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="processing">
+<h4>Processing<a class="headerlink" href="#processing" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/pois/listed_buildings/Listed Buildings.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/pois/listed_buildings/england&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">england</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/pois/listed_buildings/england/ListedBuildings_23Oct2020.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">england</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ListEntry</th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Grade</th>
+      <th>ListDate</th>
+      <th>AmendDate</th>
+      <th>LegacyUID</th>
+      <th>NGR</th>
+      <th>CaptureSca</th>
+      <th>Easting</th>
+      <th>Northing</th>
+      <th>Hyperlink</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1021466</td>
+      <td>20 AND 20A</td>
+      <td>Corsley, Wiltshire, BA12</td>
+      <td>II</td>
+      <td>1987-11-05</td>
+      <td>None</td>
+      <td>313736</td>
+      <td>ST8338544428</td>
+      <td>1:2500</td>
+      <td>383389.03</td>
+      <td>144430.4185</td>
+      <td>https://historicengland.org.uk/listing/the-lis...</td>
+      <td>POINT (383389.030 144430.419)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1021467</td>
+      <td>TENNIS CORNER FARMHOUSE WITH GRANARY AND STABLE</td>
+      <td>Dilton Marsh, Wiltshire, BA11</td>
+      <td>II</td>
+      <td>1987-11-05</td>
+      <td>None</td>
+      <td>313738</td>
+      <td>ST 82839 50851</td>
+      <td>1:2500</td>
+      <td>382839.00</td>
+      <td>150851.3608</td>
+      <td>https://historicengland.org.uk/listing/the-lis...</td>
+      <td>POINT (382839.000 150851.361)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scotland</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/pois/listed_buildings/scotland/Listed_Buildings.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scotland</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ENT_REF</th>
+      <th>ENT_SEQ</th>
+      <th>ENT_TITLE</th>
+      <th>ACCURACY</th>
+      <th>X</th>
+      <th>Y</th>
+      <th>CREATED</th>
+      <th>COMPILER</th>
+      <th>UPDATED</th>
+      <th>PRECISION</th>
+      <th>...</th>
+      <th>AMENDED</th>
+      <th>LINK</th>
+      <th>LEGISLATIO</th>
+      <th>CATEGORY</th>
+      <th>GROUPCAT</th>
+      <th>CLASS</th>
+      <th>LOCAL_AUTH</th>
+      <th>NAT_PARK</th>
+      <th>PARBUR</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>330184.0</td>
+      <td>1.0</td>
+      <td>Ayton Manse</td>
+      <td>Location Digitised on OS MasterMap</td>
+      <td>392542.0</td>
+      <td>660715.0</td>
+      <td>2003-01-01</td>
+      <td>Historic Environment Scotland</td>
+      <td>None</td>
+      <td>Within 10m</td>
+      <td>...</td>
+      <td>None</td>
+      <td>http://portal.historicenvironment.scot/designa...</td>
+      <td>http://www.legislation.gov.uk/ukpga/1997/9</td>
+      <td>C</td>
+      <td>None</td>
+      <td>Cultural</td>
+      <td>Scottish Borders</td>
+      <td>None</td>
+      <td>Ayton</td>
+      <td>POINT (392542.000 660715.000)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>330186.0</td>
+      <td>2.0</td>
+      <td>Railway Bridge, Ayton</td>
+      <td>Location Digitised on OS MasterMap</td>
+      <td>392330.0</td>
+      <td>659774.0</td>
+      <td>2003-01-01</td>
+      <td>Historic Environment Scotland</td>
+      <td>None</td>
+      <td>Within 10m</td>
+      <td>...</td>
+      <td>None</td>
+      <td>http://portal.historicenvironment.scot/designa...</td>
+      <td>http://www.legislation.gov.uk/ukpga/1997/9</td>
+      <td>C</td>
+      <td>None</td>
+      <td>Cultural</td>
+      <td>Scottish Borders</td>
+      <td>None</td>
+      <td>Ayton</td>
+      <td>POINT (392330.000 659774.000)</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 24 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wales</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/pois/listed_buildings/wales/Cadw_ListedBuildingsMPoint.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wales</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RecordNumb</th>
+      <th>Name</th>
+      <th>Name_cy</th>
+      <th>Designatio</th>
+      <th>Grade</th>
+      <th>Location</th>
+      <th>BroadClass</th>
+      <th>BroadClas0</th>
+      <th>Report</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Kelsterton Hall</td>
+      <td>None</td>
+      <td>1949-08-08</td>
+      <td>II</td>
+      <td>Set back slightly from the road at the junctio...</td>
+      <td>Recreational</td>
+      <td>Hamdden</td>
+      <td>http://cadwpublic-api.azurewebsites.net/report...</td>
+      <td>MULTIPOINT (327836.000 370714.000)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Plas Bellin</td>
+      <td>None</td>
+      <td>1962-01-21</td>
+      <td>II</td>
+      <td>To W of road, approximately 900m N of crossroa...</td>
+      <td>Domestic</td>
+      <td>Domestig</td>
+      <td>http://cadwpublic-api.azurewebsites.net/report...</td>
+      <td>MULTIPOINT (326364.000 369400.000)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">listed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">england</span><span class="p">[[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]],</span> <span class="n">scotland</span><span class="p">[[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]],</span> <span class="n">wales</span><span class="p">[[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]]])</span>
+<span class="n">listed</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/pois/listed_buildings/listed_buildings_gb.pq&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-44-77ad3d860075&gt;:2: UserWarning: this is an initial implementation of Parquet/Feather file support and associated metadata.  This is tracking version 0.1.0 of the metadata specification at https://github.com/geopandas/geo-arrow-spec
+
+This metadata specification does not yet make stability promises.  We do not yet recommend using this in a production setting unless you are able to rewrite your Parquet/Feather files.
+
+To further ignore this warning, you can do: 
+import warnings; warnings.filterwarnings(&#39;ignore&#39;, message=&#39;.*initial implementation of Parquet.*&#39;)
+  listed.reset_index(drop=True).to_parquet(&quot;../../urbangrammar_samba/functional_data/pois/listed_buildings/listed_buildings_gb.pq&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="night-lights">
+<h2>Night lights<a class="headerlink" href="#night-lights" title="Permalink to this headline">¶</a></h2>
+<p>We need to clip it to the extent of GB (dataset has a global coverage) and reproject to OSGB.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/SVDNB_npp_20190301-20190331_75N060W_vcmcfg_v10_c201904071900.tgz&#39;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">down</span><span class="p">:</span>
+    <span class="n">down</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://data.ngdc.noaa.gov/instruments/remote-sensing/passive/spectrometers-radiometers/imaging/viirs/dnb_composites/v10//201903/vcmcfg/SVDNB_npp_20190301-20190331_75N060W_vcmcfg_v10_c201904071900.tgz&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">down</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/SVDNB_npp_20190301-20190331_75N060W_vcmcfg_v10_c201904071900.tgz&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/employment&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="clip-and-reproject">
+<h3>Clip and reproject<a class="headerlink" href="#clip-and-reproject" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nl</span> <span class="o">=</span> <span class="n">ra</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/SVDNB_npp_20190301-20190331_75N060W_vcmcfg_v10_c201904071900.avg_rade9h.tif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nl</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">crs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRS.from_epsg(4326)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extent</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/spatial_signatures/local_auth_chunks.pq&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extent</span> <span class="o">=</span> <span class="n">extent</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> nl_clipped = nl.rio.clip([mapping(box(*extent.total_bounds))], all_touched=True)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3.96 s, sys: 6.95 s, total: 10.9 s
+Wall time: 29.5 s
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">time</span> nl_osgb = nl_clipped.rio.reproject(pyproj.CRS(27700).to_wkt())
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 766 ms, sys: 50.2 ms, total: 816 ms
+Wall time: 816 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nl_osgb</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/employment/night_lights_osgb.tif&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nl_osgb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x7fa79c138160&gt;
+</pre></div>
+</div>
+<img alt="../_images/fetch_data_68_1.png" src="../_images/fetch_data_68_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="postcodes">
+<h2>Postcodes<a class="headerlink" href="#postcodes" title="Permalink to this headline">¶</a></h2>
+<p>Keeping only active postcodes, relevant columns and determining their age.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.arcgis.com/sharing/rest/content/items/b6e6715fa1984648b5e690b6a8519e53/data&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/postcode/nhspd&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://ago-item-storage.s3.us-east-1.amazonaws.com/b6e6715fa1984648b5e690b6a8519e53/NHSPD_AUG_2020_UK_FULL.zip?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGcaCXVzLWVhc3QtMSJGMEQCIE1aY0Pvl6tQbhtVpUFLoDlgPOfnYQeua3PqJo%2BY4ha7AiBmEHPkSi6dk7cfbOMACbdFZIJkTemkkKYLzVaD5gPFnSq9Awi%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYwNDc1ODEwMjY2NSIMqVOVkqTsT8bs3%2FTqKpEDPg1CUnhXrkkNksaeepovynl5NWDCyWb5iMjrMuss6PTKTyCod85tX1OfcgXIhUdARci%2FKYA5fOpfPJGJpuJ%2B1qoljKytKriAyaNU%2FRonRCgB%2FSti5aaQy8i7uK923IlQwx1tbNswcBs2eO6bAYQagoRIsiv%2FynfrVAoot0zgl9nxGomHFYugdHXKoqqHSmAkYf%2FzEZmuehv0hPDealY%2FPUFbopmmGro0XY1ETls52NzkUJKhaqdz9kofSWpRrrOuVi8N3%2Ft9ggvENoVnAhw62OpBKLIoGvKyUa8XVX4qD5uljNRB6N9fpbR2BcxDERzhYDR2zSd0z6XCWjAI6UBBLcZy%2FOd2NMcP5tTaQWeA2gVtIReskJPB2MF60srFTUl07eEFub41lxQQyEqJ05uNg5mp2iwokIr7mR3Nq7GJxrzIH80QgYMEXiqpUlzptwYumC0%2F3JdqsXpNlyr0m4PR5VdcskpyYnsEGpnetaz%2B0G4%2FVhRlB1n4DIFfdMvahSf%2F9h%2FkhDyq7ADtcGie%2Ba3V%2Bhcw3MyF%2FQU67AFvPcSHt9IlZ4h%2B3Ls3iBfbnynIjGG96K8W23RkCzosvVeEzqvBd7oHufO3LrcegBJN0rvK4jwLbzomgGjTfGrHvfUSpPl4gUSAZp1CY2rqbng8blAX5tyGwo7%2BnOSybr33uDiJb9sFd8InpfOeV7Yud%2BB3gIQEdyOnS5XgR7hth3AIJPRsXbCR2yWJrkx%2BFjj4nDsNlVG73RbjNUL%2FfV4nm3lAsT5oUBCbFDO72xiEW9f3%2BgLUiAmwWmapM83nlhYF4ZAx%2Fltl%2BPD5BsvsF8zGUhCFXketa%2Bh3nYgPST1MYpT7ANE68XXJEtA9AQ%3D%3D&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20201103T145506Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=300&amp;X-Amz-Credential=ASIAYZTTEKKETFSSP5W2%2F20201103%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=f290dd148c10a89a40b5ef7f3f0d15eda6abc484fac92116edba6a1c46205ac9 (104.8 MB)
+
+file_sizes: 100%|████████████████████████████| 110M/110M [00:04&lt;00:00, 24.2MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/postcode/nhspd
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/postcode/nhspd&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">postcodes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/postcode/nhspd/Data/nhg20aug.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/IPython/core/interactiveshell.py:3146: DtypeWarning: Columns (7,10,11,17,20,26,35) have mixed types.Specify dtype option on import or set low_memory=False.
+  has_raised = await self.run_ast_nodes(code_ast.body, cell_name,
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">postcodes</span> <span class="o">=</span> <span class="n">postcodes</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">existing</span> <span class="o">=</span> <span class="n">postcodes</span><span class="p">[</span><span class="n">postcodes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+<span class="n">located</span> <span class="o">=</span> <span class="n">existing</span><span class="p">[</span><span class="n">existing</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()]</span>
+<span class="n">located</span> <span class="o">=</span> <span class="n">located</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;postcode&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;postcode2&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s1">&#39;introduced&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s1">&#39;terminated&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s1">&#39;y&#39;</span><span class="p">})</span>
+<span class="n">located</span><span class="o">.</span><span class="n">introduced</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">located</span><span class="o">.</span><span class="n">introduced</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%Y%m&quot;</span><span class="p">)</span>
+<span class="n">located</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s1">&#39;today&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">located</span><span class="o">.</span><span class="n">introduced</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+<span class="n">located</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;postcode2&#39;</span><span class="p">,</span> <span class="s1">&#39;terminated&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/postcode/postcodes_gb.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="food-hygiene-rating-scheme">
+<h2>Food hygiene rating scheme<a class="headerlink" href="#food-hygiene-rating-scheme" title="Permalink to this headline">¶</a></h2>
+<p>FHRS https://data.cdrc.ac.uk/dataset/food-hygiene-rating-scheme-fhrs-ratings (requires login)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fhrs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/fhrs/Data/fhrs_location_20200528.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fhrs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>BusinessID</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>bng_east</th>
+      <th>bng_north</th>
+      <th>utm29_east</th>
+      <th>utm29_north</th>
+      <th>utm30_east</th>
+      <th>utm30_north</th>
+      <th>utm31_east</th>
+      <th>utm31_north</th>
+      <th>utm_zone</th>
+      <th>date_created</th>
+      <th>date_updated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>51.840311</td>
+      <td>-0.634672</td>
+      <td>494159.3436</td>
+      <td>216625.1394</td>
+      <td>1.075836e+06</td>
+      <td>5776434.811</td>
+      <td>662947.2937</td>
+      <td>5745922.713</td>
+      <td>662947.2937</td>
+      <td>5745922.713</td>
+      <td>30.0</td>
+      <td>2012-11-22</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>51.914273</td>
+      <td>-1.054004</td>
+      <td>465163.7254</td>
+      <td>224393.1735</td>
+      <td>1.046116e+06</td>
+      <td>5781394.193</td>
+      <td>633842.5939</td>
+      <td>5753292.773</td>
+      <td>633842.5939</td>
+      <td>5753292.773</td>
+      <td>30.0</td>
+      <td>2012-11-22</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.000000e+00</td>
+      <td>0.000</td>
+      <td>0.0000</td>
+      <td>0.000</td>
+      <td>0.0000</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>2012-11-22</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>51.762521</td>
+      <td>-0.744901</td>
+      <td>486714.3979</td>
+      <td>207837.3419</td>
+      <td>1.069245e+06</td>
+      <td>5766934.601</td>
+      <td>655622.2705</td>
+      <td>5737031.704</td>
+      <td>655622.2705</td>
+      <td>5737031.704</td>
+      <td>30.0</td>
+      <td>2012-11-22</td>
+      <td>2018-12-26</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>51.795047</td>
+      <td>-0.716069</td>
+      <td>488640.4326</td>
+      <td>211489.2210</td>
+      <td>1.070818e+06</td>
+      <td>5770769.654</td>
+      <td>657498.3679</td>
+      <td>5740710.457</td>
+      <td>657498.3679</td>
+      <td>5740710.457</td>
+      <td>30.0</td>
+      <td>2012-11-22</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5122160</th>
+      <td>883771</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.000000e+00</td>
+      <td>0.000</td>
+      <td>0.0000</td>
+      <td>0.000</td>
+      <td>0.0000</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>2020-05-01</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5122161</th>
+      <td>1014862</td>
+      <td>52.633659</td>
+      <td>-1.130756</td>
+      <td>458925.5825</td>
+      <td>304342.1474</td>
+      <td>1.032123e+06</td>
+      <td>5860641.674</td>
+      <td>626498.9755</td>
+      <td>5833159.625</td>
+      <td>626498.9755</td>
+      <td>5833159.625</td>
+      <td>30.0</td>
+      <td>2020-04-30</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5122162</th>
+      <td>1014863</td>
+      <td>52.646938</td>
+      <td>-1.075170</td>
+      <td>462668.4778</td>
+      <td>305866.0147</td>
+      <td>1.035712e+06</td>
+      <td>5862528.654</td>
+      <td>630220.8779</td>
+      <td>5834735.509</td>
+      <td>630220.8779</td>
+      <td>5834735.509</td>
+      <td>30.0</td>
+      <td>2020-04-30</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5122163</th>
+      <td>1014864</td>
+      <td>55.761562</td>
+      <td>-4.696288</td>
+      <td>230919.6035</td>
+      <td>655316.2701</td>
+      <td>7.699701e+05</td>
+      <td>6187931.219</td>
+      <td>393561.5047</td>
+      <td>6180845.309</td>
+      <td>393561.5047</td>
+      <td>6180845.309</td>
+      <td>30.0</td>
+      <td>2020-04-25</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5122164</th>
+      <td>1014865</td>
+      <td>55.639553</td>
+      <td>-4.814533</td>
+      <td>222951.0199</td>
+      <td>642038.1479</td>
+      <td>7.633777e+05</td>
+      <td>6173911.049</td>
+      <td>385787.4574</td>
+      <td>6167457.148</td>
+      <td>385787.4574</td>
+      <td>6167457.148</td>
+      <td>30.0</td>
+      <td>2020-04-25</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5122165 rows × 14 columns</p>
+</div></div></div>
+</div>
+<p>No need to preprocess at the moment. Contains OSGB coordinates for each point.</p>
+</div>
+<div class="section" id="business-census">
+<h2>Business census<a class="headerlink" href="#business-census" title="Permalink to this headline">¶</a></h2>
+<p>https://data.cdrc.ac.uk/dataset/business-census (requires login)
+<code class="docutils literal notranslate"><span class="pre">encoding</span> <span class="pre">=</span> <span class="pre">&quot;ISO-8859-1&quot;</span></code></p>
+<ul class="simple">
+<li><p>get gemetries</p>
+<ul>
+<li><p>either geocode addresses (could be expensive</p></li>
+<li><p>or link to postcode points</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="workplace-density">
+<h2>Workplace density<a class="headerlink" href="#workplace-density" title="Permalink to this headline">¶</a></h2>
+<p>Dowload workplace population data from scottish census and english census, combine together and link to geometry.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://www.scotlandscensus.gov.uk/documents/additional_tables/WP605SCwz.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.scotlandscensus.gov.uk/documents/additional_tables/WP605SCwz.csv (234 kB)
+
+file_sizes: 100%|████████████████████████████| 239k/239k [00:00&lt;00:00, 2.47MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1314_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=TYPE262&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1314_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=TYPE262 (5.1 MB)
+
+file_sizes: 100%|██████████████████████████| 5.35M/5.35M [00:00&lt;00:00, 7.41MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265922TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/north_west.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265922TYPE299 (781 kB)
+
+file_sizes: 100%|████████████████████████████| 799k/799k [00:00&lt;00:00, 6.92MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/north_west.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/north_west.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265926TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/east.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265926TYPE299 (636 kB)
+
+file_sizes: 100%|████████████████████████████| 651k/651k [00:00&lt;00:00, 6.86MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/east.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/east.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265924TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/east_midlands.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265924TYPE299 (492 kB)
+
+file_sizes: 100%|████████████████████████████| 504k/504k [00:00&lt;00:00, 6.91MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/east_midlands.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/east_midlands.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265927TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/london.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265927TYPE299 (839 kB)
+
+file_sizes: 100%|████████████████████████████| 859k/859k [00:00&lt;00:00, 6.74MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/london.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/london.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265921TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/north_east.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265921TYPE299 (294 kB)
+
+file_sizes: 100%|████████████████████████████| 301k/301k [00:00&lt;00:00, 5.98MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/north_east.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/north_east.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265928TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/south_east.csv&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265928TYPE299 (926 kB)
+
+file_sizes: 100%|████████████████████████████| 948k/948k [00:00&lt;00:00, 7.44MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/south_east.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/south_east.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265929TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/south_west.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265929TYPE299 (591 kB)
+
+file_sizes: 100%|████████████████████████████| 605k/605k [00:00&lt;00:00, 7.05MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/south_west.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/south_west.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265925TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/west_midlands.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265925TYPE299 (599 kB)
+
+file_sizes: 100%|████████████████████████████| 614k/614k [00:00&lt;00:00, 6.14MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/west_midlands.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/west_midlands.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265923TYPE299&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/yorkshire.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_1300_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=2013265923TYPE299 (578 kB)
+
+file_sizes: 100%|████████████████████████████| 592k/592k [00:00&lt;00:00, 6.67MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/yorkshire.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/yorkshire.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nrscotland.gov.uk/files/geography/output-area-2011-mhw.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_oa&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.nrscotland.gov.uk/files/geography/output-area-2011-mhw.zip (31.2 MB)
+
+file_sizes: 100%|██████████████████████████| 32.7M/32.7M [00:00&lt;00:00, 65.3MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/employment/workplace/scotland_oa
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_oa&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nomisweb.co.uk/api/v01/dataset/nm_155_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=TYPE262&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/wp_density_ew.csv&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.nomisweb.co.uk/api/v01/dataset/nm_155_1.bulk.csv?time=latest&amp;measures=20100&amp;geography=TYPE262 (2.3 MB)
+
+file_sizes: 100%|██████████████████████████| 2.46M/2.46M [00:00&lt;00:00, 7.66MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/wp_density_ew.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/wp_density_ew.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://www.nrscotland.gov.uk/files//geography/products/workplacezones2011scotland.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/wpz_scotland&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://www.nrscotland.gov.uk/files//geography/products/workplacezones2011scotland.zip (14.7 MB)
+
+file_sizes: 100%|██████████████████████████| 15.4M/15.4M [00:00&lt;00:00, 39.3MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/employment/workplace/wpz_scotland
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/wpz_scotland&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://www.scotlandscensus.gov.uk/documents/additional_tables/WP102SCca.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/wp_density_scotland.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.scotlandscensus.gov.uk/documents/additional_tables/WP102SCca.csv (3 kB)
+
+file_sizes: 100%|███████████████████████████| 2.79k/2.79k [00:00&lt;00:00, 184kB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/wp_density_scotland.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/wp_density_scotland.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://www.scotlandscensus.gov.uk/documents/additional_tables/WP103SCwz.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/wp_pop_scotland.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://www.scotlandscensus.gov.uk/documents/additional_tables/WP103SCwz.csv (462 kB)
+
+file_sizes: 100%|████████████████████████████| 473k/473k [00:00&lt;00:00, 4.64MB/s]
+Successfully downloaded file to ../../urbangrammar_samba/functional_data/employment/workplace/wp_pop_scotland.csv
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/employment/workplace/wp_pop_scotland.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/employment/workplace/wz2011ukbgcv2.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/employment/workplace/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_geom</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/WZ_2011_UK_BGC_V2.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_geom</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>WZ11CD</th>
+      <th>LAD_DCACD</th>
+      <th>LAD11NM</th>
+      <th>LAD11NMW</th>
+      <th>BNG_E</th>
+      <th>BNG_N</th>
+      <th>LONG</th>
+      <th>LAT</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>E33000001</td>
+      <td>E08000020</td>
+      <td>Gateshead</td>
+      <td>None</td>
+      <td>426394</td>
+      <td>563614</td>
+      <td>-1.58929</td>
+      <td>54.96646</td>
+      <td>POLYGON ((426363.000 563750.000, 426477.836 56...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>E33000002</td>
+      <td>E08000020</td>
+      <td>Gateshead</td>
+      <td>None</td>
+      <td>426186</td>
+      <td>563095</td>
+      <td>-1.59258</td>
+      <td>54.96181</td>
+      <td>POLYGON ((426497.000 563046.000, 426487.000 56...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>E33000003</td>
+      <td>E08000020</td>
+      <td>Gateshead</td>
+      <td>None</td>
+      <td>426570</td>
+      <td>563542</td>
+      <td>-1.58654</td>
+      <td>54.96580</td>
+      <td>POLYGON ((426786.032 563536.860, 426602.875 56...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>E33000004</td>
+      <td>E08000020</td>
+      <td>Gateshead</td>
+      <td>None</td>
+      <td>426828</td>
+      <td>563212</td>
+      <td>-1.58254</td>
+      <td>54.96283</td>
+      <td>POLYGON ((427052.405 563318.499, 427011.334 56...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>E33000005</td>
+      <td>E08000020</td>
+      <td>Gateshead</td>
+      <td>None</td>
+      <td>425707</td>
+      <td>562777</td>
+      <td>-1.60009</td>
+      <td>54.95897</td>
+      <td>POLYGON ((425818.791 562796.341, 425806.657 56...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>60704</th>
+      <td>W35002706</td>
+      <td>W06000015</td>
+      <td>Cardiff</td>
+      <td>Caerdydd</td>
+      <td>318509</td>
+      <td>175037</td>
+      <td>-3.17457</td>
+      <td>51.46841</td>
+      <td>POLYGON ((318762.325 174960.625, 318647.719 17...</td>
+    </tr>
+    <tr>
+      <th>60705</th>
+      <td>W35002707</td>
+      <td>W06000015</td>
+      <td>Cardiff</td>
+      <td>Caerdydd</td>
+      <td>318854</td>
+      <td>174831</td>
+      <td>-3.16956</td>
+      <td>51.46660</td>
+      <td>POLYGON ((319066.795 174842.341, 319078.000 17...</td>
+    </tr>
+    <tr>
+      <th>60706</th>
+      <td>W35002708</td>
+      <td>W06000015</td>
+      <td>Cardiff</td>
+      <td>Caerdydd</td>
+      <td>318930</td>
+      <td>175713</td>
+      <td>-3.16867</td>
+      <td>51.47454</td>
+      <td>POLYGON ((319154.263 175562.432, 319108.261 17...</td>
+    </tr>
+    <tr>
+      <th>60707</th>
+      <td>W35002709</td>
+      <td>W06000015</td>
+      <td>Cardiff</td>
+      <td>Caerdydd</td>
+      <td>318822</td>
+      <td>175200</td>
+      <td>-3.17011</td>
+      <td>51.46992</td>
+      <td>POLYGON ((318768.685 175656.549, 319035.000 17...</td>
+    </tr>
+    <tr>
+      <th>60708</th>
+      <td>W35002710</td>
+      <td>W06000015</td>
+      <td>Cardiff</td>
+      <td>Caerdydd</td>
+      <td>317925</td>
+      <td>174229</td>
+      <td>-3.18279</td>
+      <td>51.46106</td>
+      <td>MULTIPOLYGON (((318537.460 174145.029, 318441....</td>
+    </tr>
+  </tbody>
+</table>
+<p>60709 rows × 9 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ew</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/employment/workplace/wp_density_ew.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ew</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>geography</th>
+      <th>geography code</th>
+      <th>Area/Population Density: All usual residents; measures: Value</th>
+      <th>Area/Population Density: Area Hectares; measures: Value</th>
+      <th>Area/Population Density: Density (number of persons per hectare); measures: Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2011</td>
+      <td>E33000439</td>
+      <td>E33000439</td>
+      <td>687</td>
+      <td>68.41</td>
+      <td>10.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2011</td>
+      <td>E33000440</td>
+      <td>E33000440</td>
+      <td>361</td>
+      <td>50.77</td>
+      <td>7.1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2011</td>
+      <td>E33000441</td>
+      <td>E33000441</td>
+      <td>462</td>
+      <td>11.28</td>
+      <td>41.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2011</td>
+      <td>E33000454</td>
+      <td>E33000454</td>
+      <td>772</td>
+      <td>1147.22</td>
+      <td>0.7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2011</td>
+      <td>E33000455</td>
+      <td>E33000455</td>
+      <td>3278</td>
+      <td>5.81</td>
+      <td>564.2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>53573</th>
+      <td>2011</td>
+      <td>W35002465</td>
+      <td>W35002465</td>
+      <td>239</td>
+      <td>1784.50</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>53574</th>
+      <td>2011</td>
+      <td>W35002466</td>
+      <td>W35002466</td>
+      <td>1489</td>
+      <td>30.67</td>
+      <td>48.5</td>
+    </tr>
+    <tr>
+      <th>53575</th>
+      <td>2011</td>
+      <td>W35002467</td>
+      <td>W35002467</td>
+      <td>2979</td>
+      <td>58.44</td>
+      <td>51.0</td>
+    </tr>
+    <tr>
+      <th>53576</th>
+      <td>2011</td>
+      <td>W35002468</td>
+      <td>W35002468</td>
+      <td>217</td>
+      <td>1599.63</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>53577</th>
+      <td>2011</td>
+      <td>W35002469</td>
+      <td>W35002469</td>
+      <td>354</td>
+      <td>272.54</td>
+      <td>1.3</td>
+    </tr>
+  </tbody>
+</table>
+<p>53578 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span> <span class="o">=</span> <span class="n">wpz_geom</span><span class="p">[[</span><span class="s1">&#39;WZ11CD&#39;</span><span class="p">,</span> <span class="s1">&#39;LAD_DCACD&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">wpz_ew</span><span class="p">[[</span><span class="s1">&#39;geography code&#39;</span><span class="p">,</span> <span class="s1">&#39;Area/Population Density: All usual residents; measures: Value&#39;</span><span class="p">]],</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;WZ11CD&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;geography code&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/employment/workplace/wp_pop_scotland.csv&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span> <span class="o">=</span> <span class="n">wpz</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">scot</span><span class="p">[[</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="s1">&#39;Total&#39;</span><span class="p">]],</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;WZ11CD&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span><span class="o">.</span><span class="n">Total</span> <span class="o">=</span> <span class="n">wpz</span><span class="o">.</span><span class="n">Total</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz</span><span class="p">[</span><span class="s1">&#39;Area/Population Density: All usual residents; measures: Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">wpz</span><span class="o">.</span><span class="n">Total</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span> <span class="o">=</span> <span class="n">wpz</span><span class="p">[</span><span class="o">~</span><span class="n">wpz</span><span class="o">.</span><span class="n">WZ11CD</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span><span class="p">[[</span><span class="s1">&#39;geography code&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/workplace_population_gb.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-144-0a3123e8e9c0&gt;:1: UserWarning: this is an initial implementation of Parquet/Feather file support and associated metadata.  This is tracking version 0.1.0 of the metadata specification at https://github.com/geopandas/geo-arrow-spec
+
+This metadata specification does not yet make stability promises.  We do not yet recommend using this in a production setting unless you are able to rewrite your Parquet/Feather files.
+
+To further ignore this warning, you can do: 
+import warnings; warnings.filterwarnings(&#39;ignore&#39;, message=&#39;.*initial implementation of Parquet.*&#39;)
+  wpz[[&#39;geography code&#39;, &#39;count&#39;, &#39;geometry&#39;]].to_parquet(&#39;../../urbangrammar_samba/functional_data/employment/workplace/workplace_population_gb.pq&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/scotland_industry.csv&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">wpz_ind_s</span> <span class="o">=</span> <span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">5378</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;Unnamed&#39;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">])</span>
+<span class="n">wpz_ind_s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>2011 Workplace Zone</th>
+      <th>All workplace population aged 16 to 74</th>
+      <th>A, B, D, E. Agriculture, energy and water</th>
+      <th>C. Manufacturing</th>
+      <th>F. Construction</th>
+      <th>G, I. Distribution, hotels and restaurants</th>
+      <th>H, J. Transport and communication</th>
+      <th>K, L, M, N. Financial, real estate, professional and administrative activities</th>
+      <th>O,P,Q. Public administration, education and health</th>
+      <th>R, S, T, U. Other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>S34000001</td>
+      <td>269</td>
+      <td>4</td>
+      <td>9</td>
+      <td>1</td>
+      <td>107</td>
+      <td>2</td>
+      <td>115</td>
+      <td>23</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S34000002</td>
+      <td>1,270</td>
+      <td>233</td>
+      <td>55</td>
+      <td>27</td>
+      <td>96</td>
+      <td>22</td>
+      <td>775</td>
+      <td>49</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>S34000003</td>
+      <td>272</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>98</td>
+      <td>2</td>
+      <td>107</td>
+      <td>50</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>S34000004</td>
+      <td>206</td>
+      <td>0</td>
+      <td>3</td>
+      <td>0</td>
+      <td>98</td>
+      <td>2</td>
+      <td>19</td>
+      <td>4</td>
+      <td>80</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>S34000005</td>
+      <td>432</td>
+      <td>0</td>
+      <td>5</td>
+      <td>5</td>
+      <td>111</td>
+      <td>12</td>
+      <td>91</td>
+      <td>192</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>5374</th>
+      <td>S34005371</td>
+      <td>257</td>
+      <td>2</td>
+      <td>6</td>
+      <td>11</td>
+      <td>39</td>
+      <td>9</td>
+      <td>29</td>
+      <td>125</td>
+      <td>36</td>
+    </tr>
+    <tr>
+      <th>5375</th>
+      <td>S34005372</td>
+      <td>218</td>
+      <td>0</td>
+      <td>8</td>
+      <td>6</td>
+      <td>39</td>
+      <td>5</td>
+      <td>44</td>
+      <td>104</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>5376</th>
+      <td>S34005373</td>
+      <td>1,572</td>
+      <td>14</td>
+      <td>194</td>
+      <td>16</td>
+      <td>111</td>
+      <td>508</td>
+      <td>199</td>
+      <td>510</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>5377</th>
+      <td>S34005374</td>
+      <td>218</td>
+      <td>1</td>
+      <td>118</td>
+      <td>5</td>
+      <td>11</td>
+      <td>12</td>
+      <td>53</td>
+      <td>16</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>5378</th>
+      <td>S34005375</td>
+      <td>348</td>
+      <td>5</td>
+      <td>20</td>
+      <td>27</td>
+      <td>50</td>
+      <td>47</td>
+      <td>65</td>
+      <td>97</td>
+      <td>37</td>
+    </tr>
+  </tbody>
+</table>
+<p>5375 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;2011 Workplace Zone&#39;, &#39;All workplace population aged 16 to 74&#39;,
+       &#39;A, B, D, E. Agriculture, energy and water&#39;, &#39;C. Manufacturing&#39;,
+       &#39;F. Construction&#39;, &#39;G, I. Distribution, hotels and restaurants&#39;,
+       &#39;H, J. Transport and communication&#39;,
+       &#39;K, L, M, N. Financial, real estate, professional and administrative activities&#39;,
+       &#39;O,P,Q. Public administration, education and health&#39;,
+       &#39;R, S, T, U. Other&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_ew</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/england_wales_industry.csv&#39;</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;date&#39;, &#39;geography&#39;, &#39;geography code&#39;,
+       &#39;Industry: All categories: Industry; measures: Value&#39;,
+       &#39;Industry: A Agriculture, forestry and fishing; measures: Value&#39;,
+       &#39;Industry: B Mining and quarrying; measures: Value&#39;,
+       &#39;Industry: C Manufacturing; measures: Value&#39;,
+       &#39;Industry: C10-12 Manufacturing: Food, beverages and tobacco; measures: Value&#39;,
+       &#39;Industry: C13-15 Manufacturing: Textiles, wearing apparel and leather and related products; measures: Value&#39;,
+       &#39;Industry: C16,17 Manufacturing: Wood, paper and paper products; measures: Value&#39;,
+       &#39;Industry: C19-22 Manufacturing: Chemicals, chemical products, rubber and plastic; measures: Value&#39;,
+       &#39;Industry: C23-25 Manufacturing: Low tech; measures: Value&#39;,
+       &#39;Industry: C26-30 Manufacturing: High tech; measures: Value&#39;,
+       &#39;Industry: C18, 31, 32 Manufacturing: Other; measures: Value&#39;,
+       &#39;Industry: D Electricity, gas, steam and air conditioning supply; measures: Value&#39;,
+       &#39;Industry: E Water supply, sewerage, waste management and remediation activities; measures: Value&#39;,
+       &#39;Industry: F Construction; measures: Value&#39;,
+       &#39;Industry: G Wholesale and retail trade; repair of motor vehicles and motor cycles; measures: Value&#39;,
+       &#39;Industry: H Transport and storage; measures: Value&#39;,
+       &#39;Industry: I Accommodation and food service activities; measures: Value&#39;,
+       &#39;Industry: J Information and communication; measures: Value&#39;,
+       &#39;Industry: K Financial and insurance activities; measures: Value&#39;,
+       &#39;Industry: L Real estate activities; measures: Value&#39;,
+       &#39;Industry: M Professional, scientific and technical activities; measures: Value&#39;,
+       &#39;Industry: N Administrative and support service activities; measures: Value&#39;,
+       &#39;Industry: O Public administration and defence; compulsory social security; measures: Value&#39;,
+       &#39;Industry: P Education; measures: Value&#39;,
+       &#39;Industry: Q Human health and social work activities; measures: Value&#39;,
+       &#39;Industry: R,S Arts, entertainment and recreation; other service activities; measures: Value&#39;,
+       &#39;Industry: T Activities of households as employers; undifferentiated goods - and services - producing activities of households for own use; measures: Value&#39;,
+       &#39;Industry: U Activities of extraterritorial organisations and bodies; measures: Value&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;A, B, D, E. Agriculture, energy and water&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;C. Manufacturing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;F. Construction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;F&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;G, I. Distribution, hotels and restaurants&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;H, J. Transport and communication&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;K, L, M, N. Financial, real estate, professional and administrative activities&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;O,P,Q. Public administration, education and health&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">wpz_ind_ew</span><span class="p">[</span><span class="s1">&#39;R, S, T, U. Other&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span> <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">]]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz</span> <span class="o">=</span> <span class="n">wpz_ind_ew</span><span class="p">[[</span><span class="s1">&#39;geography code&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">wpz_ind_ew</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wpz_ind_s</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;2011 Workplace Zone&#39;</span><span class="p">:</span> <span class="s1">&#39;geography code&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;All workplace population aged 16 to 74&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span> <span class="o">=</span> <span class="n">wpz_geom</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">wpz</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">&#39;WZ11CD&#39;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">&#39;geography code&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">wpz_merged</span> <span class="o">=</span> <span class="n">wpz_merged</span><span class="p">[</span><span class="o">~</span><span class="n">wpz_merged</span><span class="o">.</span><span class="n">WZ11CD</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span> <span class="o">=</span> <span class="n">wpz_merged</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="nb">list</span><span class="p">(</span><span class="n">wpz</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]]</span>
+<span class="n">wpz_merged</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;geography code&#39;, &#39;A, B, D, E. Agriculture, energy and water&#39;,
+       &#39;C. Manufacturing&#39;, &#39;F. Construction&#39;,
+       &#39;G, I. Distribution, hotels and restaurants&#39;,
+       &#39;H, J. Transport and communication&#39;,
+       &#39;K, L, M, N. Financial, real estate, professional and administrative activities&#39;,
+       &#39;O,P,Q. Public administration, education and health&#39;,
+       &#39;R, S, T, U. Other&#39;, &#39;geometry&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">wpz_merged</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">wpz_merged</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">wpz_merged</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>geography code</th>
+      <th>A, B, D, E. Agriculture, energy and water</th>
+      <th>C. Manufacturing</th>
+      <th>F. Construction</th>
+      <th>G, I. Distribution, hotels and restaurants</th>
+      <th>H, J. Transport and communication</th>
+      <th>K, L, M, N. Financial, real estate, professional and administrative activities</th>
+      <th>O,P,Q. Public administration, education and health</th>
+      <th>R, S, T, U. Other</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>E33000001</td>
+      <td>32.0</td>
+      <td>64.0</td>
+      <td>172.0</td>
+      <td>115.0</td>
+      <td>37.0</td>
+      <td>213.0</td>
+      <td>389.0</td>
+      <td>4.0</td>
+      <td>POLYGON ((426363.000 563750.000, 426477.836 56...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>E33000002</td>
+      <td>0.0</td>
+      <td>10.0</td>
+      <td>3.0</td>
+      <td>113.0</td>
+      <td>50.0</td>
+      <td>33.0</td>
+      <td>121.0</td>
+      <td>5.0</td>
+      <td>POLYGON ((426497.000 563046.000, 426487.000 56...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>E33000003</td>
+      <td>5.0</td>
+      <td>370.0</td>
+      <td>81.0</td>
+      <td>184.0</td>
+      <td>114.0</td>
+      <td>155.0</td>
+      <td>39.0</td>
+      <td>15.0</td>
+      <td>POLYGON ((426786.032 563536.860, 426602.875 56...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>E33000004</td>
+      <td>21.0</td>
+      <td>298.0</td>
+      <td>50.0</td>
+      <td>47.0</td>
+      <td>18.0</td>
+      <td>48.0</td>
+      <td>13.0</td>
+      <td>8.0</td>
+      <td>POLYGON ((427052.405 563318.499, 427011.334 56...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>E33000005</td>
+      <td>2.0</td>
+      <td>84.0</td>
+      <td>12.0</td>
+      <td>61.0</td>
+      <td>106.0</td>
+      <td>85.0</td>
+      <td>346.0</td>
+      <td>16.0</td>
+      <td>POLYGON ((425818.791 562796.341, 425806.657 56...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>58948</th>
+      <td>W35002706</td>
+      <td>2.0</td>
+      <td>18.0</td>
+      <td>11.0</td>
+      <td>21.0</td>
+      <td>8.0</td>
+      <td>29.0</td>
+      <td>83.0</td>
+      <td>11.0</td>
+      <td>POLYGON ((318762.325 174960.625, 318647.719 17...</td>
+    </tr>
+    <tr>
+      <th>58949</th>
+      <td>W35002707</td>
+      <td>1.0</td>
+      <td>24.0</td>
+      <td>11.0</td>
+      <td>40.0</td>
+      <td>23.0</td>
+      <td>95.0</td>
+      <td>78.0</td>
+      <td>21.0</td>
+      <td>POLYGON ((319066.795 174842.341, 319078.000 17...</td>
+    </tr>
+    <tr>
+      <th>58950</th>
+      <td>W35002708</td>
+      <td>6.0</td>
+      <td>14.0</td>
+      <td>16.0</td>
+      <td>26.0</td>
+      <td>67.0</td>
+      <td>134.0</td>
+      <td>156.0</td>
+      <td>28.0</td>
+      <td>POLYGON ((319154.263 175562.432, 319108.261 17...</td>
+    </tr>
+    <tr>
+      <th>58951</th>
+      <td>W35002709</td>
+      <td>15.0</td>
+      <td>96.0</td>
+      <td>207.0</td>
+      <td>116.0</td>
+      <td>31.0</td>
+      <td>70.0</td>
+      <td>183.0</td>
+      <td>29.0</td>
+      <td>POLYGON ((318768.685 175656.549, 319035.000 17...</td>
+    </tr>
+    <tr>
+      <th>58952</th>
+      <td>W35002710</td>
+      <td>0.0</td>
+      <td>20.0</td>
+      <td>23.0</td>
+      <td>39.0</td>
+      <td>46.0</td>
+      <td>75.0</td>
+      <td>195.0</td>
+      <td>40.0</td>
+      <td>MULTIPOLYGON (((318537.460 174145.029, 318441....</td>
+    </tr>
+  </tbody>
+</table>
+<p>58953 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wpz_merged</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/employment/workplace/workplace_by_industry_gb.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="n">pois</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">103</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="mi">103</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;../../urbangrammar_samba/spatial_signatures/morphometrics/nodes/nodes_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.pq&#39;</span><span class="p">)</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span><span class="o">.</span><span class="n">unary_union</span><span class="o">.</span><span class="n">convex_hull</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;amenity&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cinema&#39;</span><span class="p">,</span> <span class="s1">&#39;theatre&#39;</span><span class="p">]}</span>
+    <span class="n">pois</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ox</span><span class="o">.</span><span class="n">geometries</span><span class="o">.</span><span class="n">geometries_from_polygon</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">tags</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 103/103 [15:42&lt;00:00,  9.15s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 3min 59s, sys: 4.76 s, total: 4min 4s
+Wall time: 15min 42s
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pois_merged</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">pois</span><span class="p">)</span>
+<span class="n">pois_merged</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>unique_id</th>
+      <th>osmid</th>
+      <th>element_type</th>
+      <th>amenity</th>
+      <th>brand</th>
+      <th>brand:wikidata</th>
+      <th>brand:wikipedia</th>
+      <th>name</th>
+      <th>source</th>
+      <th>geometry</th>
+      <th>...</th>
+      <th>edinburgh_international</th>
+      <th>edinburgh_fringe</th>
+      <th>name:gd</th>
+      <th>ref:planningapp</th>
+      <th>local_name</th>
+      <th>surveillance</th>
+      <th>restaurant</th>
+      <th>building:roof:orientation</th>
+      <th>music</th>
+      <th>roof:orientation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>node/31532987</td>
+      <td>31532987</td>
+      <td>node</td>
+      <td>cinema</td>
+      <td>Vue</td>
+      <td>Q2535134</td>
+      <td>en:Vue Cinemas</td>
+      <td>Vue</td>
+      <td>local knowledge</td>
+      <td>POINT (-2.68034 53.74839)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>node/307745711</td>
+      <td>307745711</td>
+      <td>node</td>
+      <td>cinema</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>The Palace</td>
+      <td>NaN</td>
+      <td>POINT (-2.60005 53.82949)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>node/662485019</td>
+      <td>662485019</td>
+      <td>node</td>
+      <td>theatre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Charter Theatre</td>
+      <td>NaN</td>
+      <td>POINT (-2.69619 53.75984)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>node/973599598</td>
+      <td>973599598</td>
+      <td>node</td>
+      <td>theatre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Thornton Little Theatre</td>
+      <td>NaN</td>
+      <td>POINT (-3.01110 53.87245)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>node/2078549775</td>
+      <td>2078549775</td>
+      <td>node</td>
+      <td>cinema</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>The Dukes</td>
+      <td>survey</td>
+      <td>POINT (-2.79687 54.04910)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>way/690683787</td>
+      <td>690683787</td>
+      <td>way</td>
+      <td>cinema</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Essoldo (disused)</td>
+      <td>NaN</td>
+      <td>POLYGON ((-2.30625 53.44634, -2.30593 53.44619...</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>node/1043270422</td>
+      <td>1043270422</td>
+      <td>node</td>
+      <td>theatre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>The Partington Players Theatre</td>
+      <td>NaN</td>
+      <td>POINT (-1.94948 53.44373)</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>way/117880925</td>
+      <td>117880925</td>
+      <td>way</td>
+      <td>theatre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Buxton Opera House</td>
+      <td>Bing</td>
+      <td>POLYGON ((-1.91742 53.25824, -1.91736 53.25826...</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>way/281805351</td>
+      <td>281805351</td>
+      <td>way</td>
+      <td>theatre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>The Playhouse</td>
+      <td>NaN</td>
+      <td>POLYGON ((-1.91784 53.32325, -1.91780 53.32305...</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>way/158533178</td>
+      <td>158533178</td>
+      <td>way</td>
+      <td>theatre</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Bing</td>
+      <td>POLYGON ((-1.89410 52.98496, -1.89413 52.98486...</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>4396 rows × 272 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pois_merged</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;unique_id&#39;</span><span class="p">)[[</span><span class="s1">&#39;amenity&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;geometry&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">27700</span><span class="p">)</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;../../urbangrammar_samba/functional_data/pois/culture_gb.pq&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+&lt;ipython-input-150-b737c023146a&gt;:1: UserWarning: this is an initial implementation of Parquet/Feather file support and associated metadata.  This is tracking version 0.1.0 of the metadata specification at https://github.com/geopandas/geo-arrow-spec
+
+This metadata specification does not yet make stability promises.  We do not yet recommend using this in a production setting unless you are able to rewrite your Parquet/Feather files.
+
+To further ignore this warning, you can do: 
+import warnings; warnings.filterwarnings(&#39;ignore&#39;, message=&#39;.*initial implementation of Parquet.*&#39;)
+  pois_merged.drop_duplicates(subset=&#39;unique_id&#39;)[[&#39;amenity&#39;, &#39;name&#39;, &#39;geometry&#39;]].to_parquet(&#39;../../urbangrammar_samba/functional_data/pois/culture_gb.pq&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="corine-land-cover">
+<h2>Corine land cover<a class="headerlink" href="#corine-land-cover" title="Permalink to this headline">¶</a></h2>
+<p>Corine - get link from https://land.copernicus.eu/pan-european/corine-land-cover</p>
+<p>We need to extract data, clip to GB and reproject to OSGB.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;https://land.copernicus.eu/land-files/afd643e4508e9dd7af7659c1fb1d75017ba6d9f4.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/land_use/corine&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from https://land.copernicus.eu/land-files/afd643e4508e9dd7af7659c1fb1d75017ba6d9f4.zip (3.62 GB)
+
+file_sizes: 100%|██████████████████████████| 3.89G/3.89G [01:11&lt;00:00, 54.5MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/land_use/corine
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/land_use/corine&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/land_use/corine/u2018_clc2018_v2020_20u1_geoPackage.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+    <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/land_use/corine&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extent</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/spatial_signatures/local_auth_chunks.pq&quot;</span><span class="p">)</span>
+<span class="n">corine_gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/land_use/corine/u2018_clc2018_v2020_20u1_geoPackage/DATA/U2018_CLC2018_V2020_20u1.gpkg&quot;</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">extent</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corine_gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="mi">27700</span><span class="p">)</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/land_use/corine/corine_gb.pq&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+&lt;ipython-input-159-970263de7d63&gt;:1: UserWarning: this is an initial implementation of Parquet/Feather file support and associated metadata.  This is tracking version 0.1.0 of the metadata specification at https://github.com/geopandas/geo-arrow-spec
+
+This metadata specification does not yet make stability promises.  We do not yet recommend using this in a production setting unless you are able to rewrite your Parquet/Feather files.
+
+To further ignore this warning, you can do: 
+import warnings; warnings.filterwarnings(&#39;ignore&#39;, message=&#39;.*initial implementation of Parquet.*&#39;)
+  corine_gdf.to_crs(27700).to_parquet(&quot;../../urbangrammar_samba/functional_data/land_use/corine/corine_gb.pq&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="land-cover-classification">
+<h2>Land cover classification<a class="headerlink" href="#land-cover-classification" title="Permalink to this headline">¶</a></h2>
+<p>Land cover classification - get link from https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-land-cover?tab=form</p>
+<p>We need to clip it to the extent of GB (dataset has a global coverage) and reproject to OSGB.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;http://136.156.133.37/cache-compute-0011/cache/data0/dataset-satellite-land-cover-c20f5b30-2bdb-4f69-a21e-c8f2e696e715.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;../../urbangrammar_samba/functional_data/land_use/lcc&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Creating data folder...
+Downloading data from http://136.156.133.37/cache-compute-0011/cache/data0/dataset-satellite-land-cover-c20f5b30-2bdb-4f69-a21e-c8f2e696e715.zip (2.17 GB)
+
+file_sizes: 100%|██████████████████████████| 2.33G/2.33G [01:26&lt;00:00, 27.1MB/s]
+Extracting zip file...
+Successfully downloaded / unzipped to ../../urbangrammar_samba/functional_data/land_use/lcc
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;../../urbangrammar_samba/functional_data/land_use/lcc&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lcc</span> <span class="o">=</span> <span class="n">ra</span><span class="o">.</span><span class="n">open_rasterio</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/land_use/lcc/C3S-LC-L4-LCCS-Map-300m-P1Y-2018-v2.1.1.nc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/conda/lib/python3.8/site-packages/rasterio/__init__.py:221: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  s = DatasetReader(path, driver=driver, sharing=sharing, **kwargs)
+/opt/conda/lib/python3.8/site-packages/rioxarray/_io.py:678: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  warnings.warn(str(rio_warning.message), type(rio_warning.message))
+/opt/conda/lib/python3.8/site-packages/rasterio/__init__.py:221: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  s = DatasetReader(path, driver=driver, sharing=sharing, **kwargs)
+/opt/conda/lib/python3.8/site-packages/rioxarray/_io.py:678: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  warnings.warn(str(rio_warning.message), type(rio_warning.message))
+/opt/conda/lib/python3.8/site-packages/rasterio/__init__.py:221: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  s = DatasetReader(path, driver=driver, sharing=sharing, **kwargs)
+/opt/conda/lib/python3.8/site-packages/rioxarray/_io.py:678: NotGeoreferencedWarning: Dataset has no geotransform set. The identity matrix may be returned.
+  warnings.warn(str(rio_warning.message), type(rio_warning.message))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lccs</span> <span class="o">=</span> <span class="n">lcc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lccs_class</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">extent</span><span class="o">.</span><span class="n">total_bounds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-8.64999583, 49.86463177,  1.76893745, 60.86078737])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lccs_gb</span> <span class="o">=</span> <span class="n">lccs</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="mi">61</span><span class="p">,</span> <span class="mi">49</span><span class="p">))</span>
+<span class="n">lccs_gb</span> <span class="o">=</span> <span class="n">lccs_gb</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">set_crs</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lccs_osgb</span> <span class="o">=</span> <span class="n">lccs_gb</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">pyproj</span><span class="o">.</span><span class="n">CRS</span><span class="p">(</span><span class="mi">27700</span><span class="p">)</span><span class="o">.</span><span class="n">to_wkt</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lccs_osgb</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">to_raster</span><span class="p">(</span><span class="s2">&quot;../../urbangrammar_samba/functional_data/land_use/lcc/lccs_osgb.tif&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./code"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="terracotta_explore.html" title="previous page">Explore Imagery with <code class="docutils literal notranslate"><span class="pre">terracotta</span></code></a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dani Arribas-Bel, Martin Fleischmann<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

@@ -11,9 +11,10 @@
   sections:
     - file: infrastructure/platform
     - file: infrastructure/storage_drives.md
+    - file: infrastructure/kubernetes_cluster
     - file: infrastructure/dask_cluster
 
-- chapter: Vector data
+- chapter: Morphological data
   sections:
     - file: code/Fetch_OS_Data
     - file: code/Load_data_from_PostGIS
@@ -26,3 +27,7 @@
     - file: code/GHS-composite-S2_mirror
     - file: code/GHS-composite-S2_explore_mosaic
     - file: code/terracotta_explore
+
+- chapter: Functional data
+  sections:
+    - file: code/fetch_data

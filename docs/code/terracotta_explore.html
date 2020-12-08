@@ -24,7 +24,7 @@
     href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -43,7 +43,7 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -53,7 +53,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Mirror GHS-composite-S2" href="GHS-composite-S2_mirror.html" />
+    <link rel="next" title="Download data for a functional layer of Spatial Signatures" href="fetch_data.html" />
+    <link rel="prev" title="Explore the mosaic" href="GHS-composite-S2_explore_mosaic.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -78,15 +79,12 @@
   <h1 class="site-logo" id="site-title">Urban Grammar AI | WP1 - Data Processing</h1>
   
 </a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
-
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Project
  </span>
@@ -107,7 +105,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Infrastructure
  </span>
@@ -124,14 +122,19 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../infrastructure/kubernetes_cluster.html">
+   Manage Kubernetes cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../infrastructure/dask_cluster.html">
    Set up ad-hoc Dask cluster
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
-  Vector data
+  Morphological data
  </span>
 </p>
 <ul class="nav sidenav_l1">
@@ -156,7 +159,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Imagery
  </span>
@@ -172,6 +175,11 @@
    Mirror GHS-composite-S2
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="GHS-composite-S2_explore_mosaic.html">
+   Explore the mosaic
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Explore Imagery with
@@ -183,10 +191,20 @@
   </a>
  </li>
 </ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Functional data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="fetch_data.html">
+   Download data for a functional layer of Spatial Signatures
+  </a>
+ </li>
+</ul>
 
-</nav>
-
- <!-- To handle the deprecated key -->
+</nav> <!-- To handle the deprecated key -->
 
 </div>
 
@@ -211,11 +229,11 @@
             <i class="fas fa-arrow-up"></i>
         </button>
         
-        <div class="dropdown-buttons-trigger">
+        
+<div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
 
-    
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         
@@ -227,8 +245,8 @@
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
-    
 </div>
+
         <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -344,12 +362,17 @@ container:</p>
            -ti <span class="se">\</span>
            -p <span class="m">5005</span>:5005 <span class="se">\</span>
            -v /path/to/data/folder/:/data <span class="se">\</span>
-           --network host 
+           --network host <span class="se">\</span>
            terracotta sh
 </pre></div>
 </div>
 <p>Note that although the command is similar to that we use for the server, here
 we set <code class="docutils literal notranslate"><span class="pre">--network</span> <span class="pre">host</span></code> so the client can be reached from the guest’s browser.</p>
+<p>Inside the container, then launch the app:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>/opt/conda/bin/terracotta connect --port <span class="m">5005</span> localhost:5000
+</pre></div>
+</div>
+<p>Then point your browser to <code class="docutils literal notranslate"><span class="pre">localhost:5005</span></code>.</p>
 </div>
 <div class="section" id="optimising">
 <h2>Optimising<a class="headerlink" href="#optimising" title="Permalink to this headline">¶</a></h2>
@@ -394,7 +417,8 @@ of the data path.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="GHS-composite-S2_mirror.html" title="previous page">Mirror GHS-composite-S2</a>
+    <a class='left-prev' id="prev-link" href="GHS-composite-S2_explore_mosaic.html" title="previous page">Explore the mosaic</a>
+    <a class='right-next' id="next-link" href="fetch_data.html" title="next page">Download data for a functional layer of Spatial Signatures</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
