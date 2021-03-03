@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Manage Kubernetes cluster &#8212; Urban Grammar AI | WP1 - Data Processing</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Set up ad-hoc Dask cluster" href="dask_cluster.html" />
+    <link rel="prev" title="Mount samba drives on linux from the command line" href="storage_drives.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.svg" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Urban Grammar AI | WP1 - Data Processing</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Project
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.github.io">
+   Project homepage
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.github.io/spatial_signatures">
+   WP2 - Spatial signatures
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Infrastructure
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="platform.html">
+   Computational platform
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="storage_drives.html">
+   Mount samba drives on linux from the command line
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Manage Kubernetes cluster
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dask_cluster.html">
+   Set up ad-hoc Dask cluster
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Morphological data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/Fetch_OS_Data.html">
+   Fetch Ordnance Survey (Open) Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/Load_data_from_PostGIS.html">
+   Load data from PostGIS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/Network_Consolidation_Test.html">
+   Assessment of the correctness of OpenRoads network
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/OpenRoads_Topology.html">
+   Cleaning OpenRoads topology
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Imagery
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/GHS-composite-S2_meta.html">
+   Build metadata GHS-composite-S2 R2020A
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/GHS-composite-S2_mirror.html">
+   Mirror GHS-composite-S2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/GHS-composite-S2_explore_mosaic.html">
+   Explore the mosaic
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/terracotta_explore.html">
+   Explore Imagery with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     terracotta
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Functional data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../code/fetch_data.html">
+   Download data for a functional layer of Spatial Signatures
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/infrastructure/kubernetes_cluster.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/urbangrammarai/data_processing"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cluster-setup">
+   Cluster setup
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-kubernetes-via-microk8s">
+     Install Kubernetes (via
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       microk8s
+      </span>
+     </code>
+     )
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#link-up-machines-to-the-cluster">
+     Link up machines to the cluster
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#remove-machines-from-the-cluster">
+     Remove machines from the cluster
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connecting-to-a-cluster-via-dask">
+   Connecting to a cluster via Dask
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kubernetes-config">
+     Kubernetes config
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dask-client-on-kubernetes-cluster">
+     dask.Client on Kubernetes cluster
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scaling">
+     Scaling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-worker-specification">
+     Example worker specification
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="manage-kubernetes-cluster">
+<h1>Manage Kubernetes cluster<a class="headerlink" href="#manage-kubernetes-cluster" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cluster-setup">
+<h2>Cluster setup<a class="headerlink" href="#cluster-setup" title="Permalink to this headline">¶</a></h2>
+<p>This guide documents the process of setting up a Kubernetes cluster between an arbitrary number of machines to run Dask loads in a distributed way.</p>
+<p>Here is our preliminary set up:</p>
+<ul class="simple">
+<li><p>All machines are connected to the same network and hence “available to each other”</p></li>
+<li><p>Each machine is running Ubuntu and we have admin rights on them all</p></li>
+</ul>
+<p>This guide will use the following jargon:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster</span></code>: a Kubernetes deployment that connects different machines and allows to run distributed jobs through containers</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">node</span></code>: each of the physical machines that are part of the cluster</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scheduler</span></code>: the JupyterLab session that controls the cluster, creates and distributes jobs across the cluster</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pod</span></code>: a single containerised task distributed from the Dask scheduler</p></li>
+</ul>
+<div class="section" id="install-kubernetes-via-microk8s">
+<h3>Install Kubernetes (via <code class="docutils literal notranslate"><span class="pre">microk8s</span></code>)<a class="headerlink" href="#install-kubernetes-via-microk8s" title="Permalink to this headline">¶</a></h3>
+<p>To simplify the set up of Kubernetes, we rely on <a class="reference external" href="https://microk8s.io"><code class="docutils literal notranslate"><span class="pre">microk8s</span></code></a>, by Canonical. This is a pre-packaged version of Kubernetes set up with “sensible defaults” so deployment is simplified. Installation happens through <code class="docutils literal notranslate"><span class="pre">snap</span></code>.</p>
+<p>On each machine that will be part of the cluster, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">snap</span> <span class="n">install</span> <span class="n">microk8s</span> <span class="o">--</span><span class="n">classic</span> <span class="o">--</span><span class="n">channel</span><span class="o">=</span><span class="mf">1.19</span>
+</pre></div>
+</div>
+<p>This will create a <code class="docutils literal notranslate"><span class="pre">microk8s</span></code> Kubernetes instance on each machine. You can check the machine is properly setup with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">microk8s</span> <span class="n">status</span> <span class="o">--</span><span class="n">wait</span><span class="o">-</span><span class="n">ready</span>
+</pre></div>
+</div>
+<p>For the overall status of the single machine cluster. Or:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">microk8s</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">nodes</span>
+</pre></div>
+</div>
+<p>To confirm the cluster has a single node.</p>
+</div>
+<div class="section" id="link-up-machines-to-the-cluster">
+<h3>Link up machines to the cluster<a class="headerlink" href="#link-up-machines-to-the-cluster" title="Permalink to this headline">¶</a></h3>
+<p>So far we have independent, one-machine clusters running, now we will link them up into a single cluster that can “orchestrate” tasks across machines.</p>
+<p>Pick one machine to act as the main “entry point”. It is not very important which one you pick as, as soon as you have more than two, the cluster will automatically become “high availability”, meaning each node can act as the entry point. But, to get there, pick one. We will call this node the <em>entry point</em>, and the other ones the <em>followers</em>.</p>
+<p>On the entry point, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">microk8s</span> <span class="n">add</span><span class="o">-</span><span class="n">node</span>
+</pre></div>
+</div>
+<p>This will print a command starting by <code class="docutils literal notranslate"><span class="pre">microk8s</span> <span class="pre">join</span> <span class="pre">...</span></code> that you can copy on a given follower, preceded by <code class="docutils literal notranslate"><span class="pre">sudo</span></code>. Once both machines shake hands and complete the process, you can check your cluster entry point has two nodes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">microk8s</span> <span class="n">kubectl</span> <span class="n">get</span> <span class="n">nodes</span>
+</pre></div>
+</div>
+<p>Repeat this process for as many nodes as you want to join to the cluster.</p>
+</div>
+<div class="section" id="remove-machines-from-the-cluster">
+<h3>Remove machines from the cluster<a class="headerlink" href="#remove-machines-from-the-cluster" title="Permalink to this headline">¶</a></h3>
+<p>Once a node is joined to the cluster, the add computing resources to the pool that Kubernetes manages. Kubernetes is also very good at letting you dynamically adjust a cluster, adding more resources as you acquire them (e.g. get a new machine), and dropping them as you need them somewhere else.</p>
+<p>Removing a node from the cluster is a two-stage process:</p>
+<ol class="simple">
+<li><p>First, remove the node. For that, from the node you want to remove:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">microk8s</span> <span class="n">leave</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Once that process has completed, update the cluster information. From the entry point (or any node on a high availability cluster):</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">microk8s</span> <span class="n">remove</span><span class="o">-</span><span class="n">node</span> <span class="o">&lt;</span><span class="n">node</span><span class="o">-</span><span class="nb">id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">&lt;node-id&gt;</span></code> is the name you’d find for the node if you run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">microk8s</span> <span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">nodes</span></code> when the node is part of the cluster.</p>
+</div>
+</div>
+<div class="section" id="connecting-to-a-cluster-via-dask">
+<h2>Connecting to a cluster via Dask<a class="headerlink" href="#connecting-to-a-cluster-via-dask" title="Permalink to this headline">¶</a></h2>
+<p>To use Kubernetes cluster as a Dask cluster, you need to connect to it using <code class="docutils literal notranslate"><span class="pre">config</span></code> file and specify how each worker should look like.</p>
+<p>Note that you should ideally run the same docker container as a scheduler and pods (workers).</p>
+<div class="section" id="kubernetes-config">
+<h3>Kubernetes config<a class="headerlink" href="#kubernetes-config" title="Permalink to this headline">¶</a></h3>
+<p>To connect to Kubernetes cluster, you need its configuration saved in <code class="docutils literal notranslate"><span class="pre">/home/jovyan/.kube/config</span></code> file. You can generate config using</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>microk8s config &gt; config
+</pre></div>
+</div>
+<p>It is likely that this will be generated outside of the container on the host machine, so make sure it is available from the container. Once your Jupyter instance is up and running, you create <code class="docutils literal notranslate"><span class="pre">.kube</span></code> folder and copy the file there.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir /home/jovyan/.kube
+cp config /home/jovyan/.kube/config
+</pre></div>
+</div>
+<p>That way Kubernetes knows to which cluster it should connect and how.</p>
+</div>
+<div class="section" id="dask-client-on-kubernetes-cluster">
+<h3>dask.Client on Kubernetes cluster<a class="headerlink" href="#dask-client-on-kubernetes-cluster" title="Permalink to this headline">¶</a></h3>
+<p>To connect Dask to Kuberenetes cluster, you need <code class="docutils literal notranslate"><span class="pre">dask-kubernetes</span></code> installed in the docker container. Then you can use <code class="docutils literal notranslate"><span class="pre">KubeCluster</span></code> within Dask <code class="docutils literal notranslate"><span class="pre">Client</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dask_kubernetes</span> <span class="kn">import</span> <span class="n">KubeCluster</span>
+<span class="kn">from</span> <span class="nn">dask.distributed</span> <span class="kn">import</span> <span class="n">Client</span>
+</pre></div>
+</div>
+<p>Kubernetes requires specification of pods, i.e. which docker image it should use, CPU and memory limits and other information. That should be stored in<code class="docutils literal notranslate"><span class="pre">.yml</span></code>, which you load during the creation of <code class="docutils literal notranslate"><span class="pre">KubeCluster</span></code>. See below the example specification.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cluster</span> <span class="o">=</span> <span class="n">KubeCluster</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s1">&#39;worker-spec.yml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once we have <code class="docutils literal notranslate"><span class="pre">KubeCluster</span></code> set up, we can hook it into dask client.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scaling">
+<h3>Scaling<a class="headerlink" href="#scaling" title="Permalink to this headline">¶</a></h3>
+<p>By default the cluster will not give you any worker, so you have to specify them. You can either do that manually and specify the number of workers or set up adaptive scaling.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">cluster.scale(20)</span></code>, Kubernetes will try to start 20 pods (workers) for you. However, if your nodes are not able to accomodate all of them due to memory and CPU limitations, you may get less than that.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">cluster.adapt(minimum=1,</span> <span class="pre">maximum=100)</span></code> Kubernetes will try to adapt number of pods based on the actual workload.</p>
+<p>Once you are finished, use <code class="docutils literal notranslate"><span class="pre">cluster.close()</span></code> to shut down all pods (that will also happen automatically if you shut down Jupyter kernel).</p>
+</div>
+<div class="section" id="example-worker-specification">
+<h3>Example worker specification<a class="headerlink" href="#example-worker-specification" title="Permalink to this headline">¶</a></h3>
+<p>This is the example of <code class="docutils literal notranslate"><span class="pre">worker-spec.yml</span></code> which will start each pod using <code class="docutils literal notranslate"><span class="pre">darribas/gds_py:6.0alpha1</span></code> docker container and limits each of them to two CPUs and 8GB of RAM.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">labels</span><span class="p">:</span>
+    <span class="nt">foo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bar</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">restartPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Never</span>
+  <span class="nt">containers</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">darribas/gds_py:6.0alpha1</span>
+    <span class="nt">imagePullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+    <span class="nt">args</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">start.sh</span><span class="p p-Indicator">,</span> <span class="nv">dask-worker</span><span class="p p-Indicator">,</span> <span class="nv">--nthreads</span><span class="p p-Indicator">,</span> <span class="s">&#39;2&#39;</span><span class="p p-Indicator">,</span> <span class="nv">--no-dashboard</span><span class="p p-Indicator">,</span> <span class="nv">--memory-limit</span><span class="p p-Indicator">,</span> <span class="nv">6GB</span><span class="p p-Indicator">,</span> <span class="nv">--death-timeout</span><span class="p p-Indicator">,</span> <span class="s">&#39;60&#39;</span><span class="p p-Indicator">]</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dask</span>
+    <span class="nt">resources</span><span class="p">:</span>
+      <span class="nt">limits</span><span class="p">:</span>
+        <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;2&quot;</span>
+        <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8G</span>
+      <span class="nt">requests</span><span class="p">:</span>
+        <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;2&quot;</span>
+        <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8G</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./infrastructure"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="storage_drives.html" title="previous page">Mount samba drives on linux from the command line</a>
+    <a class='right-next' id="next-link" href="dask_cluster.html" title="next page">Set up ad-hoc Dask cluster</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Dani Arribas-Bel, Martin Fleischmann<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
