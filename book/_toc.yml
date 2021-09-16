@@ -2,9 +2,9 @@
 
 - chapter: Project
   sections:
-    - url: http://urbangrammarai.github.io
+    - url: http://urbangrammarai.xyz
       title: Project homepage
-    - url: http://urbangrammarai.github.io/spatial_signatures
+    - url: http://urbangrammarai.xyz/spatial_signatures
       title: WP2 - Spatial signatures
 
 - chapter: Infrastructure

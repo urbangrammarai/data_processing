@@ -2,7 +2,7 @@
 
 This is a Jupyter Book containing the code and documentation for WP 1 (Data Processing) of Urban Grammar AI research project.
 
-The project is currently in progress and the content of this book is reflecting the work done to date. 
+The project is currently in progress and the content of this book is reflecting the work done to date.
 
 ## Urban Grammar AI research project
 
@@ -12,7 +12,7 @@ Satellite imagery, combined with cutting-edge AI, can provide a source of data t
 
 This project develops a conceptual framework to characterise urban structure through the notions of spatial signatures and urban grammar, and will deploy it to generate open data products and insight about the evolution of cities.
 
-The detailed overview is available on the [project homepage](https://urbangrammarai.github.io).
+The detailed overview is available on the [project homepage](https://urbangrammarai.xyz).
 
 [<img src="_static/gdsl.png" alt="GDSL" width="25%" style="margin-right: 20px">](https://www.liverpool.ac.uk/geographic-data-science/)
 [<img src="_static/liv_logo.png" alt="University of Liverpool"  width="25%" style="margin-right: 20px">](https://www.liverpool.ac.uk)
