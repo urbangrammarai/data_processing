@@ -97,6 +97,11 @@
    WP2 - Spatial signatures
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://urbangrammarai.xyz/signature_ai">
+   WP3 - Signature AI
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -451,24 +456,24 @@ cp config /home/jovyan/.kube/config
 <div class="section" id="example-worker-specification">
 <h3>Example worker specification<a class="headerlink" href="#example-worker-specification" title="Permalink to this headline">¶</a></h3>
 <p>This is the example of <code class="docutils literal notranslate"><span class="pre">worker-spec.yml</span></code> which will start each pod using <code class="docutils literal notranslate"><span class="pre">darribas/gds_py:6.0alpha1</span></code> docker container and limits each of them to two CPUs and 8GB of RAM.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">labels</span><span class="p">:</span>
-    <span class="nt">foo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bar</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">restartPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Never</span>
-  <span class="nt">containers</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">darribas/gds_py:6.0alpha1</span>
-    <span class="nt">imagePullPolicy</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
-    <span class="nt">args</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">start.sh</span><span class="p p-Indicator">,</span> <span class="nv">dask-worker</span><span class="p p-Indicator">,</span> <span class="nv">--nthreads</span><span class="p p-Indicator">,</span> <span class="s">&#39;2&#39;</span><span class="p p-Indicator">,</span> <span class="nv">--no-dashboard</span><span class="p p-Indicator">,</span> <span class="nv">--memory-limit</span><span class="p p-Indicator">,</span> <span class="nv">6GB</span><span class="p p-Indicator">,</span> <span class="nv">--death-timeout</span><span class="p p-Indicator">,</span> <span class="s">&#39;60&#39;</span><span class="p p-Indicator">]</span>
-    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dask</span>
-    <span class="nt">resources</span><span class="p">:</span>
-      <span class="nt">limits</span><span class="p">:</span>
-        <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;2&quot;</span>
-        <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8G</span>
-      <span class="nt">requests</span><span class="p">:</span>
-        <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;2&quot;</span>
-        <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8G</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">foo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Never</span><span class="w"></span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">darribas/gds_py:6.0alpha1</span><span class="w"></span>
+<span class="w">    </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span><span class="w"></span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">start.sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">dask-worker</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">--nthreads</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;2&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">--no-dashboard</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">--memory-limit</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">6GB</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">--death-timeout</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;60&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dask</span><span class="w"></span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8G</span><span class="w"></span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8G</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
